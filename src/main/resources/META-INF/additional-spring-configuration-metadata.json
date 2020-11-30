@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "portal.host",
+      "type": "java.lang.String",
+      "description": "Description for portal.host."
+  }
+] }
