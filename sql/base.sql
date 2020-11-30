@@ -12,13 +12,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema base
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `base` ;
+DROP SCHEMA IF EXISTS `nrha` ;
 
 -- -----------------------------------------------------
 -- Schema base
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `base` DEFAULT CHARACTER SET latin1 ;
-USE `base` ;
+CREATE SCHEMA IF NOT EXISTS `nrha` DEFAULT CHARACTER SET latin1 ;
+USE `nrha` ;
 
 
 
@@ -132,8 +132,9 @@ create table IF NOT EXISTS oauth_refresh_token (
   authentication BLOB
 );
 
-INSERT INTO `base`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
+INSERT INTO `nrha`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
 VALUES ('appClient', 'bae', '$2a$10$Ob7Xv7QF3MnrTyIgV6J7Qu5T89zxaHJlT0i7aYW876hizquvUYg.m', 'read,write', 'password,authorization_code,check_token,refresh_token,client_credentials', 'http://localhost:8080', 'ROLE_CLIENT', '3600', '172800', 1);
 
-INSERT INTO `base`.`security_role` (`authority`, `name`, `description`, `date_created`) VALUES ('ROLE_ADMIN', 'Admin', 'Admin', now());
-INSERT INTO `base`.`security_role` (`authority`, `name`, `description`, `date_created`) VALUES ('ROLE_MEMBER', 'Member', 'Member', now());
+INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `date_created`) VALUES ('ROLE_ADMIN', 'Admin', 'Admin', now());
+INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `date_created`) VALUES ('ROLE_MEMBER', 'Member', 'Member', now());
+
