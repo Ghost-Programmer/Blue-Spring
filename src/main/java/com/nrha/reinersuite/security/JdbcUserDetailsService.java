@@ -1,6 +1,6 @@
 package com.nrha.reinersuite.security;
 
-import com.nrha.reinersuite.dao.UserRepository;
+import com.nrha.reinersuite.dao.user.UserRepository;
 import com.nrha.reinersuite.models.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

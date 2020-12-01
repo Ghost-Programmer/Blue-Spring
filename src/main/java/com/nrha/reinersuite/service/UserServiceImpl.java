@@ -1,10 +1,10 @@
 package com.nrha.reinersuite.service;
 
 import com.nrha.reinersuite.config.PortalConfig;
-import com.nrha.reinersuite.dao.SecurityRoleRepository;
-import com.nrha.reinersuite.dao.UserRepository;
-import com.nrha.reinersuite.dao.UserSecurityRoleRepository;
-import com.nrha.reinersuite.dao.VerificationTokenRepository;
+import com.nrha.reinersuite.dao.user.SecurityRoleRepository;
+import com.nrha.reinersuite.dao.user.UserRepository;
+import com.nrha.reinersuite.dao.user.UserSecurityRoleRepository;
+import com.nrha.reinersuite.dao.user.VerificationTokenRepository;
 import com.nrha.reinersuite.dto.ChangePassword;
 import com.nrha.reinersuite.dto.Registration;
 import com.nrha.reinersuite.dto.StatusMessage;
