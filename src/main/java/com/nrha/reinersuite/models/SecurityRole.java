@@ -7,8 +7,10 @@ import javax.persistence.*;
 @Table(name = "security_role")
 public class SecurityRole extends AbstractTimestampEntity implements Serializable {
 
-  public static final String ROLE_MEMBER = "ROLE_MEMBER";
-  public static final String ROLE_ADMIN = "ROLE_ADMIN";
+  public static final String ROLE_USER = "ROLE_USER";
+  public static final String ROLE_USER_MANAGEMENT = "ROLE_USER_MANAGEMENT";
+  public static final String ROLE_CHANGE_USER_PASSWORD = "ROLE_CHANGE_USER_PASSWORD";
+  public static final String ROLE_CHANGE_OWN_PASSWORD = "ROLE_CHANGE_OWN_PASSWORD";
 
   private static final long serialVersionUID = 1L;
 
@@ -24,6 +26,9 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
 
   @Column(name = "description")
   private String description;
+
+  @Column(name = "default")
+  private Boolean defaultRole;
 
   public static long getSerialVersionUID() {
     return serialVersionUID;

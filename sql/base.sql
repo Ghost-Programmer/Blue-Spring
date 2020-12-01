@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `security_role` (
   `authority` VARCHAR(45) NOT NULL,
   `name` VARCHAR(100) NULL,
   `description` VARCHAR(255) NULL,
+  `default` BIT(1) NULL DEFAULT 1,
   `date_created` TIMESTAMP NULL DEFAULT NULL,
   `last_updated` TIMESTAMP NULL,
   PRIMARY KEY (`id`))
@@ -132,9 +133,15 @@ create table IF NOT EXISTS oauth_refresh_token (
   authentication BLOB
 );
 
+-- -----------------------------------------------------
+-- Populate Tables
+-- -----------------------------------------------------
+
+
 INSERT INTO `nrha`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
 VALUES ('appClient', 'bae', '$2a$10$Ob7Xv7QF3MnrTyIgV6J7Qu5T89zxaHJlT0i7aYW876hizquvUYg.m', 'read,write', 'password,authorization_code,check_token,refresh_token,client_credentials', 'http://localhost:8080', 'ROLE_CLIENT', '3600', '172800', 1);
 
-INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `date_created`) VALUES ('ROLE_ADMIN', 'Admin', 'Admin', now());
-INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `date_created`) VALUES ('ROLE_MEMBER', 'Member', 'Member', now());
-
+INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER', 'User', 'Grants Access to Login', 1, now());
+INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Modify User Role Access.', 0, now());
+INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Permission to change a password for a user.', 0, now());
+INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'Permission to change own password.', 1, now());

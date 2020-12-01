@@ -12,6 +12,7 @@ import com.nrha.reinersuite.models.SecurityRole;
 import com.nrha.reinersuite.models.User;
 import com.nrha.reinersuite.models.UserSecurityRole;
 import com.nrha.reinersuite.models.VerificationToken;
+import name.mymiller.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -94,19 +95,23 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = new User();
-        UserSecurityRole role = new UserSecurityRole();
 
         user.setEnabled(false);
         user.setId(null);
         user.setUsername(verificationToken.getEmail());
         user.setPassword(verificationToken.getPassword());
         user.setEnabled(true);
+        final User savedUser = this.userRepository.save(user);
 
-        role.setUser(this.userRepository.save(user));
-        SecurityRole authority = this.securityRoleRepository.findFirstByAuthority(SecurityRole.ROLE_MEMBER);
-        role.setSecurityRole(authority);
+        List<SecurityRole> defaultRoles = ListUtils.safe(this.securityRoleRepository.findAllByDefaultRoleTrue());
 
-        this.userSecurityRoleRepository.save(role);
+        defaultRoles.stream().forEach(defaultRole -> {
+            UserSecurityRole role = new UserSecurityRole();
+            role.setUser(savedUser);
+            role.setSecurityRole(defaultRole);
+
+            this.userSecurityRoleRepository.save(role);
+        });
 
         this.verificationTokenRepository.delete(verificationToken);
 
