@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "security_role")
+@Table(name = "security_role", schema = "nrha_user", catalog = "nrha_user")
 public class SecurityRole extends AbstractTimestampEntity implements Serializable {
 
   public static final String ROLE_USER = "ROLE_USER";

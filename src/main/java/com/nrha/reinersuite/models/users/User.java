@@ -5,7 +5,7 @@ import com.nrha.reinersuite.models.AbstractTimestampEntity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-@Table(name = "user")
+@Table(name = "user", schema = "nrha_user", catalog = "nrha_user")
 @Entity
 public class User extends AbstractTimestampEntity implements Serializable {
   private static final long serialVersionUID = 1L;

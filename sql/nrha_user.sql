@@ -12,13 +12,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema base
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `nrha` ;
+DROP SCHEMA IF EXISTS `nrha_user` ;
 
 -- -----------------------------------------------------
 -- Schema base
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `nrha` DEFAULT CHARACTER SET latin1 ;
-USE `nrha` ;
+CREATE SCHEMA IF NOT EXISTS `nrha_user` DEFAULT CHARACTER SET latin1 ;
+USE `nrha_user` ;
 
 
 
@@ -138,10 +138,10 @@ create table IF NOT EXISTS oauth_refresh_token (
 -- -----------------------------------------------------
 
 
-INSERT INTO `nrha`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
+INSERT INTO `nrha_user`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
 VALUES ('appClient', 'bae', '$2a$10$Ob7Xv7QF3MnrTyIgV6J7Qu5T89zxaHJlT0i7aYW876hizquvUYg.m', 'read,write', 'password,authorization_code,check_token,refresh_token,client_credentials', 'http://localhost:8080', 'ROLE_CLIENT', '3600', '172800', 1);
 
-INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER', 'User', 'Grants Access to Login', 1, now());
-INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Modify User Role Access.', 0, now());
-INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Permission to change a password for a user.', 0, now());
-INSERT INTO `nrha`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'Permission to change own password.', 1, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER', 'User', 'Grants Access to Login', 1, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Modify User Role Access.', 0, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Permission to change a password for a user.', 0, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'Permission to change own password.', 1, now());

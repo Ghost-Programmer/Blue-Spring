@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.*;
 
-@Table(name = "verification_token")
+@Table(name = "verification_token", schema = "nrha_user", catalog = "nrha_user")
 @Entity
 public class VerificationToken extends AbstractTimestampEntity implements Serializable {
   private static final long serialVersionUID = 1L;
