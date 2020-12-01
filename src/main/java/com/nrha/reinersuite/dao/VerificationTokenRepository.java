@@ -2,7 +2,7 @@ package com.nrha.reinersuite.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import com.nrha.reinersuite.models.VerificationToken;
+import com.nrha.reinersuite.models.users.VerificationToken;
 
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long>, JpaSpecificationExecutor<VerificationToken> {
 

@@ -1,6 +1,6 @@
 package com.nrha.reinersuite.security;
 
-import com.nrha.reinersuite.models.User;
+import com.nrha.reinersuite.models.users.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

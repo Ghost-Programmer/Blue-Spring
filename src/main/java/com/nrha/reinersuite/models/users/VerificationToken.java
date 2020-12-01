@@ -1,4 +1,6 @@
-package com.nrha.reinersuite.models;
+package com.nrha.reinersuite.models.users;
+
+import com.nrha.reinersuite.models.AbstractTimestampEntity;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
