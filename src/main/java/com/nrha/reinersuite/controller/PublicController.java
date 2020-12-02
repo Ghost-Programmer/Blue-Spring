@@ -31,7 +31,7 @@ public class PublicController {
         return this.userService.userVerification(token);
     }
 
-    @GetMapping("/maintrance/scheduled")
+    @GetMapping("/maintenance/scheduled")
     @PreAuthorize("permitAll()")
     public ScheduledMaintenance getScheduleMaintenance() {
         return maintenanceService.getNextScheduledMaintenance();
