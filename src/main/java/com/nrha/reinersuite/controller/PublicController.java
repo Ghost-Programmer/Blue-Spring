@@ -3,7 +3,9 @@ package com.nrha.reinersuite.controller;
 import com.nrha.reinersuite.dto.Registration;
 import com.nrha.reinersuite.dto.ScheduledMaintenance;
 import com.nrha.reinersuite.dto.StatusMessage;
+import com.nrha.reinersuite.dto.SystemInfo;
 import com.nrha.reinersuite.service.MaintenanceService;
+import com.nrha.reinersuite.service.SystemService;
 import com.nrha.reinersuite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,6 +20,9 @@ public class PublicController {
 
     @Autowired
     private MaintenanceService maintenanceService;
+
+    @Autowired
+    private SystemService systemService;
 
     @PostMapping("/user/register")
     @PreAuthorize("permitAll()")
@@ -35,5 +40,11 @@ public class PublicController {
     @PreAuthorize("permitAll()")
     public ScheduledMaintenance getScheduleMaintenance() {
         return maintenanceService.getNextScheduledMaintenance();
+    }
+
+    @GetMapping("/system/info")
+    @PreAuthorize("permitAll()")
+    public SystemInfo getSystemInfo() {
+        return systemService.getSystemInfo();
     }
 }
