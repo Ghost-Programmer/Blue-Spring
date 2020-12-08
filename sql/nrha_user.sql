@@ -145,3 +145,4 @@ INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `de
 INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Modify User Role Access.', 0, now());
 INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Permission to change a password for a user.', 0, now());
 INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'Permission to change own password.', 1, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_DEVELOPER', 'Developer', 'Developer special access.', 0, now());

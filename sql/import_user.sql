@@ -5,3 +5,4 @@ insert into nrha_user.user_security_role (user_id,security_role_id,date_created,
 insert into nrha_user.user_security_role (user_id,security_role_id,date_created,last_updated) select id,4,now(),now() from nrha.user;
 update nrha_user.user set account_expired = 0;
 update nrha_user.user set account_locked = 0;
+
