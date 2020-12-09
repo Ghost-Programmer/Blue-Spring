@@ -139,7 +139,7 @@ create table IF NOT EXISTS oauth_refresh_token (
 
 
 INSERT INTO `nrha_user`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
-VALUES ('appClient', 'bae', '$2a$10$Ob7Xv7QF3MnrTyIgV6J7Qu5T89zxaHJlT0i7aYW876hizquvUYg.m', 'read,write', 'password,authorization_code,check_token,refresh_token,client_credentials', 'http://localhost:8080', 'ROLE_CLIENT', '1800', '172800', 1);
+VALUES ('appClient', 'nrha', '$2a$10$Ob7Xv7QF3MnrTyIgV6J7Qu5T89zxaHJlT0i7aYW876hizquvUYg.m', 'read,write', 'password,authorization_code,check_token,refresh_token,client_credentials', 'http://localhost:8080', 'ROLE_CLIENT', '1800', '172800', 1);
 
 INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER', 'User', 'Grants Access to Login', 1, now());
 INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Modify User Role Access.', 0, now());

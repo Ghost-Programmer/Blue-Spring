@@ -12,7 +12,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId("bae").stateless(false);
+        resources.resourceId("nrha").stateless(false);
     }
 
     @Override
