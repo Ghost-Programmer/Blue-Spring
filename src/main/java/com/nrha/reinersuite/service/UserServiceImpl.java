@@ -8,13 +8,16 @@ import com.nrha.reinersuite.dao.user.VerificationTokenRepository;
 import com.nrha.reinersuite.dto.ChangePassword;
 import com.nrha.reinersuite.dto.Registration;
 import com.nrha.reinersuite.dto.StatusMessage;
+import com.nrha.reinersuite.dto.UserSearch;
 import com.nrha.reinersuite.models.users.SecurityRole;
 import com.nrha.reinersuite.models.users.User;
 import com.nrha.reinersuite.models.users.UserSecurityRole;
 import com.nrha.reinersuite.models.users.VerificationToken;
 import name.mymiller.utils.ListUtils;
+import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -166,5 +169,23 @@ public class UserServiceImpl implements UserService {
         }
 
         return new StatusMessage("Password Changed",true);
+    }
+
+    public List<User> search(UserSearch userSearch) {
+        Pageable pageable = PageRequest.of(userSearch.getPage(),userSearch.getSize());
+
+        if(StringUtils.isNotNullOrEmpty(userSearch.getUsername())) {
+            ExampleMatcher customExampleMatcher = ExampleMatcher.matchingAny()
+                    .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+
+            Example<User> example = Example.of(User.from(userSearch.getUsername()));
+
+            Page<User> all = this.userRepository.findAll(example, pageable);
+            return ListUtils.safe(all.toList());
+        }
+
+        Page<User> all = this.userRepository.findAll(pageable);
+
+        return ListUtils.safe(all.toList());
     }
 }

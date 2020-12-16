@@ -1,6 +1,7 @@
 package com.nrha.reinersuite.models.users;
 
 import com.nrha.reinersuite.models.AbstractTimestampEntity;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class User extends AbstractTimestampEntity implements Serializable {
   private String username;
 
   @Column(name = "password")
+  @JsonIgnore
   private String password;
 
   @Column(name = "enabled", nullable = false)
@@ -40,6 +42,13 @@ public class User extends AbstractTimestampEntity implements Serializable {
 
   @Column(name = "account_refreshed", nullable = false)
   private Boolean accountRefreshed = Boolean.FALSE;
+
+  public static User from(String username) {
+    User user = new User();
+    user.setUsername(username);
+
+    return user;
+  }
 
   public static long getSerialVersionUID() {
     return serialVersionUID;
