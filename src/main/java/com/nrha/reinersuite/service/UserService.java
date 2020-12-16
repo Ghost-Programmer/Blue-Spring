@@ -19,5 +19,5 @@ public interface UserService {
 
     StatusMessage changePassword(ChangePassword changePassword);
 
-    public List<User> search(UserSearch userSearch);
+    public UserSearch search(UserSearch userSearch);
 }

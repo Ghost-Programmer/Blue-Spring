@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("user-search")
-    public List<User> userSearch(@RequestBody UserSearch userSearch) {
+    public UserSearch userSearch(@RequestBody UserSearch userSearch) {
         return userService.search(userSearch);
     }
 }

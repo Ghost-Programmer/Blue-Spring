@@ -171,8 +171,9 @@ public class UserServiceImpl implements UserService {
         return new StatusMessage("Password Changed",true);
     }
 
-    public List<User> search(UserSearch userSearch) {
+    public UserSearch search(UserSearch userSearch) {
         Pageable pageable = PageRequest.of(userSearch.getPage(),userSearch.getSize());
+        Page<User> results;
 
         if(StringUtils.isNotNullOrEmpty(userSearch.getUsername())) {
             ExampleMatcher customExampleMatcher = ExampleMatcher.matchingAny()
@@ -180,12 +181,13 @@ public class UserServiceImpl implements UserService {
 
             Example<User> example = Example.of(User.from(userSearch.getUsername()));
 
-            Page<User> all = this.userRepository.findAll(example, pageable);
-            return ListUtils.safe(all.toList());
+            results = this.userRepository.findAll(example, pageable);
+        } else {
+            results = this.userRepository.findAll(pageable);
         }
+        userSearch.setResults(results.toList());
+        userSearch.setTotal(results.getTotalElements());
 
-        Page<User> all = this.userRepository.findAll(pageable);
-
-        return ListUtils.safe(all.toList());
+        return userSearch;
     }
 }
