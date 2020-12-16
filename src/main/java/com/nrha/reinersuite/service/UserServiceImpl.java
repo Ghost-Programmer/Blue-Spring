@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
             ExampleMatcher customExampleMatcher = ExampleMatcher.matchingAny()
                     .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
 
-            Example<User> example = Example.of(User.from(userSearch.getUsername()));
+            Example<User> example = Example.of(User.from(userSearch.getUsername()),customExampleMatcher);
 
             results = this.userRepository.findAll(example, pageable);
         } else {

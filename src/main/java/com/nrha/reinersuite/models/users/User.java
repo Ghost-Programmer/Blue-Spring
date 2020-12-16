@@ -46,6 +46,16 @@ public class User extends AbstractTimestampEntity implements Serializable {
   public static User from(String username) {
     User user = new User();
     user.setUsername(username);
+    user.setEnabled(null);
+    user.setPassword(null);
+    user.setId(null);
+    user.setAccountComplete(null);
+    user.setAccountExpired(null);
+    user.setAccountLocked(null);
+    user.setAccountRefreshed(null);
+    user.setAccountVerified(null);
+    user.setPasswordChangeRequired(null);
+    user.setDateCreated(null);
 
     return user;
   }
