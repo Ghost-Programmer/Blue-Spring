@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.dto;
+package com.nrha.reinersuite.dto.users;
 
 import com.nrha.reinersuite.models.users.User;
 
@@ -10,6 +10,8 @@ public class UserSearch {
     private Integer size;
     private List<User> results;
     private Long total;
+    private String sort;
+    private Boolean ascending;
 
     public String getUsername() {
         return username;
@@ -49,5 +51,21 @@ public class UserSearch {
 
     public void setTotal(Long total) {
         this.total = total;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public Boolean getAscending() {
+        return ascending;
+    }
+
+    public void setAscending(Boolean ascending) {
+        this.ascending = ascending;
     }
 }

@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.dto;
+package com.nrha.reinersuite.dto.users;
 
 public class Registration {
     private String userName;

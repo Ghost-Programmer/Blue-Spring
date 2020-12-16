@@ -1,6 +1,6 @@
 package com.nrha.reinersuite.controller;
 
-import com.nrha.reinersuite.dto.Registration;
+import com.nrha.reinersuite.dto.users.Registration;
 import com.nrha.reinersuite.dto.ScheduledMaintenance;
 import com.nrha.reinersuite.dto.StatusMessage;
 import com.nrha.reinersuite.dto.SystemInfo;

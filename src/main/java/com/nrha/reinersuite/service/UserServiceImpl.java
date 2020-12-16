@@ -5,10 +5,10 @@ import com.nrha.reinersuite.dao.user.SecurityRoleRepository;
 import com.nrha.reinersuite.dao.user.UserRepository;
 import com.nrha.reinersuite.dao.user.UserSecurityRoleRepository;
 import com.nrha.reinersuite.dao.user.VerificationTokenRepository;
-import com.nrha.reinersuite.dto.ChangePassword;
-import com.nrha.reinersuite.dto.Registration;
+import com.nrha.reinersuite.dto.users.ChangePassword;
+import com.nrha.reinersuite.dto.users.Registration;
 import com.nrha.reinersuite.dto.StatusMessage;
-import com.nrha.reinersuite.dto.UserSearch;
+import com.nrha.reinersuite.dto.users.UserSearch;
 import com.nrha.reinersuite.models.users.SecurityRole;
 import com.nrha.reinersuite.models.users.User;
 import com.nrha.reinersuite.models.users.UserSecurityRole;
@@ -172,8 +172,18 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserSearch search(UserSearch userSearch) {
-        Pageable pageable = PageRequest.of(userSearch.getPage(),userSearch.getSize());
+        Pageable pageable;
         Page<User> results;
+
+        if(StringUtils.isNotNullOrEmpty(userSearch.getSort())) {
+            if(userSearch.getAscending()) {
+                pageable = PageRequest.of(userSearch.getPage(), userSearch.getSize(), Sort.by(userSearch.getSort()).ascending());
+            } else {
+                pageable = PageRequest.of(userSearch.getPage(), userSearch.getSize(), Sort.by(userSearch.getSort()).descending());
+            }
+        } else {
+            pageable = PageRequest.of(userSearch.getPage(),userSearch.getSize());
+        }
 
         if(StringUtils.isNotNullOrEmpty(userSearch.getUsername())) {
             ExampleMatcher customExampleMatcher = ExampleMatcher.matchingAny()
