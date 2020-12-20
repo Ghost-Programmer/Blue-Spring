@@ -1,10 +1,10 @@
 package com.nrha.reinersuite.models.maintenance;
 
 import com.nrha.reinersuite.models.AbstractEntity;
-import com.nrha.reinersuite.models.AbstractTimestampEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Table(name = "audit_row", schema = "nrha_maintenance", catalog = "nrha_maintenance")
 @Entity
@@ -30,7 +30,6 @@ public class AuditRow extends AbstractEntity implements Serializable {
     }
 
     public AuditRow( AuditTable auditTable, String field, String original, String change) {
-        this.id = id;
         this.auditTable = auditTable;
         this.field = field;
         this.original = original;
@@ -84,11 +83,11 @@ public class AuditRow extends AbstractEntity implements Serializable {
 
         AuditRow auditRow = (AuditRow) o;
 
-        if (id != null ? !id.equals(auditRow.id) : auditRow.id != null) return false;
-        if (auditTable != null ? !auditTable.equals(auditRow.auditTable) : auditRow.auditTable != null) return false;
-        if (field != null ? !field.equals(auditRow.field) : auditRow.field != null) return false;
-        if (original != null ? !original.equals(auditRow.original) : auditRow.original != null) return false;
-        return change != null ? change.equals(auditRow.change) : auditRow.change == null;
+        if (!Objects.equals(id, auditRow.id)) return false;
+        if (!Objects.equals(auditTable, auditRow.auditTable)) return false;
+        if (!Objects.equals(field, auditRow.field)) return false;
+        if (!Objects.equals(original, auditRow.original)) return false;
+        return Objects.equals(change, auditRow.change);
     }
 
     @Override

@@ -3,12 +3,15 @@ package com.nrha.reinersuite.models.users;
 import com.nrha.reinersuite.models.AbstractTimestampEntity;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Table(name = "user", schema = "nrha_user", catalog = "nrha_user")
 @Entity
 public class User extends AbstractTimestampEntity implements Serializable {
+  @Serial
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -151,20 +154,20 @@ public class User extends AbstractTimestampEntity implements Serializable {
 
     User user = (User) o;
 
-    if (id != null ? !id.equals(user.id) : user.id != null) return false;
-    if (username != null ? !username.equals(user.username) : user.username != null) return false;
-    if (password != null ? !password.equals(user.password) : user.password != null) return false;
-    if (enabled != null ? !enabled.equals(user.enabled) : user.enabled != null) return false;
-    if (accountExpired != null ? !accountExpired.equals(user.accountExpired) : user.accountExpired != null)
+    if (!Objects.equals(id, user.id)) return false;
+    if (!Objects.equals(username, user.username)) return false;
+    if (!Objects.equals(password, user.password)) return false;
+    if (!Objects.equals(enabled, user.enabled)) return false;
+    if (!Objects.equals(accountExpired, user.accountExpired))
       return false;
-    if (passwordChangeRequired != null ? !passwordChangeRequired.equals(user.passwordChangeRequired) : user.passwordChangeRequired != null)
+    if (!Objects.equals(passwordChangeRequired, user.passwordChangeRequired))
       return false;
-    if (accountLocked != null ? !accountLocked.equals(user.accountLocked) : user.accountLocked != null) return false;
-    if (accountVerified != null ? !accountVerified.equals(user.accountVerified) : user.accountVerified != null)
+    if (!Objects.equals(accountLocked, user.accountLocked)) return false;
+    if (!Objects.equals(accountVerified, user.accountVerified))
       return false;
-    if (accountComplete != null ? !accountComplete.equals(user.accountComplete) : user.accountComplete != null)
+    if (!Objects.equals(accountComplete, user.accountComplete))
       return false;
-    return accountRefreshed != null ? accountRefreshed.equals(user.accountRefreshed) : user.accountRefreshed == null;
+    return Objects.equals(accountRefreshed, user.accountRefreshed);
   }
 
   @Override

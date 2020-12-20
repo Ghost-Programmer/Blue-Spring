@@ -2,7 +2,9 @@ package com.nrha.reinersuite.models.users;
 
 import com.nrha.reinersuite.models.AbstractTimestampEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
   public static final String ROLE_CHANGE_OWN_PASSWORD = "ROLE_CHANGE_OWN_PASSWORD";
   public static final String ROLE_DEVELOPER = "ROLE_DEVELOPER";
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -76,11 +79,11 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
 
     SecurityRole that = (SecurityRole) o;
 
-    if (id != null ? !id.equals(that.id) : that.id != null) return false;
-    if (authority != null ? !authority.equals(that.authority) : that.authority != null) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
-    if (description != null ? !description.equals(that.description) : that.description != null) return false;
-    return defaultRole != null ? defaultRole.equals(that.defaultRole) : that.defaultRole == null;
+    if (!Objects.equals(id, that.id)) return false;
+    if (!Objects.equals(authority, that.authority)) return false;
+    if (!Objects.equals(name, that.name)) return false;
+    if (!Objects.equals(description, that.description)) return false;
+    return Objects.equals(defaultRole, that.defaultRole);
   }
 
   @Override

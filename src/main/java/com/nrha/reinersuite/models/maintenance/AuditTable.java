@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "audit_table", schema = "nrha_maintenance", catalog = "nrha_maintenance")
 @Entity
@@ -101,13 +102,13 @@ public class AuditTable extends AbstractTimestampEntity implements Serializable 
 
         AuditTable that = (AuditTable) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (!Objects.equals(id, that.id)) return false;
         if (type != that.type) return false;
-        if (tableName != null ? !tableName.equals(that.tableName) : that.tableName != null) return false;
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        if (row != null ? !row.equals(that.row) : that.row != null) return false;
-        if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) return false;
-        return rows != null ? rows.equals(that.rows) : that.rows == null;
+        if (!Objects.equals(tableName, that.tableName)) return false;
+        if (!Objects.equals(user, that.user)) return false;
+        if (!Objects.equals(row, that.row)) return false;
+        if (!Objects.equals(timestamp, that.timestamp)) return false;
+        return Objects.equals(rows, that.rows);
     }
 
     @Override

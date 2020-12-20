@@ -26,13 +26,13 @@ public class PublicController {
 
     @PostMapping("/user/register")
     @PreAuthorize("permitAll()")
-    public StatusMessage registerUser(@RequestBody Registration registration) throws Exception {
+    public StatusMessage registerUser(@RequestBody Registration registration) {
         return this.userService.registerUser(registration);
     }
 
     @GetMapping("/user/verification/{token}")
     @PreAuthorize("permitAll()")
-    public StatusMessage userVerification(@PathVariable String token) throws Exception {
+    public StatusMessage userVerification(@PathVariable String token) {
         return this.userService.userVerification(token);
     }
 

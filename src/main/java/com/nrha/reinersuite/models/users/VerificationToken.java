@@ -2,13 +2,16 @@ package com.nrha.reinersuite.models.users;
 
 import com.nrha.reinersuite.models.AbstractTimestampEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Table(name = "verification_token", schema = "nrha_user", catalog = "nrha_user")
 @Entity
 public class VerificationToken extends AbstractTimestampEntity implements Serializable {
+  @Serial
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -90,12 +93,12 @@ public class VerificationToken extends AbstractTimestampEntity implements Serial
 
     VerificationToken that = (VerificationToken) o;
 
-    if (id != null ? !id.equals(that.id) : that.id != null) return false;
-    if (email != null ? !email.equals(that.email) : that.email != null) return false;
-    if (verification != null ? !verification.equals(that.verification) : that.verification != null) return false;
-    if (password != null ? !password.equals(that.password) : that.password != null) return false;
-    if (expiration != null ? !expiration.equals(that.expiration) : that.expiration != null) return false;
-    return valid != null ? valid.equals(that.valid) : that.valid == null;
+    if (!Objects.equals(id, that.id)) return false;
+    if (!Objects.equals(email, that.email)) return false;
+    if (!Objects.equals(verification, that.verification)) return false;
+    if (!Objects.equals(password, that.password)) return false;
+    if (!Objects.equals(expiration, that.expiration)) return false;
+    return Objects.equals(valid, that.valid);
   }
 
   @Override

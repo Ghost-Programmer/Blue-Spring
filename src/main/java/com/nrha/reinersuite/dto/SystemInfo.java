@@ -8,12 +8,12 @@ import java.time.ZonedDateTime;
 
 public class SystemInfo {
 
-    String name;
-    String artifact;
-    String group;
-    String version;
-    ZonedDateTime time;
-    String[] profiles;
+    final String name;
+    final String artifact;
+    final String group;
+    final String version;
+    final ZonedDateTime time;
+    final String[] profiles;
 
     public SystemInfo(BuildProperties buildProperties, Environment environment) {
         this.version = buildProperties.getVersion();

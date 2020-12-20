@@ -5,6 +5,7 @@ import com.nrha.reinersuite.models.AbstractTimestampEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @Table(name = "scheduled", schema = "nrha_maintenance", catalog = "nrha_maintenance")
 @Entity
@@ -62,11 +63,11 @@ public class Scheduled extends AbstractTimestampEntity implements Serializable {
 
         Scheduled scheduled = (Scheduled) o;
 
-        if (id != null ? !id.equals(scheduled.id) : scheduled.id != null) return false;
-        if (description != null ? !description.equals(scheduled.description) : scheduled.description != null)
+        if (!Objects.equals(id, scheduled.id)) return false;
+        if (!Objects.equals(description, scheduled.description))
             return false;
-        if (start != null ? !start.equals(scheduled.start) : scheduled.start != null) return false;
-        return end != null ? end.equals(scheduled.end) : scheduled.end == null;
+        if (!Objects.equals(start, scheduled.start)) return false;
+        return Objects.equals(end, scheduled.end);
     }
 
     @Override

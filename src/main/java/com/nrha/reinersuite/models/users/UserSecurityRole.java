@@ -2,12 +2,15 @@ package com.nrha.reinersuite.models.users;
 
 import com.nrha.reinersuite.models.AbstractTimestampEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user_security_role", schema = "nrha_user", catalog = "nrha_user")
 public class UserSecurityRole extends AbstractTimestampEntity implements Serializable {
+  @Serial
   private static final long serialVersionUID = 1L;
 
 
@@ -56,9 +59,9 @@ public class UserSecurityRole extends AbstractTimestampEntity implements Seriali
 
     UserSecurityRole that = (UserSecurityRole) o;
 
-    if (id != null ? !id.equals(that.id) : that.id != null) return false;
-    if (user != null ? !user.equals(that.user) : that.user != null) return false;
-    return securityRole != null ? securityRole.equals(that.securityRole) : that.securityRole == null;
+    if (!Objects.equals(id, that.id)) return false;
+    if (!Objects.equals(user, that.user)) return false;
+    return Objects.equals(securityRole, that.securityRole);
   }
 
   @Override

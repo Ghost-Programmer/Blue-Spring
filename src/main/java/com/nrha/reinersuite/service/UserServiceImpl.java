@@ -19,7 +19,6 @@ import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -73,21 +72,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuditService auditService;
 
-    public StatusMessage registerUser(Registration registration) throws Exception {
+    public StatusMessage registerUser(Registration registration) {
         if(this.userRepository.existsByUsername(registration.getUserName())) {
             return new StatusMessage("User Name not available",false);
         }
         VerificationToken verificationToken;
         if(this.verificationTokenRepository.existsByEmail(registration.getUserName())) {
             verificationToken = this.verificationTokenRepository.findFirstByEmail(registration.getUserName());
-            verificationToken.setExpiration(this.calculateExpiryDate(UserServiceImpl.EXPIRATION));
+            verificationToken.setExpiration(this.calculateExpiryDate());
         } else {
             String token = UUID.randomUUID().toString();
             verificationToken = new VerificationToken();
             verificationToken.setVerification(token);
             verificationToken.setPassword(this.passwordEncoder.encode(registration.getPassword()));
             verificationToken.setEmail(registration.getUserName());
-            verificationToken.setExpiration(this.calculateExpiryDate(UserServiceImpl.EXPIRATION));
+            verificationToken.setExpiration(this.calculateExpiryDate());
             this.verificationTokenRepository.save(verificationToken);
         }
 
@@ -113,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
         List<SecurityRole> defaultRoles = ListUtils.safe(this.securityRoleRepository.findAllByDefaultRoleTrue());
 
-        defaultRoles.stream().forEach(defaultRole -> {
+        defaultRoles.forEach(defaultRole -> {
             UserSecurityRole role = new UserSecurityRole();
             role.setUser(savedUser);
             role.setSecurityRole(defaultRole);
@@ -126,9 +125,9 @@ public class UserServiceImpl implements UserService {
         return new StatusMessage("Email Verified",true);
     }
 
-    private ZonedDateTime calculateExpiryDate(int expiryTimeInMinutes) {
+    private ZonedDateTime calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+        cal.add(Calendar.MINUTE, UserServiceImpl.EXPIRATION);
         return cal.toInstant().atZone(ZoneId.systemDefault());
     }
 

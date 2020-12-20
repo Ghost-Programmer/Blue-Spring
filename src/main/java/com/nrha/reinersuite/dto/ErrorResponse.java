@@ -12,7 +12,7 @@ public class ErrorResponse {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Throwable throwable;
-    private ZonedDateTime timestamp;
+    private final ZonedDateTime timestamp;
     private int status;
     private HttpStatus code;
     private String error;
@@ -81,7 +81,7 @@ public class ErrorResponse {
 
     protected String getErrorFromException(Throwable t) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         if (t != null)
             sb.append(t.getClass().getName());
@@ -91,7 +91,7 @@ public class ErrorResponse {
 
     protected String getMessageFromException(Throwable t) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         if (t != null)
             sb.append(t.getMessage().trim());

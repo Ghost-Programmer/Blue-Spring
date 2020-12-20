@@ -30,10 +30,11 @@ public class AuditService implements EntityAuditInterface {
 
     @Override
     public Object table(EntityAudit.Type type, String table, String user, String rowId, ZonedDateTime timestamp) {
-        AuditTableType auditType = AuditTableType.UPDATE;
+        AuditTableType auditType;
         switch(type) {
-            case INSERT -> auditType = AuditTableType.INSERT;
+            default -> auditType = AuditTableType.UPDATE;
             case UPDATE -> auditType = AuditTableType.UPDATE;
+            case INSERT -> auditType = AuditTableType.INSERT;
             case DELETE -> auditType = AuditTableType.DELETE;
         }
         return this.auditTableRepository.save(new AuditTable(auditType,table,user,rowId,timestamp));
@@ -41,7 +42,7 @@ public class AuditService implements EntityAuditInterface {
 
     @Override
     public void field(Object tableId, String field, String original, String changed) {
-        AuditTable auditTable = null;
+        AuditTable auditTable;
         if(tableId instanceof AuditTable) {
             auditTable = (AuditTable) tableId;
         } else {
