@@ -13,11 +13,13 @@ import com.nrha.reinersuite.models.users.SecurityRole;
 import com.nrha.reinersuite.models.users.User;
 import com.nrha.reinersuite.models.users.UserSecurityRole;
 import com.nrha.reinersuite.models.users.VerificationToken;
+import name.mymiller.nadia.Nadia;
 import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -67,6 +70,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ServletContext context;
 
+    @Autowired
+    private AuditService auditService;
 
     public StatusMessage registerUser(Registration registration) throws Exception {
         if(this.userRepository.existsByUsername(registration.getUserName())) {
@@ -199,5 +204,39 @@ public class UserServiceImpl implements UserService {
         userSearch.setTotal(results.getTotalElements());
 
         return userSearch;
+    }
+
+    public User getCurrentUser() {
+        return this.getUserByUsername(this.getCurrentUserName());
+    }
+    public String getCurrentUserName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public User userSave(User user) throws IllegalAccessException {
+        Optional<User> existingUser = this.userRepository.findById(user.getId());
+        if(existingUser.isPresent()) {
+            Nadia.getInstance().updateEntity(existingUser.get(),user,this.getCurrentUserName(),"user",existingUser.get().getId().toString());
+            return this.userRepository.save(user);
+        }
+
+        return null;
+    }
+
+    public User userCreate(User user) throws IllegalAccessException {
+        user = this.userRepository.save(user);
+        Nadia.getInstance().insertEntity(user,this.getCurrentUserName(),"user",user.getId().toString());
+        return user;
+    }
+
+    public User userDelete(Long userId) throws IllegalAccessException {
+        Optional<User> user = this.userRepository.findById(userId);
+        if(user.isPresent()) {
+            Nadia.getInstance().deleteEntity(user.get(),this.getCurrentUserName(),"user",user.get().getId().toString());
+            this.userRepository.delete(user.get());
+            return user.get();
+        }
+
+        return null;
     }
 }

@@ -14,8 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication
 public class ReinerSuiteApplication {
 
-    @Autowired
-    private AuditService auditService;
+
 
     public static void main(String[] args) {
         Nadia.getInstance();

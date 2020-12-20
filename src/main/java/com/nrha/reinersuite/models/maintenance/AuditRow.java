@@ -23,7 +23,7 @@ public class AuditRow extends AbstractEntity implements Serializable {
     @Column(name = "original")
     private String original;
 
-    @Column(name = "change")
+    @Column(name = "new_value")
     private String change;
 
     public AuditRow() {

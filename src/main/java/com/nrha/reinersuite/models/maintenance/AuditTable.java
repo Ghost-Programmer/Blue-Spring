@@ -23,10 +23,10 @@ public class AuditTable extends AbstractTimestampEntity implements Serializable 
     @Column(name = "user")
     private String user;
 
-    @Column(name = "row")
+    @Column(name = "row_id")
     private String row;
 
-    @Column(name = "timestamp")
+    @Column(name = "recorded")
     private ZonedDateTime timestamp;
 
     @OneToMany(mappedBy = "auditTable")
@@ -43,6 +43,7 @@ public class AuditTable extends AbstractTimestampEntity implements Serializable 
         this.user = user;
         this.row = row;
         this.timestamp = timestamp;
+        this.rows = null;
     }
 
     public Long getId() {
