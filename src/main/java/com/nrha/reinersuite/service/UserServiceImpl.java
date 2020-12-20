@@ -233,6 +233,14 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = this.userRepository.findById(userId);
         if(user.isPresent()) {
             Nadia.getInstance().deleteEntity(user.get(),this.getCurrentUserName(),"user",user.get().getId().toString());
+
+            List<UserSecurityRole> roles = ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(userId));
+            for (UserSecurityRole role : roles) {
+                Nadia.getInstance().deleteEntity(role, this.getCurrentUserName(), "user_security_role", role.getId().toString());
+                this.userSecurityRoleRepository.delete(role);
+            }
+
+
             this.userRepository.delete(user.get());
             return user.get();
         }

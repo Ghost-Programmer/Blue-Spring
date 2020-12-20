@@ -82,4 +82,43 @@ public class VerificationToken extends AbstractTimestampEntity implements Serial
   public void setValid(Boolean valid) {
     this.valid = valid;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    VerificationToken that = (VerificationToken) o;
+
+    if (id != null ? !id.equals(that.id) : that.id != null) return false;
+    if (email != null ? !email.equals(that.email) : that.email != null) return false;
+    if (verification != null ? !verification.equals(that.verification) : that.verification != null) return false;
+    if (password != null ? !password.equals(that.password) : that.password != null) return false;
+    if (expiration != null ? !expiration.equals(that.expiration) : that.expiration != null) return false;
+    return valid != null ? valid.equals(that.valid) : that.valid == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id != null ? id.hashCode() : 0;
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (verification != null ? verification.hashCode() : 0);
+    result = 31 * result + (password != null ? password.hashCode() : 0);
+    result = 31 * result + (expiration != null ? expiration.hashCode() : 0);
+    result = 31 * result + (valid != null ? valid.hashCode() : 0);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("VerificationToken{");
+    sb.append("id=").append(id);
+    sb.append(", email='").append(email).append('\'');
+    sb.append(", verification='").append(verification).append('\'');
+    sb.append(", password='").append(password).append('\'');
+    sb.append(", expiration=").append(expiration);
+    sb.append(", valid=").append(valid);
+    sb.append('}');
+    return sb.toString();
+  }
 }

@@ -68,4 +68,40 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
   public void setDescription(String description) {
     this.description = description;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    SecurityRole that = (SecurityRole) o;
+
+    if (id != null ? !id.equals(that.id) : that.id != null) return false;
+    if (authority != null ? !authority.equals(that.authority) : that.authority != null) return false;
+    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    if (description != null ? !description.equals(that.description) : that.description != null) return false;
+    return defaultRole != null ? defaultRole.equals(that.defaultRole) : that.defaultRole == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id != null ? id.hashCode() : 0;
+    result = 31 * result + (authority != null ? authority.hashCode() : 0);
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (description != null ? description.hashCode() : 0);
+    result = 31 * result + (defaultRole != null ? defaultRole.hashCode() : 0);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("SecurityRole{");
+    sb.append("id=").append(id);
+    sb.append(", authority='").append(authority).append('\'');
+    sb.append(", name='").append(name).append('\'');
+    sb.append(", description='").append(description).append('\'');
+    sb.append(", defaultRole=").append(defaultRole);
+    sb.append('}');
+    return sb.toString();
+  }
 }

@@ -93,4 +93,46 @@ public class AuditTable extends AbstractTimestampEntity implements Serializable 
     public void setTimestamp(ZonedDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AuditTable that = (AuditTable) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (type != that.type) return false;
+        if (tableName != null ? !tableName.equals(that.tableName) : that.tableName != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        if (row != null ? !row.equals(that.row) : that.row != null) return false;
+        if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) return false;
+        return rows != null ? rows.equals(that.rows) : that.rows == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (tableName != null ? tableName.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (row != null ? row.hashCode() : 0);
+        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+        result = 31 * result + (rows != null ? rows.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AuditTable{");
+        sb.append("id=").append(id);
+        sb.append(", type=").append(type);
+        sb.append(", tableName='").append(tableName).append('\'');
+        sb.append(", user='").append(user).append('\'');
+        sb.append(", row='").append(row).append('\'');
+        sb.append(", timestamp=").append(timestamp);
+        sb.append(", rows=").append(rows);
+        sb.append('}');
+        return sb.toString();
+    }
 }
