@@ -45,8 +45,4 @@ public abstract class AbstractTimestampEntity extends AbstractEntity {
     public AbstractTimestampEntity() {
     }
 
-    public AbstractTimestampEntity(AbstractTimestampEntity other) {
-        this.dateCreated = other.dateCreated;
-        this.lastUpdated = other.lastUpdated;
-    }
 }

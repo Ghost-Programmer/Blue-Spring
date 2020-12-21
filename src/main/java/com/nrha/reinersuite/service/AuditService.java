@@ -33,7 +33,6 @@ public class AuditService implements EntityAuditInterface {
         AuditTableType auditType;
         switch(type) {
             default -> auditType = AuditTableType.UPDATE;
-            case UPDATE -> auditType = AuditTableType.UPDATE;
             case INSERT -> auditType = AuditTableType.INSERT;
             case DELETE -> auditType = AuditTableType.DELETE;
         }
