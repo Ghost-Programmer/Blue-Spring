@@ -19,6 +19,15 @@ import javax.sql.DataSource;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    public static String[] PUBLIC_APIS = {
+            "/actuator/**",
+            "/public/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v2/**",
+            "/swagger-resources/**"};
+
     @Autowired
     private DataSource dataSource;
 
@@ -61,14 +70,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/actuator/**","/public/**").permitAll()
+                .antMatchers(PUBLIC_APIS).permitAll()
                 .anyRequest().authenticated();
     }
 
     @Override
     public void configure(WebSecurity web) {
 
-        web.ignoring().antMatchers("/public/**");
+        web.ignoring().antMatchers(PUBLIC_APIS);
     }
 
 }

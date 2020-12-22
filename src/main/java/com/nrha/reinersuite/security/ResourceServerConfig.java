@@ -19,7 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/actuator/**","/public/**").permitAll()
+                .antMatchers(WebSecurityConfig.PUBLIC_APIS).permitAll()
                 .anyRequest().authenticated();
     }
 }
