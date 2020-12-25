@@ -1,7 +1,7 @@
 package com.nrha.reinersuite.models.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nrha.reinersuite.models.AbstractTimestampEntity;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,8 +21,8 @@ public class User extends AbstractTimestampEntity implements Serializable {
   @Column(name = "username")
   private String username;
 
-  @Column(name = "password")
   @JsonIgnore
+  @Column(name = "password")
   private String password;
 
   @Column(name = "enabled", nullable = false)
