@@ -8,6 +8,7 @@ import com.nrha.reinersuite.dao.user.VerificationTokenRepository;
 import com.nrha.reinersuite.dto.users.ChangePassword;
 import com.nrha.reinersuite.dto.users.Registration;
 import com.nrha.reinersuite.dto.StatusMessage;
+import com.nrha.reinersuite.dto.users.UserRole;
 import com.nrha.reinersuite.dto.users.UserSearch;
 import com.nrha.reinersuite.models.users.SecurityRole;
 import com.nrha.reinersuite.models.users.User;
@@ -28,10 +29,8 @@ import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -245,5 +244,14 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    public List<UserRole> getUserRoles(Long userId) {
+        Map<Long, UserRole> map = ListUtils.safe(this.securityRoleRepository.findAll()).stream().map(role -> new UserRole(userId, role)).collect(Collectors.toMap(UserRole::getSecurityRoleId, Function.identity()));
+        ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(userId)).forEach(role -> {
+            map.get(role.getSecurityRole().getId()).setActive(true);
+        });
+
+        return ListUtils.mapValuesToList(map);
     }
 }

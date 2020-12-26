@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `security_role` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `authority` VARCHAR(45) NOT NULL,
   `name` VARCHAR(100) NULL,
+  `category` VARCHAR(100) NULL,
   `description` VARCHAR(255) NULL,
   `default` BIT(1) NULL DEFAULT 1,
   `date_created` TIMESTAMP NULL DEFAULT NULL,
@@ -141,8 +142,8 @@ create table IF NOT EXISTS oauth_refresh_token (
 INSERT INTO `nrha_user`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`)
 VALUES ('appClient', 'nrha', '$2a$10$Ob7Xv7QF3MnrTyIgV6J7Qu5T89zxaHJlT0i7aYW876hizquvUYg.m', 'read,write', 'password,authorization_code,check_token,refresh_token,client_credentials', 'http://localhost:8080', 'ROLE_CLIENT', '1800', '172800', 1);
 
-INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER', 'User', 'Grants Access to Login', 1, now());
-INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Modify User Role Access.', 0, now());
-INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Permission to change a password for a user.', 0, now());
-INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'Permission to change own password.', 1, now());
-INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `description`, `default`, `date_created`) VALUES ('ROLE_DEVELOPER', 'Developer', 'Developer special access.', 0, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_USER', 'User', 'User', 'Grants Access to Login', 1, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `category`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_USER_MANAGEMENT', 'User Management', 'Admin', 'Modify User Role Access.', 0, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Admin', 'Permission to change a password for a user.', 0, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'User', 'Permission to change own password.', 1, now());
+INSERT INTO `nrha_user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_DEVELOPER', 'Developer', 'Dev', 'Developer special access.', 0, now());

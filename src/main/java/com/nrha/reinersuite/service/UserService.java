@@ -3,6 +3,7 @@ package com.nrha.reinersuite.service;
 import com.nrha.reinersuite.dto.users.ChangePassword;
 import com.nrha.reinersuite.dto.users.Registration;
 import com.nrha.reinersuite.dto.StatusMessage;
+import com.nrha.reinersuite.dto.users.UserRole;
 import com.nrha.reinersuite.dto.users.UserSearch;
 import com.nrha.reinersuite.models.users.SecurityRole;
 import com.nrha.reinersuite.models.users.User;
@@ -25,4 +26,5 @@ public interface UserService {
     StatusMessage changePassword(ChangePassword changePassword);
 
     UserSearch search(UserSearch userSearch);
+    List<UserRole> getUserRoles(Long userId);
 }

@@ -30,6 +30,9 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
   @Column(name = "name")
   private String name;
 
+  @Column(name = "category")
+  private String category;
+
   @Column(name = "description")
   private String description;
 
@@ -72,28 +75,33 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
     this.description = description;
   }
 
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+  public Boolean getDefaultRole() {
+    return defaultRole;
+  }
+
+  public void setDefaultRole(Boolean defaultRole) {
+    this.defaultRole = defaultRole;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-
     SecurityRole that = (SecurityRole) o;
-
-    if (!Objects.equals(id, that.id)) return false;
-    if (!Objects.equals(authority, that.authority)) return false;
-    if (!Objects.equals(name, that.name)) return false;
-    if (!Objects.equals(description, that.description)) return false;
-    return Objects.equals(defaultRole, that.defaultRole);
+    return Objects.equals(id, that.id) && Objects.equals(authority, that.authority) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(description, that.description) && Objects.equals(defaultRole, that.defaultRole);
   }
 
   @Override
   public int hashCode() {
-    int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + (authority != null ? authority.hashCode() : 0);
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    result = 31 * result + (description != null ? description.hashCode() : 0);
-    result = 31 * result + (defaultRole != null ? defaultRole.hashCode() : 0);
-    return result;
+    return Objects.hash(id, authority, name, category, description, defaultRole);
   }
 
   @Override
@@ -102,6 +110,7 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
     sb.append("id=").append(id);
     sb.append(", authority='").append(authority).append('\'');
     sb.append(", name='").append(name).append('\'');
+    sb.append(", category='").append(category).append('\'');
     sb.append(", description='").append(description).append('\'');
     sb.append(", defaultRole=").append(defaultRole);
     sb.append('}');
