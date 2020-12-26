@@ -10,4 +10,5 @@ public interface SecurityRoleRepository extends JpaRepository<SecurityRole, Long
     SecurityRole findFirstByAuthority(String authority);
 
     List<SecurityRole> findAllByDefaultRoleTrue();
+
 }

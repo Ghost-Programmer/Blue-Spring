@@ -13,6 +13,9 @@ public class UserRole {
     private String category;
     private String description;
 
+    public UserRole() {
+    }
+
     public UserRole(Long userId, SecurityRole role) {
         this.userId = userId;
         this.name = role.getName();

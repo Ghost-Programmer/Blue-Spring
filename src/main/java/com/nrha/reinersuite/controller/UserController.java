@@ -48,4 +48,8 @@ public class UserController {
     public List<UserRole> getUserRoles(@PathVariable("id") Long userId) {
         return this.userService.getUserRoles(userId);
     }
+    @PutMapping("{id}/roles")
+    public List<UserRole> putUserRoles(@PathVariable("id") long userId, @RequestBody List<UserRole> roles) {
+        return this.userService.putUserRoles(userId,roles);
+    }
 }

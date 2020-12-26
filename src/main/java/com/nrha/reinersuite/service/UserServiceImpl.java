@@ -31,6 +31,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -253,5 +254,41 @@ public class UserServiceImpl implements UserService {
         });
 
         return ListUtils.mapValuesToList(map);
+    }
+
+    public List<UserRole> putUserRoles(long userId, List<UserRole> roles) {
+        roles = ListUtils.safe(roles);
+        if(roles.stream().anyMatch(role -> !role.getUserId().equals(userId))) {
+            throw new IllegalArgumentException("User Id Mismatch");
+        }
+        Optional<User> user = this.userRepository.findById(userId);
+        if(!user.isPresent()) {
+            throw new IllegalArgumentException("User not found");
+        }
+        List<UserSecurityRole> deleteList = new ArrayList<>();
+        List<UserSecurityRole> saveList = new ArrayList<>();
+
+        roles.stream().forEach(role -> {
+            UserSecurityRole roleFound = this.userSecurityRoleRepository.findFirstByUser_IdAndSecurityRole_Id(userId, role.getSecurityRoleId());
+            if(roleFound != null) {
+                if(!role.getActive()) {
+                    deleteList.add(roleFound);
+                }
+            } else if(role.getActive()) {
+                UserSecurityRole newRole = new UserSecurityRole();
+                newRole.setUser(user.get());
+                newRole.setSecurityRole(this.securityRoleRepository.findById(role.getSecurityRoleId()).get());
+                saveList.add(newRole);
+            }
+        });
+
+        if(deleteList.size() > 0) {
+            this.userSecurityRoleRepository.deleteAll(deleteList);
+        }
+        if(saveList.size() > 0) {
+            this.userSecurityRoleRepository.saveAll(saveList);
+        }
+
+        return this.getUserRoles(userId);
     }
 }

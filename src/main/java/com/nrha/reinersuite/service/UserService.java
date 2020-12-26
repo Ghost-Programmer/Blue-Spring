@@ -27,4 +27,6 @@ public interface UserService {
 
     UserSearch search(UserSearch userSearch);
     List<UserRole> getUserRoles(Long userId);
+
+    List<UserRole> putUserRoles(long userId, List<UserRole> roles);
 }

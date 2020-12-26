@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserSecurityRoleRepository extends JpaRepository<UserSecurityRole, Long>, JpaSpecificationExecutor<UserSecurityRole> {
 
     List<UserSecurityRole> findAllByUserId(Long userId);
+
+    UserSecurityRole findFirstByUser_IdAndSecurityRole_Id(Long userId, Long securityRoleId);
 }
