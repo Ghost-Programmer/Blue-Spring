@@ -6,3 +6,5 @@ insert into nrha_user.user_security_role (user_id,security_role_id,date_created,
 update nrha_user.user set account_expired = 0;
 update nrha_user.user set account_locked = 0;
 
+INSERT INTO `nrha_user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '2', now(), now());
+
