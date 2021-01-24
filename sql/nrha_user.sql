@@ -26,7 +26,7 @@ USE `nrha_user` ;
 -- Table `user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(100) NULL,
   `password` VARCHAR(128) NULL,
   `enabled` BIT(1) NOT NULL DEFAULT 1,
@@ -46,7 +46,7 @@ ENGINE = InnoDB;
 -- Table `security_role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `security_role` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority` VARCHAR(45) NOT NULL,
   `name` VARCHAR(100) NULL,
   `category` VARCHAR(100) NULL,
@@ -63,8 +63,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user_security_role` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` BIGINT(20) NOT NULL,
-  `security_role_id` BIGINT(20) NOT NULL,
+  `user_id` BIGINT(20) UNSIGNED NOT NULL,
+  `security_role_id` BIGINT(20) UNSIGNED NOT NULL,
   `date_created` TIMESTAMP NULL DEFAULT NULL,
   `last_updated` TIMESTAMP NULL,
   INDEX `user` (`user_id` ASC),
