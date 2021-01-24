@@ -5,11 +5,8 @@ import com.nrha.reinersuite.dao.user.SecurityRoleRepository;
 import com.nrha.reinersuite.dao.user.UserRepository;
 import com.nrha.reinersuite.dao.user.UserSecurityRoleRepository;
 import com.nrha.reinersuite.dao.user.VerificationTokenRepository;
-import com.nrha.reinersuite.dto.users.ChangePassword;
-import com.nrha.reinersuite.dto.users.Registration;
+import com.nrha.reinersuite.dto.users.*;
 import com.nrha.reinersuite.dto.StatusMessage;
-import com.nrha.reinersuite.dto.users.UserRole;
-import com.nrha.reinersuite.dto.users.UserSearch;
 import com.nrha.reinersuite.models.users.SecurityRole;
 import com.nrha.reinersuite.models.users.User;
 import com.nrha.reinersuite.models.users.UserSecurityRole;
@@ -155,6 +152,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public StatusMessage changeUserPassword(ChangeUserPassword changeUserPassword) {
+        Optional<User> user = this.userRepository.findById(changeUserPassword.getUserId());
+
+        if(user.isPresent()) {
+            String newPassword = this.passwordEncoder.encode(changeUserPassword.getPassword());
+            user.get().setPassword(newPassword);
+            this.userRepository.save(user.get());
+            return new StatusMessage("Password Changed",true);
+        }
+
+        return new StatusMessage("Unable to find user",false);
+    }
+
+    @Override
     public StatusMessage changePassword(ChangePassword changePassword) {
         User user = this.getUserByUsername( SecurityContextHolder.getContext().getAuthentication().getName());
 
@@ -170,9 +181,11 @@ public class UserServiceImpl implements UserService {
             String newPassword = this.passwordEncoder.encode(changePassword.getNewPassword());
             user.setPassword(newPassword);
             this.userRepository.save(user);
+
+            return new StatusMessage("Password Changed",true);
         }
 
-        return new StatusMessage("Password Changed",true);
+        return new StatusMessage("Unable to find user",false);
     }
 
     public UserSearch search(UserSearch userSearch) {
@@ -289,6 +302,7 @@ public class UserServiceImpl implements UserService {
             this.userSecurityRoleRepository.saveAll(saveList);
         }
 
+        this.entityManager.flush();
         return this.getUserRoles(userId);
     }
 }
