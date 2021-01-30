@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.dto.SystemInfo;
+import com.blue.project.dto.SystemInfo;
 
 public interface SystemService {
     SystemInfo getSystemInfo();

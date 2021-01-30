@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.models.dashboard;
+package com.blue.project.models.dashboard;
 
-import com.nrha.reinersuite.models.AbstractEntity;
+import com.blue.project.models.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serial;

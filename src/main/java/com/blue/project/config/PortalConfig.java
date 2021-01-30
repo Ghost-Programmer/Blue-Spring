@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.config;
+package com.blue.project.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

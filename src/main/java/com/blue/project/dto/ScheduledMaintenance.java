@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.dto;
+package com.blue.project.dto;
 
-import com.nrha.reinersuite.models.maintenance.Scheduled;
+import com.blue.project.models.maintenance.Scheduled;
 
 import java.time.ZonedDateTime;
 

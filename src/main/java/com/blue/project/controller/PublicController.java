@@ -1,12 +1,12 @@
-package com.nrha.reinersuite.controller;
+package com.blue.project.controller;
 
-import com.nrha.reinersuite.dto.users.Registration;
-import com.nrha.reinersuite.dto.ScheduledMaintenance;
-import com.nrha.reinersuite.dto.StatusMessage;
-import com.nrha.reinersuite.dto.SystemInfo;
-import com.nrha.reinersuite.service.MaintenanceService;
-import com.nrha.reinersuite.service.SystemService;
-import com.nrha.reinersuite.service.UserService;
+import com.blue.project.dto.users.Registration;
+import com.blue.project.dto.ScheduledMaintenance;
+import com.blue.project.dto.StatusMessage;
+import com.blue.project.dto.SystemInfo;
+import com.blue.project.service.MaintenanceService;
+import com.blue.project.service.SystemService;
+import com.blue.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;

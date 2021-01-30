@@ -1,16 +1,16 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.config.PortalConfig;
-import com.nrha.reinersuite.dao.user.SecurityRoleRepository;
-import com.nrha.reinersuite.dao.user.UserRepository;
-import com.nrha.reinersuite.dao.user.UserSecurityRoleRepository;
-import com.nrha.reinersuite.dao.user.VerificationTokenRepository;
-import com.nrha.reinersuite.dto.users.*;
-import com.nrha.reinersuite.dto.StatusMessage;
-import com.nrha.reinersuite.models.users.SecurityRole;
-import com.nrha.reinersuite.models.users.User;
-import com.nrha.reinersuite.models.users.UserSecurityRole;
-import com.nrha.reinersuite.models.users.VerificationToken;
+import com.blue.project.config.PortalConfig;
+import com.blue.project.dao.user.SecurityRoleRepository;
+import com.blue.project.dao.user.UserRepository;
+import com.blue.project.dao.user.UserSecurityRoleRepository;
+import com.blue.project.dao.user.VerificationTokenRepository;
+import com.blue.project.dto.users.*;
+import com.blue.project.dto.StatusMessage;
+import com.blue.project.models.users.SecurityRole;
+import com.blue.project.models.users.User;
+import com.blue.project.models.users.UserSecurityRole;
+import com.blue.project.models.users.VerificationToken;
 import name.mymiller.nadia.Nadia;
 import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
@@ -28,7 +28,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.function.Function;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service

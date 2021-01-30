@@ -1,7 +1,7 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.models.dashboard.Dashboard;
-import com.nrha.reinersuite.models.dashboard.DashboardType;
+import com.blue.project.models.dashboard.Dashboard;
+import com.blue.project.models.dashboard.DashboardType;
 
 import java.util.List;
 

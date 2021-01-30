@@ -1,8 +1,8 @@
-package com.nrha.reinersuite.dao.user;
+package com.blue.project.dao.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import com.nrha.reinersuite.models.users.User;
+import com.blue.project.models.users.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 

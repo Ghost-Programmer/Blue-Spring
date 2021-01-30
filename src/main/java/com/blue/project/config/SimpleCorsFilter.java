@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.config;
+package com.blue.project.config;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

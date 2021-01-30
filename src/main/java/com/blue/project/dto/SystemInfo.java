@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.dto;
+package com.blue.project.dto;
 
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.core.env.Environment;

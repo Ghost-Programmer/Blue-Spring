@@ -1,13 +1,13 @@
-package com.nrha.reinersuite.controller;
+package com.blue.project.controller;
 
-import com.nrha.reinersuite.dto.users.ChangePassword;
-import com.nrha.reinersuite.dto.StatusMessage;
-import com.nrha.reinersuite.dto.users.ChangeUserPassword;
-import com.nrha.reinersuite.dto.users.UserRole;
-import com.nrha.reinersuite.dto.users.UserSearch;
-import com.nrha.reinersuite.models.users.SecurityRole;
-import com.nrha.reinersuite.models.users.User;
-import com.nrha.reinersuite.service.UserService;
+import com.blue.project.dto.users.ChangePassword;
+import com.blue.project.dto.StatusMessage;
+import com.blue.project.dto.users.ChangeUserPassword;
+import com.blue.project.dto.users.UserRole;
+import com.blue.project.dto.users.UserSearch;
+import com.blue.project.models.users.SecurityRole;
+import com.blue.project.models.users.User;
+import com.blue.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

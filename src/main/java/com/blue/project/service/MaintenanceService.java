@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.dto.ScheduledMaintenance;
+import com.blue.project.dto.ScheduledMaintenance;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface MaintenanceService {

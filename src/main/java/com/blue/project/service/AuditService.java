@@ -1,10 +1,10 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.dao.maintenance.AuditRowRepository;
-import com.nrha.reinersuite.dao.maintenance.AuditTableRepository;
-import com.nrha.reinersuite.models.maintenance.AuditRow;
-import com.nrha.reinersuite.models.maintenance.AuditTable;
-import com.nrha.reinersuite.models.maintenance.AuditTableType;
+import com.blue.project.dao.maintenance.AuditRowRepository;
+import com.blue.project.dao.maintenance.AuditTableRepository;
+import com.blue.project.models.maintenance.AuditRow;
+import com.blue.project.models.maintenance.AuditTable;
+import com.blue.project.models.maintenance.AuditTableType;
 import name.mymiller.nadia.Nadia;
 import name.mymiller.nadia.dto.EntityAudit;
 import name.mymiller.nadia.interfaces.EntityAuditInterface;

@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.dao.dashboard;
+package com.blue.project.dao.dashboard;
 
-import com.nrha.reinersuite.models.dashboard.DashboardType;
+import com.blue.project.models.dashboard.DashboardType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

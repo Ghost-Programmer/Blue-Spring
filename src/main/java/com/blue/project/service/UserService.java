@@ -1,9 +1,9 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.dto.users.*;
-import com.nrha.reinersuite.dto.StatusMessage;
-import com.nrha.reinersuite.models.users.SecurityRole;
-import com.nrha.reinersuite.models.users.User;
+import com.blue.project.dto.users.*;
+import com.blue.project.dto.StatusMessage;
+import com.blue.project.models.users.SecurityRole;
+import com.blue.project.models.users.User;
 
 import java.util.List;
 

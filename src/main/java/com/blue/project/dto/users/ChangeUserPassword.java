@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.dto.users;
+package com.blue.project.dto.users;
 
 public class ChangeUserPassword {
     private Long userId;

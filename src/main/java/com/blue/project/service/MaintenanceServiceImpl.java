@@ -1,8 +1,8 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.dao.maintenance.ScheduleRepository;
-import com.nrha.reinersuite.dto.ScheduledMaintenance;
-import com.nrha.reinersuite.models.maintenance.Scheduled;
+import com.blue.project.dao.maintenance.ScheduleRepository;
+import com.blue.project.dto.ScheduledMaintenance;
+import com.blue.project.models.maintenance.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

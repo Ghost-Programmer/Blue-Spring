@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.dao.maintenance;
+package com.blue.project.dao.maintenance;
 
-import com.nrha.reinersuite.models.maintenance.AuditTable;
+import com.blue.project.models.maintenance.AuditTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

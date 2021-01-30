@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.dto;
+package com.blue.project.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

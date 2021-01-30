@@ -1,8 +1,6 @@
-package com.nrha.reinersuite.dto.users;
+package com.blue.project.dto.users;
 
-import com.nrha.reinersuite.models.users.SecurityRole;
-
-import javax.persistence.Column;
+import com.blue.project.models.users.SecurityRole;
 
 public class UserRole {
 

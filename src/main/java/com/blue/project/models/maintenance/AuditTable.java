@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.models.maintenance;
+package com.blue.project.models.maintenance;
 
-import com.nrha.reinersuite.models.AbstractTimestampEntity;
+import com.blue.project.models.AbstractTimestampEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;

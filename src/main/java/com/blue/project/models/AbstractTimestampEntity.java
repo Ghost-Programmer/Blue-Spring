@@ -1,8 +1,8 @@
-package com.nrha.reinersuite.models;
+package com.blue.project.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.nrha.reinersuite.View.Views;
+import com.blue.project.View.Views;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

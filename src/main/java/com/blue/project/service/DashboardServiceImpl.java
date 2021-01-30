@@ -1,11 +1,11 @@
-package com.nrha.reinersuite.service;
+package com.blue.project.service;
 
-import com.nrha.reinersuite.dao.dashboard.DashboardRepository;
-import com.nrha.reinersuite.dao.dashboard.DashboardTypeRepository;
-import com.nrha.reinersuite.models.dashboard.Dashboard;
-import com.nrha.reinersuite.models.dashboard.DashboardType;
-import com.nrha.reinersuite.models.users.SecurityRole;
-import com.nrha.reinersuite.models.users.User;
+import com.blue.project.dao.dashboard.DashboardRepository;
+import com.blue.project.dao.dashboard.DashboardTypeRepository;
+import com.blue.project.models.dashboard.Dashboard;
+import com.blue.project.models.dashboard.DashboardType;
+import com.blue.project.models.users.SecurityRole;
+import com.blue.project.models.users.User;
 import name.mymiller.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

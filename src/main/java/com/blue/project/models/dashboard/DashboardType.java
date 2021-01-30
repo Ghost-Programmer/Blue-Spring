@@ -1,7 +1,7 @@
-package com.nrha.reinersuite.models.dashboard;
+package com.blue.project.models.dashboard;
 
-import com.nrha.reinersuite.models.AbstractEntity;
-import com.nrha.reinersuite.models.users.SecurityRole;
+import com.blue.project.models.AbstractEntity;
+import com.blue.project.models.users.SecurityRole;
 
 import javax.persistence.*;
 import java.io.Serial;

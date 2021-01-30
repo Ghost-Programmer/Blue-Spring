@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.dto;
+package com.blue.project.dto;
 
 public class StatusMessage {
     String message;

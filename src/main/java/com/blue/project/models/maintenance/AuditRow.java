@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.models.maintenance;
+package com.blue.project.models.maintenance;
 
-import com.nrha.reinersuite.models.AbstractEntity;
+import com.blue.project.models.AbstractEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.models;
+package com.blue.project.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

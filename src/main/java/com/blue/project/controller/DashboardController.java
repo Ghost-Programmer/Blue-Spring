@@ -1,9 +1,9 @@
-package com.nrha.reinersuite.controller;
+package com.blue.project.controller;
 
-import com.nrha.reinersuite.models.dashboard.Dashboard;
-import com.nrha.reinersuite.models.dashboard.DashboardType;
-import com.nrha.reinersuite.models.users.SecurityRole;
-import com.nrha.reinersuite.service.DashboardService;
+import com.blue.project.models.dashboard.Dashboard;
+import com.blue.project.models.dashboard.DashboardType;
+import com.blue.project.models.users.SecurityRole;
+import com.blue.project.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

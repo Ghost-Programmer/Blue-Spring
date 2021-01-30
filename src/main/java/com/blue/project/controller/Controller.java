@@ -1,7 +1,7 @@
-package com.nrha.reinersuite.controller;
+package com.blue.project.controller;
 
 
-import com.nrha.reinersuite.dto.StatusMessage;
+import com.blue.project.dto.StatusMessage;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,7 @@
-package com.nrha.reinersuite.models.users;
+package com.blue.project.models.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nrha.reinersuite.models.AbstractTimestampEntity;
+import com.blue.project.models.AbstractTimestampEntity;
 
 import java.io.Serial;
 import java.io.Serializable;

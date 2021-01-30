@@ -1,6 +1,6 @@
-package com.nrha.reinersuite.dto.users;
+package com.blue.project.dto.users;
 
-import com.nrha.reinersuite.models.users.User;
+import com.blue.project.models.users.User;
 
 import java.util.List;
 
