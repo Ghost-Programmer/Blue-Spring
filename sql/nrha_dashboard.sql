@@ -35,6 +35,8 @@ CREATE TABLE `nrha_dashboard`.`dashboard` (
 CREATE TABLE `nrha_dashboard`.`dashboard_type` (
                                                    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                                                    `type` VARCHAR(45) NOT NULL,
+                                                   `security_role_id` BIGINT(20) UNSIGNED NOT NULL,
+                                                   `default` BIT(1) NULL DEFAULT 0,
                                                    PRIMARY KEY (`id`),
                                                    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
                                                    UNIQUE INDEX `name_UNIQUE` (`type` ASC) VISIBLE);
@@ -51,5 +53,12 @@ ALTER TABLE `nrha_dashboard`.`dashboard`
     ADD CONSTRAINT `fk_user_id`
         FOREIGN KEY (`user_id`)
             REFERENCES `nrha_user`.`user` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+
+ALTER TABLE `nrha_dashboard`.`dashboard_type`
+    ADD CONSTRAINT `fk_dashboard_type_security_role_id`
+        FOREIGN KEY (`security_role_id`)
+            REFERENCES `nrha_user`.`security_role` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION;
