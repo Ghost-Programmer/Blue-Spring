@@ -22,13 +22,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RolesAllowed(SecurityRole.ROLE_CHANGE_OWN_PASSWORD)
+    @RolesAllowed("ROLE_CHANGE_OWN_PASSWORD")
     @PostMapping("/change-password")
     public StatusMessage changePasword(@RequestBody ChangePassword changePassword) {
         return userService.changePassword(changePassword);
     }
 
-    @RolesAllowed(SecurityRole.ROLE_CHANGE_USER_PASSWORD)
+    @RolesAllowed("ROLE_CHANGE_USER_PASSWORD")
     @PostMapping("/change-user-password")
     public StatusMessage changeUserPasword(@RequestBody ChangeUserPassword changeUserPassword) {
         return userService.changeUserPassword(changeUserPassword);
@@ -44,19 +44,19 @@ public class UserController {
         return this.userService.userSave(user);
     }
 
-    @RolesAllowed(SecurityRole.ROLE_USER_MANAGEMENT)
+    @RolesAllowed("ROLE_USER_MANAGEMENT")
     @DeleteMapping("{id}")
     public User userDelete(@PathVariable("id") Long userId) throws IllegalAccessException {
         return this.userService.userDelete(userId);
     }
 
-    @RolesAllowed(SecurityRole.ROLE_USER_MANAGEMENT)
+    @RolesAllowed("ROLE_USER_MANAGEMENT")
     @GetMapping("{id}/roles")
     public List<UserRole> getUserRoles(@PathVariable("id") Long userId) {
         return this.userService.getUserRoles(userId);
     }
 
-    @RolesAllowed(SecurityRole.ROLE_USER_MANAGEMENT)
+    @RolesAllowed("ROLE_USER_MANAGEMENT")
     @PutMapping("{id}/roles")
     public List<UserRole> putUserRoles(@PathVariable("id") long userId, @RequestBody List<UserRole> roles) {
         return this.userService.putUserRoles(userId,roles);

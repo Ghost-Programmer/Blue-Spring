@@ -19,13 +19,13 @@ public class DashboardController {
     private DashboardService dashboardService;
 
 
-    @RolesAllowed(SecurityRole.ROLE_USER)
+    @RolesAllowed("ROLE_USER")
     @GetMapping("/components")
     public List<Dashboard> getUserDashboardComponents() {
         return this.dashboardService.getUserDashboardComponents();
     }
 
-    @RolesAllowed(SecurityRole.ROLE_USER)
+    @RolesAllowed("ROLE_USER")
     @GetMapping("/components/list")
     public List<DashboardType> getUserDashboardTypeAvailable() {
         return this.dashboardService.getUserDashboardTypeAvailable();

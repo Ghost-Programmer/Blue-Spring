@@ -19,7 +19,7 @@ public class Dashboard extends AbstractEntity {
     @Column(name = "user_id")
     private long userId;
 
-    @Column(name = "rowpan")
+    @Column(name = "rowspan")
     private Integer rowspan;
 
     @Column(name = "colspan")
