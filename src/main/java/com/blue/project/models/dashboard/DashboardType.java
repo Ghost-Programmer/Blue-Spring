@@ -20,6 +20,15 @@ public class DashboardType extends AbstractEntity {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "rowspan")
+    private Integer rowspan;
+
+    @Column(name = "colspan")
+    private Integer colspan;
+
+    @Column(name = "data")
+    private String data;
+
     @Column(name = "default")
     private Boolean defaultItem;
 
@@ -63,17 +72,41 @@ public class DashboardType extends AbstractEntity {
         this.role = role;
     }
 
+    public Integer getRowspan() {
+        return rowspan;
+    }
+
+    public void setRowspan(Integer rowspan) {
+        this.rowspan = rowspan;
+    }
+
+    public Integer getColspan() {
+        return colspan;
+    }
+
+    public void setColspan(Integer colspan) {
+        this.colspan = colspan;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DashboardType that = (DashboardType) o;
-        return Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(defaultItem, that.defaultItem) && Objects.equals(role, that.role);
+        return Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(rowspan, that.rowspan) && Objects.equals(colspan, that.colspan) && Objects.equals(data, that.data) && Objects.equals(defaultItem, that.defaultItem) && Objects.equals(role, that.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, defaultItem, role);
+        return Objects.hash(id, type, rowspan, colspan, data, defaultItem, role);
     }
 
     @Override
@@ -81,6 +114,9 @@ public class DashboardType extends AbstractEntity {
         final StringBuilder sb = new StringBuilder("DashboardType{");
         sb.append("id=").append(id);
         sb.append(", type='").append(type).append('\'');
+        sb.append(", rowspan=").append(rowspan);
+        sb.append(", colspan=").append(colspan);
+        sb.append(", data='").append(data).append('\'');
         sb.append(", defaultItem=").append(defaultItem);
         sb.append(", role=").append(role);
         sb.append('}');

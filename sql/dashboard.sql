@@ -36,6 +36,9 @@ CREATE TABLE `dashboard`.`dashboard_type` (
                                                    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                                                    `type` VARCHAR(45) NOT NULL,
                                                    `security_role_id` BIGINT(20) UNSIGNED NOT NULL,
+                                                   `rowspan` INT UNSIGNED NOT NULL,
+                                                   `colspan` INT UNSIGNED NOT NULL,
+                                                   `data` VARCHAR(255) NULL,
                                                    `default` BIT(1) NULL DEFAULT 0,
                                                    PRIMARY KEY (`id`),
                                                    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
@@ -62,3 +65,6 @@ ALTER TABLE `dashboard`.`dashboard_type`
             REFERENCES `user`.`security_role` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION;
+
+
+INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('USER_INFO', '1', '1', '1', 1);

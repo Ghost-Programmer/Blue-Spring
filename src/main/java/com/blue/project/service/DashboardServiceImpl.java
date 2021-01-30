@@ -34,6 +34,16 @@ public class DashboardServiceImpl implements DashboardService{
 
         List<Dashboard> dashboards = ListUtils.safe(this.dashboardRepository.findAllByUserIdOrderBySortAsc(user.getId()));
 
+        if(ListUtils.isEmpty(dashboards)) {
+            dashboards = this.getDefaultUserComponents(user);
+            if(ListUtils.notEmpty(dashboards)) {
+                for(int i = 0; i < dashboards.size();i++) {
+                    dashboards.get(i).setSort(i+1);
+                }
+                dashboards = this.dashboardRepository.saveAll(dashboards);
+            }
+        }
+
         return dashboards.stream().filter(item -> roles.contains(item.getType().getRole())).collect(Collectors.toList());
     }
 
@@ -44,5 +54,17 @@ public class DashboardServiceImpl implements DashboardService{
         List<DashboardType> typeList = ListUtils.safe(this.dashboardTypeRepository.findAll());
 
         return typeList.stream().filter(item -> roles.contains(item.getRole())).collect(Collectors.toList());
+    }
+
+    private List<Dashboard> getDefaultUserComponents(User user) {
+        return ListUtils.safe(this.dashboardTypeRepository.findAll()).stream().map(type -> {
+            Dashboard dashboard = new Dashboard();
+            dashboard.setType(type);
+            dashboard.setUserId(user.getId());
+            dashboard.setColspan(type.getColspan());
+            dashboard.setRowspan(type.getRowspan());
+            dashboard.setData(type.getData());
+            return dashboard;
+        }).collect(Collectors.toList());
     }
 }
