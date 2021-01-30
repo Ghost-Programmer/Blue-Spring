@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-@Table(name = "scheduled", schema = "nrha_maintenance", catalog = "nrha_maintenance")
+@Table(name = "scheduled", schema = "maintenance", catalog = "maintenance")
 @Entity
 public class Scheduled extends AbstractTimestampEntity implements Serializable {
 

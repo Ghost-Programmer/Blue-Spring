@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.util.Objects;
 
-@Table(name = "dashboard", schema = "nrha_dashboard", catalog = "nrha_dashboard")
+@Table(name = "dashboard", schema = "dashboard", catalog = "dashboard")
 @Entity
 public class Dashboard extends AbstractEntity {
     @Serial

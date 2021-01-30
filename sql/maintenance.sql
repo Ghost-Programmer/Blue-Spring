@@ -12,13 +12,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema base
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `nrha_maintenance` ;
+DROP SCHEMA IF EXISTS `maintenance` ;
 
 -- -----------------------------------------------------
 -- Schema base
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `nrha_maintenance` DEFAULT CHARACTER SET latin1 ;
-USE `nrha_maintenance` ;
+CREATE SCHEMA IF NOT EXISTS `maintenance` DEFAULT CHARACTER SET latin1 ;
+USE `maintenance` ;
 
 CREATE TABLE `scheduled` (
     `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -31,7 +31,7 @@ CREATE TABLE `scheduled` (
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
 
-CREATE TABLE `nrha_maintenance`.`audit_table` (
+CREATE TABLE `maintenance`.`audit_table` (
                                                   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                                                   `type` ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
                                                   `table_name` VARCHAR(255) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `nrha_maintenance`.`audit_table` (
                                                   INDEX `idx_user` (`user` ASC) INVISIBLE,
                                                   INDEX `idx_table_row` (`table_name` ASC, `row_id` ASC) VISIBLE);
 
-CREATE TABLE `nrha_maintenance`.`audit_row` (
+CREATE TABLE `maintenance`.`audit_row` (
                                                  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                                                  `audit_table_id` BIGINT(20) UNSIGNED NOT NULL,
                                                  `field` VARCHAR(255) NOT NULL,

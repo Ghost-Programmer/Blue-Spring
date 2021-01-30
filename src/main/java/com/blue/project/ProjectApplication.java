@@ -1,6 +1,6 @@
-package com.nrha.reinersuite;
+package com.blue.project;
 
-import com.nrha.reinersuite.config.PortalConfig;
+import com.blue.project.config.PortalConfig;
 import name.mymiller.nadia.Nadia;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,13 +12,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableConfigurationProperties({PortalConfig.class})
 @SpringBootApplication
 @EnableSwagger2
-public class ReinerSuiteApplication {
+public class ProjectApplication {
 
 
 
     public static void main(String[] args) {
         Nadia.getInstance();
-        SpringApplication.run(ReinerSuiteApplication.class, args);
+        SpringApplication.run(ProjectApplication.class, args);
     }
 
 }

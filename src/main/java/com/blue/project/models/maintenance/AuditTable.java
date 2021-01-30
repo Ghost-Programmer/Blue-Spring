@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
-@Table(name = "audit_table", schema = "nrha_maintenance", catalog = "nrha_maintenance")
+@Table(name = "audit_table", schema = "maintenance", catalog = "maintenance")
 @Entity
 public class AuditTable extends AbstractTimestampEntity implements Serializable {
     @Id

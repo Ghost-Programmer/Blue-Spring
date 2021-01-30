@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Table(name = "audit_row", schema = "nrha_maintenance", catalog = "nrha_maintenance")
+@Table(name = "audit_row", schema = "maintenance", catalog = "maintenance")
 @Entity
 public class AuditRow extends AbstractEntity implements Serializable {
     @Id

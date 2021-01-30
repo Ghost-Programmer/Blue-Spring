@@ -8,7 +8,7 @@ import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "security_role", schema = "nrha_user", catalog = "nrha_user")
+@Table(name = "security_role", schema = "user", catalog = "user")
 public class SecurityRole extends AbstractTimestampEntity implements Serializable {
 
   public static final String ROLE_USER = "ROLE_USER";

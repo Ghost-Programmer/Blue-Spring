@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.persistence.*;
 
-@Table(name = "verification_token", schema = "nrha_user", catalog = "nrha_user")
+@Table(name = "verification_token", schema = "user", catalog = "user")
 @Entity
 public class VerificationToken extends AbstractTimestampEntity implements Serializable {
   @Serial

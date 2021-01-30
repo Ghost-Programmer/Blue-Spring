@@ -1,4 +1,4 @@
-package com.nrha.reinersuite.View;
+package com.blue.project.View;
 
 public class Views {
     // include the field as a publicly accessible value in the API, i.e. only expose certain values to the public
