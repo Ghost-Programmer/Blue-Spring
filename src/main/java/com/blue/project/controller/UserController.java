@@ -61,4 +61,16 @@ public class UserController {
     public List<UserRole> putUserRoles(@PathVariable("id") long userId, @RequestBody List<UserRole> roles) {
         return this.userService.putUserRoles(userId,roles);
     }
+
+    @RolesAllowed("ROLE_USER")
+    @GetMapping("/current")
+    public User getCurrentUser() {
+        return this.userService.getCurrentUser();
+    }
+
+    @RolesAllowed("ROLE_USER")
+    @GetMapping("/current/roles")
+    public List<SecurityRole> getCurrentUserRoles() {
+        return this.userService.getRolesByUser(this.userService.getCurrentUser());
+    }
 }
