@@ -147,3 +147,4 @@ INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `descriptio
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_USER_PASSWORD', 'Change User Password', 'Admin', 'Permission to change a password for a user.', 0, now());
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_CHANGE_OWN_PASSWORD', 'Change Own Password', 'User', 'Permission to change own password.', 1, now());
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_DEVELOPER', 'Developer', 'Dev', 'Developer special access.', 0, now());
+INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_MONITOR', 'System Monitor', 'Dev', 'Monitor System status.', 0, now());

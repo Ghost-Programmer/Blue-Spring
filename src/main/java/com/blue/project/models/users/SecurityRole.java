@@ -16,6 +16,7 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
   public static final String ROLE_CHANGE_USER_PASSWORD = "ROLE_CHANGE_USER_PASSWORD";
   public static final String ROLE_CHANGE_OWN_PASSWORD = "ROLE_CHANGE_OWN_PASSWORD";
   public static final String ROLE_DEVELOPER = "ROLE_DEVELOPER";
+  public static final String ROLE_MONITOR = "ROLE_MONITOR";
 
   @Serial
   private static final long serialVersionUID = 1L;

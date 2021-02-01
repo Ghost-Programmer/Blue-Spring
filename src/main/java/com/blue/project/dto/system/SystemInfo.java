@@ -1,4 +1,4 @@
-package com.blue.project.dto;
+package com.blue.project.dto.system;
 
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.core.env.Environment;
