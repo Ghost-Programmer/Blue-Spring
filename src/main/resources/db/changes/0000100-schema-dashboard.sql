@@ -1,22 +1,9 @@
+--liquibase formatted sql
 
+--changeset jmiller:0000100
 
--- MySQL Workbench Forward Engineering
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema base
--- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `dashboard` ;
 
--- -----------------------------------------------------
--- Schema base
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `dashboard` DEFAULT CHARACTER SET latin1 ;
 USE `dashboard` ;
 
