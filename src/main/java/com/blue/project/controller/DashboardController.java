@@ -27,7 +27,7 @@ public class DashboardController {
 
     @RolesAllowed("ROLE_USER")
     @GetMapping("/components/list")
-    public List<DashboardType> getUserDashboardTypeAvailable() {
-        return this.dashboardService.getUserDashboardTypeAvailable();
+    public List<Dashboard> getUserDashboardTypeAvailable() {
+        return this.dashboardService.getUserAvailableDashboardComponents();
     }
 }

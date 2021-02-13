@@ -53,7 +53,20 @@ public class DashboardServiceImpl implements DashboardService{
 
         List<DashboardType> typeList = ListUtils.safe(this.dashboardTypeRepository.findAll());
 
-        return typeList.stream().filter(item -> roles.contains(item.getRole())).collect(Collectors.toList());
+        return ListUtils.safe(typeList.stream().filter(item -> roles.contains(item.getRole())).collect(Collectors.toList()));
+    }
+
+    public List<Dashboard> getUserAvailableDashboardComponents() {
+        User user = this.userService.getCurrentUser();
+        return this.getUserDashboardTypeAvailable().stream().map(type -> {
+            Dashboard dashboard = new Dashboard();
+            dashboard.setType(type);
+            dashboard.setUserId(user.getId());
+            dashboard.setColspan(type.getColspan());
+            dashboard.setRowspan(type.getRowspan());
+            dashboard.setData(type.getData());
+            return dashboard;
+        }).collect(Collectors.toList());
     }
 
     private List<Dashboard> getDefaultUserComponents(User user) {
