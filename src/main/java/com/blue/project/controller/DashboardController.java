@@ -1,8 +1,6 @@
 package com.blue.project.controller;
 
 import com.blue.project.models.dashboard.Dashboard;
-import com.blue.project.models.dashboard.DashboardType;
-import com.blue.project.models.users.SecurityRole;
 import com.blue.project.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,4 +28,11 @@ public class DashboardController {
     public List<Dashboard> getUserDashboardTypeAvailable() {
         return this.dashboardService.getUserAvailableDashboardComponents();
     }
+
+    @RolesAllowed("ROLE_USER")
+    @PostMapping("/components")
+    public List<Dashboard> saveUserDashboardComponents(@RequestBody List<Dashboard> cards) {
+        return this.dashboardService.saveUserDashboardComponents(cards);
+    }
+
 }

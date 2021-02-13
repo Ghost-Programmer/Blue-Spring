@@ -44,7 +44,24 @@ public class DashboardServiceImpl implements DashboardService{
             }
         }
 
-        return dashboards.stream().filter(item -> roles.contains(item.getType().getRole())).collect(Collectors.toList());
+        return ListUtils.safe(dashboards.stream().filter(item -> roles.contains(item.getType().getRole())).collect(Collectors.toList()));
+    }
+
+    public List<Dashboard> saveUserDashboardComponents(List<Dashboard> cards) {
+        User user = this.userService.getCurrentUser();
+        cards = ListUtils.safe(cards).stream().filter(card -> card.getUserId() == user.getId()).collect(Collectors.toList());
+        for(int i = 0 ; i < cards.size(); i++) {
+            cards.get(i).setSort(i+1);
+        }
+
+        List<Long> currentIds = ListUtils.safe(this.getUserDashboardComponents().stream().map(Dashboard::getId).collect(Collectors.toList()));
+        List<Long> keepIds = ListUtils.safe(cards.stream().filter(card -> card.getId() != null).map(Dashboard::getId).collect(Collectors.toList()));
+
+        currentIds.removeAll(keepIds);
+
+        this.dashboardRepository.deleteAllInIdList(currentIds);
+
+        return this.dashboardRepository.saveAll(cards);
     }
 
     public List<DashboardType> getUserDashboardTypeAvailable() {

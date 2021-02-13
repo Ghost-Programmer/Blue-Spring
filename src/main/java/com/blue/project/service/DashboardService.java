@@ -10,4 +10,6 @@ public interface DashboardService {
     List<Dashboard> getUserDashboardComponents();
     List<DashboardType> getUserDashboardTypeAvailable();
     List<Dashboard> getUserAvailableDashboardComponents();
+
+    List<Dashboard> saveUserDashboardComponents(List<Dashboard> cards);
 }
