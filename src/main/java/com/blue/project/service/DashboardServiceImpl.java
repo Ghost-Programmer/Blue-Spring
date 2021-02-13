@@ -57,7 +57,7 @@ public class DashboardServiceImpl implements DashboardService{
     }
 
     private List<Dashboard> getDefaultUserComponents(User user) {
-        return ListUtils.safe(this.dashboardTypeRepository.findAll()).stream().map(type -> {
+        return ListUtils.safe(this.dashboardTypeRepository.findAllByDefaultItemIsTrue()).stream().map(type -> {
             Dashboard dashboard = new Dashboard();
             dashboard.setType(type);
             dashboard.setUserId(user.getId());
