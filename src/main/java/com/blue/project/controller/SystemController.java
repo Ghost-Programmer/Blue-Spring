@@ -3,6 +3,7 @@ package com.blue.project.controller;
 
 import com.blue.project.dto.system.SystemStatus;
 import com.blue.project.service.SystemService;
+import name.mymiller.nadia.system.SystemStatusReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,12 @@ public class SystemController {
     @GetMapping("/status")
     public List<SystemStatus> getSystemStatus() {
         return this.systemService.getSystemStatus();
+    }
+
+    @RolesAllowed("ROLE_MONITOR")
+    @GetMapping("/status/current")
+    public SystemStatusReport getCurrentSystemStatus() {
+        return this.systemService.getCurrentSystemStatus();
     }
 
 }

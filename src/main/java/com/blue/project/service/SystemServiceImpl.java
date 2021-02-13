@@ -5,6 +5,7 @@ import com.blue.project.dto.system.SystemStatus;
 import name.mymiller.nadia.Nadia;
 import name.mymiller.nadia.constants.Fields;
 import name.mymiller.nadia.constants.Types;
+import name.mymiller.nadia.system.SystemStatusReport;
 import name.mymiller.nadia.utils.ZonedDateTimeGenerator;
 import name.mymiller.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class SystemServiceImpl implements SystemService{
         return new SystemInfo(buildProperties,environment);
     }
 
+    @Override
     public List<SystemStatus> getSystemStatus() {
         List<Properties> query = ListUtils.safe(Nadia.getInstance().query(Types.NADIA_SYSTEM_STATUS, null, ZonedDateTime.now().minusWeeks(1), ZonedDateTime.now()));
         return ListUtils.safe(query.parallelStream().map(property -> {
@@ -46,5 +48,10 @@ public class SystemServiceImpl implements SystemService{
 
             return systemStatus;
         }).collect(Collectors.toList()));
+    }
+
+    @Override
+    public SystemStatusReport getCurrentSystemStatus() {
+        return Nadia.getInstance().getSystemStatusReport();
     }
 }
