@@ -45,6 +45,7 @@ public class SystemServiceImpl implements SystemService{
             systemStatus.setVmMaxMemory(Long.parseLong(property.getProperty(Fields.NADIA_VM_MAX_MEMORY)));
             systemStatus.setVmCurrentMemory(Long.parseLong(property.getProperty(Fields.NADIA_VM_CURRENT_MEMORY)));
             systemStatus.setVmFreeMemory(Long.parseLong(property.getProperty(Fields.NADIA_VM_FREE_MEMORY)));
+            systemStatus.setCpuLoad(Double.parseDouble(property.getProperty(Fields.NADIA_CPU_LOAD)));
 
             return systemStatus;
         }).collect(Collectors.toList()));

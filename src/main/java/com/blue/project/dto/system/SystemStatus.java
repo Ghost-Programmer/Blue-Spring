@@ -10,6 +10,7 @@ public class SystemStatus {
     private Long vmFreeMemory;
     private Long vmCurrentMemory;
     private Long vmMaxMemory;
+    private Double cpuLoad;
 
 
 
@@ -59,5 +60,13 @@ public class SystemStatus {
 
     public void setVmMaxMemory(Long vmMaxMemory) {
         this.vmMaxMemory = vmMaxMemory;
+    }
+
+    public Double getCpuLoad() {
+        return cpuLoad;
+    }
+
+    public void setCpuLoad(Double cpuLoad) {
+        this.cpuLoad = cpuLoad;
     }
 }
