@@ -55,6 +55,8 @@ ALTER TABLE `dashboard`.`dashboard_type`
 
 
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('USER_INFO', '1', '1', '1', 1);
-INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('MEMORY_MONITOR', '6', '1', '2', 0);
+INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('VM_MEMORY_MONITOR', '6', '1', '2', 0);
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('CPU_MONITOR', '6', '1', '2', 0);
-INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_MONITOR', '6', '1', '2', 1);
+INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_VM_MEMORY_MONITOR', '6', '1', '1', 1);
+INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_CPU_MONITOR', '6', '1', '1', 1);
+INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_MEMORY_MONITOR', '6', '1', '1', 1);
