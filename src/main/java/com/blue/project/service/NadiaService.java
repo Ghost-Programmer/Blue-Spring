@@ -6,6 +6,9 @@ import com.blue.project.models.maintenance.AuditRow;
 import com.blue.project.models.maintenance.AuditTable;
 import com.blue.project.models.maintenance.AuditTableType;
 import name.mymiller.nadia.Nadia;
+import name.mymiller.nadia.dao.DaoEvent;
+import name.mymiller.nadia.dao.DaoRead;
+import name.mymiller.nadia.dao.DaoWrite;
 import name.mymiller.nadia.dto.EntityAudit;
 import name.mymiller.nadia.interfaces.EntityAuditInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +16,11 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Service
 @Transactional
-public class AuditService implements EntityAuditInterface {
+public class NadiaService implements EntityAuditInterface, DaoEvent {
 
     @Autowired
     private AuditTableRepository auditTableRepository;
@@ -24,7 +28,7 @@ public class AuditService implements EntityAuditInterface {
     @Autowired
     private AuditRowRepository auditRowRepository;
 
-    public AuditService() {
+    public NadiaService() {
         Nadia.getInstance().setAuditInterface(this);
     }
 
@@ -48,5 +52,15 @@ public class AuditService implements EntityAuditInterface {
             throw new IllegalArgumentException("tableId must be of type AuditTable");
         }
         this.auditRowRepository.save(new AuditRow(auditTable,field,original,changed));
+    }
+
+    @Override
+    public void saveEvent(String s) {
+
+    }
+
+    @Override
+    public List<String> readAllEvents() {
+        return null;
     }
 }

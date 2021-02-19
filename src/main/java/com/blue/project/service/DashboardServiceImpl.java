@@ -8,6 +8,7 @@ import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
 import name.mymiller.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

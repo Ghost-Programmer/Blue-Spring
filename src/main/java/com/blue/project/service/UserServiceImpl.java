@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     private ServletContext context;
 
     @Autowired
-    private AuditService auditService;
+    private NadiaService auditService;
 
     public StatusMessage registerUser(Registration registration) {
         if(this.userRepository.existsByUsername(registration.getUserName())) {
