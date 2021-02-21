@@ -25,6 +25,7 @@ public interface UserService {
 
     UserSearch search(UserSearch userSearch);
     List<UserRole> getUserRoles(Long userId);
+    boolean hasAuthority(User user, String role);
 
     List<UserRole> putUserRoles(long userId, List<UserRole> roles);
 }

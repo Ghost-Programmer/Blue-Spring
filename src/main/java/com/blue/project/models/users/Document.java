@@ -1,10 +1,12 @@
 package com.blue.project.models.users;
 
 import com.blue.project.models.AbstractTimestampEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -27,8 +29,14 @@ public class Document extends AbstractTimestampEntity implements Serializable {
     @Column(name = "content_type")
     private String contentType;
 
+    @JsonIgnore
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "document")
-    byte[] document;
+    private byte[] document;
+
+    @Transient
+    private Boolean lock;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -72,6 +80,28 @@ public class Document extends AbstractTimestampEntity implements Serializable {
 
     public void setDocument(byte[] document) {
         this.document = document;
+    }
+
+    @PostLoad
+    public void postLoad() {
+        this.lock = false;
+    }
+
+    public static Document from(String username, String fileName, String contentType, ZonedDateTime date) {
+        Document doc = new Document();
+
+        doc.setUser(User.from(username));
+        doc.setContentType(contentType);
+        doc.setFileName(fileName);
+        doc.setDocument(null);
+        doc.setId(null);
+        doc.setDateCreated(date);
+        if(username == null || username.isEmpty()) {
+            doc.setUser(null);
+        } else {
+
+        }
+        return doc;
     }
 
     @Override

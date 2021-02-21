@@ -151,6 +151,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean hasAuthority(User user, String role) {
+        return ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(user.getId())).stream().anyMatch(securityRole -> securityRole.getSecurityRole().getAuthority().equals(role));
+    }
+
+    @Override
     public StatusMessage changeUserPassword(ChangeUserPassword changeUserPassword) {
         Optional<User> user = this.userRepository.findById(changeUserPassword.getUserId());
 
