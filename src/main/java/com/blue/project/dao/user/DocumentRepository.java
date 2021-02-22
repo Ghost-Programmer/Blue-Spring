@@ -1,6 +1,6 @@
 package com.blue.project.dao.user;
 
-import com.blue.project.models.users.Document;
+import com.blue.project.models.documents.Document;
 import com.blue.project.models.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

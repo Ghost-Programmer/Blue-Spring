@@ -2,8 +2,6 @@ package com.blue.project.controller;
 
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.users.DocumentSearch;
-import com.blue.project.dto.users.UserSearch;
-import com.blue.project.models.users.Document;
 import com.blue.project.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/document", produces = MediaType.APPLICATION_JSON_VALUE)

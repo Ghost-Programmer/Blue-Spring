@@ -3,7 +3,7 @@ package com.blue.project.service;
 import com.blue.project.dao.user.DocumentRepository;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.users.DocumentSearch;
-import com.blue.project.models.users.Document;
+import com.blue.project.models.documents.Document;
 import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
 import name.mymiller.utils.StringUtils;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.List;
 
 @Service
 @Transactional
@@ -42,6 +41,7 @@ public class DocumentServiceImpl implements DocumentService{
             doc.setFileName(file.getOriginalFilename());
             doc.setContentType(file.getContentType());
             doc.setDocument(file.getBytes());
+            doc.setSize(Integer.toUnsignedLong(file.getBytes().length));
 
             this.documentRepository.save(doc);
         } catch(IOException e) {

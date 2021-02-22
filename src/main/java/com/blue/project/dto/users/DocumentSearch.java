@@ -1,7 +1,6 @@
 package com.blue.project.dto.users;
 
-import com.blue.project.models.users.Document;
-import com.blue.project.models.users.User;
+import com.blue.project.models.documents.Document;
 
 import java.time.ZonedDateTime;
 import java.util.List;

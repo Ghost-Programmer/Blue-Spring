@@ -1,7 +1,9 @@
-package com.blue.project.models.users;
+package com.blue.project.models.documents;
 
 import com.blue.project.models.AbstractTimestampEntity;
+import com.blue.project.models.users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import name.mymiller.lang.UnitOfMemory;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -10,7 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Table(name = "documents", schema = "user", catalog = "user")
+@Table(name = "documents", schema = "documents", catalog = "documents")
 @Entity
 public class Document extends AbstractTimestampEntity implements Serializable {
     @Serial
@@ -29,6 +31,9 @@ public class Document extends AbstractTimestampEntity implements Serializable {
     @Column(name = "content_type")
     private String contentType;
 
+    @Column(name = "size")
+    private Long size;
+
     @JsonIgnore
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -37,6 +42,9 @@ public class Document extends AbstractTimestampEntity implements Serializable {
 
     @Transient
     private Boolean lock;
+
+    @Transient
+    private String sizeString;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -82,9 +90,35 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         this.document = document;
     }
 
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public Boolean getLock() {
+        return lock;
+    }
+
+    public void setLock(Boolean lock) {
+        this.lock = lock;
+    }
+
+    public String getSizeString() {
+        return sizeString;
+    }
+
+    public void setSizeString(String sizeString) {
+        this.sizeString = sizeString;
+    }
+
     @PostLoad
     public void postLoad() {
         this.lock = false;
+
+        this.sizeString = UnitOfMemory.measurement(this.size);
     }
 
     public static Document from(String username, String fileName, String contentType, ZonedDateTime date) {
@@ -93,6 +127,7 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         doc.setUser(User.from(username));
         doc.setContentType(contentType);
         doc.setFileName(fileName);
+
         doc.setDocument(null);
         doc.setId(null);
         doc.setDateCreated(date);
