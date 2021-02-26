@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.UUID;
 
 @Table(name = "documents", schema = "documents", catalog = "documents")
 @Entity
@@ -21,6 +22,9 @@ public class Document extends AbstractTimestampEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "uuid")
+    private String uuid;
 
     @ManyToOne
     private User user;
@@ -114,6 +118,18 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         this.sizeString = sizeString;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+    @PrePersist
+    public void prePersist() {
+        this.setUuid(UUID.randomUUID().toString());
+    }
+
     @PostLoad
     public void postLoad() {
         this.lock = false;
@@ -128,6 +144,7 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         doc.setContentType(contentType);
         doc.setFileName(fileName);
 
+        doc.setUuid(null);
         doc.setDocument(null);
         doc.setId(null);
         doc.setDateCreated(date);

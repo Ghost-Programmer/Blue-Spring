@@ -17,6 +17,7 @@ use user;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
                                       `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                                      `uuid` VARCHAR(45) NOT NULL,
                                       `username` VARCHAR(100) NULL,
                                       `password` VARCHAR(128) NULL,
                                       `enabled` BIT(1) NOT NULL DEFAULT 1,
@@ -28,6 +29,8 @@ CREATE TABLE IF NOT EXISTS `user` (
                                       `account_refreshed` BIT(1) NOT NULL DEFAULT 0,
                                       `date_created` TIMESTAMP NULL DEFAULT NULL,
                                       `last_updated` TIMESTAMP NULL,
+                                      UNIQUE INDEX `user_uuid_unique_idx` (`uuid` ASC) INVISIBLE,
+									  INDEX `user_uuid_idx` (`uuid` ASC) VISIBLE,
                                       PRIMARY KEY (`id`))
     ENGINE = InnoDB;
 

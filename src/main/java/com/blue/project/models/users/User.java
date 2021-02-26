@@ -6,6 +6,7 @@ import com.blue.project.models.AbstractTimestampEntity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 import javax.persistence.*;
 
 @Table(name = "user", schema = "user", catalog = "user")
@@ -17,6 +18,9 @@ public class User extends AbstractTimestampEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column(name = "uuid")
+  private String uuid;
 
   @Column(name = "username")
   private String username;
@@ -59,8 +63,14 @@ public class User extends AbstractTimestampEntity implements Serializable {
     user.setAccountVerified(null);
     user.setPasswordChangeRequired(null);
     user.setDateCreated(null);
+    user.setUuid(null);
 
     return user;
+  }
+
+  @PrePersist
+  public void prePersist() {
+    this.setUuid(UUID.randomUUID().toString());
   }
 
   public static long getSerialVersionUID() {
@@ -145,6 +155,14 @@ public class User extends AbstractTimestampEntity implements Serializable {
 
   public void setAccountRefreshed(Boolean accountRefreshed) {
     this.accountRefreshed = accountRefreshed;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 
   @Override
