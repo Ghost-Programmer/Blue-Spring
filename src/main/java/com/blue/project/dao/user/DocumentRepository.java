@@ -11,4 +11,5 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
 public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSpecificationExecutor<Document>, PagingAndSortingRepository<Document, Long>, QueryByExampleExecutor<Document> {
 
     Document findFirstByIdAndUser(Long id, User user);
+    Document findFirstByUuid(String uuid);;
 }

@@ -4,11 +4,13 @@ import com.blue.project.dto.users.Registration;
 import com.blue.project.dto.ScheduledMaintenance;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.system.SystemInfo;
+import com.blue.project.service.DocumentService;
 import com.blue.project.service.MaintenanceService;
 import com.blue.project.service.SystemService;
 import com.blue.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,9 @@ public class PublicController {
 
     @Autowired
     private SystemService systemService;
+
+    @Autowired
+    private DocumentService documentService;
 
     @PostMapping("/user/register")
     @PreAuthorize("permitAll()")
@@ -46,5 +51,11 @@ public class PublicController {
     @PreAuthorize("permitAll()")
     public SystemInfo getSystemInfo() {
         return systemService.getSystemInfo();
+    }
+
+    @GetMapping("/document/{uuid}")
+    @PreAuthorize("permitAll()")
+    public ResponseEntity<byte[]> downloadDocument(@PathVariable("uuid") String uuid) {
+        return documentService.downloadDocumentByUuid(uuid);
     }
 }

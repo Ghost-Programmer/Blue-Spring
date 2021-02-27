@@ -2,7 +2,7 @@ package com.blue.project.service;
 
 import com.blue.project.dao.user.DocumentRepository;
 import com.blue.project.dto.StatusMessage;
-import com.blue.project.dto.users.DocumentSearch;
+import com.blue.project.dto.documents.DocumentSearch;
 import com.blue.project.models.documents.Document;
 import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
@@ -56,6 +56,13 @@ public class DocumentServiceImpl implements DocumentService{
         User user = this.userService.getCurrentUser();
 
         Document doc = this.documentRepository.findFirstByIdAndUser(documentId,user);
+
+        return this.downloadResponseEntity(doc.getDocument(),doc.getFileName());
+    }
+
+    @Override
+    public ResponseEntity<byte[]> downloadDocumentByUuid(String uuid) {
+        Document doc = this.documentRepository.findFirstByUuid(uuid);
 
         return this.downloadResponseEntity(doc.getDocument(),doc.getFileName());
     }

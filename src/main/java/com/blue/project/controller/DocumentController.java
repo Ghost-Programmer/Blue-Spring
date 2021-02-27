@@ -1,7 +1,7 @@
 package com.blue.project.controller;
 
 import com.blue.project.dto.StatusMessage;
-import com.blue.project.dto.users.DocumentSearch;
+import com.blue.project.dto.documents.DocumentSearch;
 import com.blue.project.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

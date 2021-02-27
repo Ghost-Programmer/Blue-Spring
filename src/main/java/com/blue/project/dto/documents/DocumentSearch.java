@@ -1,4 +1,4 @@
-package com.blue.project.dto.users;
+package com.blue.project.dto.documents;
 
 import com.blue.project.models.documents.Document;
 
