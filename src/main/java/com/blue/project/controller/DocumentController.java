@@ -2,6 +2,7 @@ package com.blue.project.controller;
 
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.documents.DocumentSearch;
+import com.blue.project.models.users.User;
 import com.blue.project.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,5 +35,11 @@ public class DocumentController {
     @PostMapping("doc-search")
     public DocumentSearch docSearch(@RequestBody DocumentSearch docSearch) {
         return documentService.search(docSearch);
+    }
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole(T(com.blue.project.models.users.SecurityRole).ROLE_USER) or hasRole(T(com.blue.project.models.users.SecurityRole).ROLE_DOCUMENT_MANAGER) ")
+    public StatusMessage deleteDocument(@PathVariable("id") Long id) {
+        return documentService.deleteDocument(id);
     }
 }

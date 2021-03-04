@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean hasAuthority(List<SecurityRole> roles, String role) {
+    public boolean hasAuthority(Collection<SecurityRole> roles, String role) {
         if(roles != null) {
             return roles.stream().anyMatch(securityRole -> securityRole.getAuthority().equals(role));
         }
@@ -153,6 +153,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean hasAuthority(User user, String role) {
         return ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(user.getId())).stream().anyMatch(securityRole -> securityRole.getSecurityRole().getAuthority().equals(role));
+    }
+
+    @Override
+    public boolean hasAuthority(User user, List<String> roles) {
+        return ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(user.getId())).stream().anyMatch(securityRole -> roles.contains(securityRole.getSecurityRole().getAuthority()));
     }
 
     @Override

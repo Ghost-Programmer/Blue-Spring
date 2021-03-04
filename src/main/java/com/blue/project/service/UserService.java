@@ -5,6 +5,7 @@ import com.blue.project.dto.StatusMessage;
 import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
@@ -18,7 +19,7 @@ public interface UserService {
     User userCreate(User user) throws IllegalAccessException;
     User userDelete(Long userId) throws IllegalAccessException;
     List<SecurityRole> getRolesByUser(User user);
-    boolean hasAuthority(List<SecurityRole> roles, String role);
+    boolean hasAuthority(Collection<SecurityRole> roles, String role);
 
     StatusMessage changePassword(ChangePassword changePassword);
     StatusMessage changeUserPassword(ChangeUserPassword changeUserPassword);
@@ -26,6 +27,7 @@ public interface UserService {
     UserSearch search(UserSearch userSearch);
     List<UserRole> getUserRoles(Long userId);
     boolean hasAuthority(User user, String role);
+    boolean hasAuthority(User user, List<String> roles);
 
     List<UserRole> putUserRoles(long userId, List<UserRole> roles);
 }

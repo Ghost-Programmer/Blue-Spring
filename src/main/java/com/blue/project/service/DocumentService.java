@@ -14,4 +14,6 @@ public interface DocumentService {
     DocumentSearch search(DocumentSearch docSearch);
 
     ResponseEntity<byte[]> downloadDocumentByUuid(String uuid);
+
+    StatusMessage deleteDocument(Long id);
 }

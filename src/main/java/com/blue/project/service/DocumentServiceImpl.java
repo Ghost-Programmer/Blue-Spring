@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -134,5 +135,26 @@ public class DocumentServiceImpl implements DocumentService{
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return new ResponseEntity <>(body, headers, HttpStatus.OK);
+    }
+
+    public StatusMessage deleteDocument(Long id) {
+        StatusMessage status = new StatusMessage();
+        status.setOk(true);
+
+        User user  = this.userService.getCurrentUser();
+        Optional<Document> optionalDocument = this.documentRepository.findById(id);
+        if(optionalDocument.isPresent() && optionalDocument.get().getUser().getId().equals(user.getId())) {
+            this.documentRepository.delete(optionalDocument.get());
+        } else if(optionalDocument.isPresent() && this.userService.hasAuthority(user,SecurityRole.ROLE_DOCUMENT_MANAGER)) {
+            this.documentRepository.delete(optionalDocument.get());
+        } else if(optionalDocument.isPresent()){
+            status.setOk(false);
+            status.setMessage("error.not_authorized");
+        } else {
+            status.setOk(false);
+            status.setMessage("error.not_found");
+        }
+
+        return status;
     }
 }
