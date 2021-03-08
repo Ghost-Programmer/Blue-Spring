@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.Doc;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
@@ -89,15 +90,22 @@ public class DocumentServiceImpl implements DocumentService{
             pageable = PageRequest.of(docSearch.getPage(),docSearch.getSize());
         }
 
-        if(StringUtils.isNotNullOrEmpty(docSearch.getUsername())) {
+        if(StringUtils.isNotNullOrEmpty(username)) {
+            ExampleMatcher.PropertyValueTransformer transformer = new ExampleMatcher.PropertyValueTransformer() {
+                @Override
+                public Optional<Object> apply(Optional<Object> o) {
+                    if(o.isPresent()) {
+                        Document doc  = (Document) o.get();
+                        return Optional.of(doc.getUser());
+                    }
+                    return Optional.empty();
+                }
+            };
             ExampleMatcher customExampleMatcher = ExampleMatcher.matching()
-                    .withMatcher("username", match -> match.transform(source -> java.util.Optional.ofNullable(((Document) (source.get())).getUser())).ignoreCase())
-                    .withMatcher("filename", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                    .withMatcher("contentType", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                    .withMatcher("date", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                    .withMatcher("user.username",ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase() );
 
 
-            Example<Document> example = Example.of(Document.from(username,docSearch.getFileName(), docSearch.getContentType(), docSearch.getDate()),customExampleMatcher);
+            Example<Document> example = Example.of(Document.from(username,null, null, null),customExampleMatcher);
 
             results = this.documentRepository.findAll(example, pageable);
         } else {
