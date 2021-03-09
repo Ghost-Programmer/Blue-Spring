@@ -90,22 +90,19 @@ public class DocumentServiceImpl implements DocumentService{
             pageable = PageRequest.of(docSearch.getPage(),docSearch.getSize());
         }
 
-        if(StringUtils.isNotNullOrEmpty(username)) {
-            ExampleMatcher.PropertyValueTransformer transformer = new ExampleMatcher.PropertyValueTransformer() {
-                @Override
-                public Optional<Object> apply(Optional<Object> o) {
-                    if(o.isPresent()) {
-                        Document doc  = (Document) o.get();
-                        return Optional.of(doc.getUser());
-                    }
-                    return Optional.empty();
-                }
-            };
-            ExampleMatcher customExampleMatcher = ExampleMatcher.matching()
-                    .withMatcher("user.username",ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase() );
+        if(StringUtils.isNotNullOrEmpty(username) || StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
+            ExampleMatcher customExampleMatcher = ExampleMatcher.matching();
+
+            if(StringUtils.isNotNullOrEmpty(username)) {
+                customExampleMatcher = customExampleMatcher.withMatcher("user.username", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+            }
+
+            if(StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
+                customExampleMatcher = customExampleMatcher.withMatcher("fileName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+            }
 
 
-            Example<Document> example = Example.of(Document.from(username,null, null, null),customExampleMatcher);
+            Example<Document> example = Example.of(Document.from(username,docSearch.getFileName(), null, null),customExampleMatcher);
 
             results = this.documentRepository.findAll(example, pageable);
         } else {
