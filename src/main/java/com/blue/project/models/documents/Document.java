@@ -140,7 +140,6 @@ public class Document extends AbstractTimestampEntity implements Serializable {
     public static Document from(String username, String fileName, String contentType, ZonedDateTime date) {
         Document doc = new Document();
 
-        doc.setUser(User.from(username));
         doc.setContentType(contentType);
         doc.setFileName(fileName);
 
@@ -151,8 +150,22 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         if(username == null || username.isEmpty()) {
             doc.setUser(null);
         } else {
-
+            doc.setUser(User.from(username));
         }
+        return doc;
+    }
+
+    public static Document asNull() {
+        Document doc = new Document();
+
+        doc.setContentType(null);
+        doc.setFileName(null);
+
+        doc.setUuid(null);
+        doc.setDocument(null);
+        doc.setId(null);
+        doc.setDateCreated(null);
+        doc.setUser(null);
         return doc;
     }
 

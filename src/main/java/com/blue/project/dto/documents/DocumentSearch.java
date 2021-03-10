@@ -10,6 +10,7 @@ public class DocumentSearch {
     private String contentType;
     private ZonedDateTime date;
     private String fileName;
+    private List<String> contentTypes;
 
     private Integer page;
     private Integer size;
@@ -96,5 +97,13 @@ public class DocumentSearch {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public List<String> getContentTypes() {
+        return contentTypes;
+    }
+
+    public void setContentTypes(List<String> contentTypes) {
+        this.contentTypes = contentTypes;
     }
 }

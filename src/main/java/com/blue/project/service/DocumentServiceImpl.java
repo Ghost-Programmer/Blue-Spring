@@ -1,6 +1,6 @@
 package com.blue.project.service;
 
-import com.blue.project.dao.user.DocumentRepository;
+import com.blue.project.dao.documents.DocumentRepository;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.documents.DocumentSearch;
 import com.blue.project.models.documents.Document;
@@ -16,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.Doc;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -90,19 +90,26 @@ public class DocumentServiceImpl implements DocumentService{
             pageable = PageRequest.of(docSearch.getPage(),docSearch.getSize());
         }
 
-        if(StringUtils.isNotNullOrEmpty(username) || StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
+        if(StringUtils.isNotNullOrEmpty(username) || StringUtils.isNotNullOrEmpty(docSearch.getFileName()) || StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
             ExampleMatcher customExampleMatcher = ExampleMatcher.matching();
+            Document exampleDocument = Document.asNull();
 
             if(StringUtils.isNotNullOrEmpty(username)) {
                 customExampleMatcher = customExampleMatcher.withMatcher("user.username", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                exampleDocument.setUser(User.from(username));
             }
 
             if(StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
                 customExampleMatcher = customExampleMatcher.withMatcher("fileName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                exampleDocument.setFileName(docSearch.getFileName());
             }
 
+            if(StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
+                customExampleMatcher = customExampleMatcher.withMatcher("contentType", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                exampleDocument.setContentType(docSearch.getContentType());
+            }
 
-            Example<Document> example = Example.of(Document.from(username,docSearch.getFileName(), null, null),customExampleMatcher);
+            Example<Document> example = Example.of(exampleDocument,customExampleMatcher);
 
             results = this.documentRepository.findAll(example, pageable);
         } else {
@@ -110,8 +117,28 @@ public class DocumentServiceImpl implements DocumentService{
         }
         docSearch.setResults(results.toList());
         docSearch.setTotal(results.getTotalElements());
-
+        docSearch.setContentTypes(this.getDocumentContentTypes(docSearch));
         return docSearch;
+    }
+
+    private List<String> getDocumentContentTypes(DocumentSearch docSearch) {
+        String username = "%";
+        String filename = "%";
+        String contentType = "%";
+
+        if(StringUtils.isNotNullOrEmpty(docSearch.getUsername())) {
+            username = "%"+docSearch.getUsername()+"%";
+        }
+
+        if(StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
+            filename = "%"+docSearch.getFileName()+"%";
+        }
+
+        if(StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
+            contentType = "%"+docSearch.getContentType()+"%";
+        }
+
+        return this.documentRepository.findAllContentTypesByUsernameAndFileNameAndContentType(username,filename,contentType);
     }
 
     private ResponseEntity<byte[]> downloadResponseEntity(byte[] body, String fileName) {
