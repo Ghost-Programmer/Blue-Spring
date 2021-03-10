@@ -10,6 +10,8 @@ public class DocumentSearch {
     private String contentType;
     private ZonedDateTime date;
     private String fileName;
+    private Long sizeFilter;
+
     private List<String> contentTypes;
 
     private Integer page;
@@ -105,5 +107,13 @@ public class DocumentSearch {
 
     public void setContentTypes(List<String> contentTypes) {
         this.contentTypes = contentTypes;
+    }
+
+    public Long getSizeFilter() {
+        return sizeFilter;
+    }
+
+    public void setSizeFilter(Long sizeFilter) {
+        this.sizeFilter = sizeFilter;
     }
 }
