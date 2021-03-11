@@ -1,11 +1,14 @@
 package com.blue.project.service;
 
 import com.blue.project.dao.documents.DocumentRepository;
+import com.blue.project.dto.SearchResults;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.documents.DocumentSearch;
 import com.blue.project.models.documents.Document;
 import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
+import name.mymiller.utils.ArrayUtils;
+import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -16,14 +19,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class DocumentServiceImpl implements DocumentService{
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private UserService userService;
@@ -71,8 +83,18 @@ public class DocumentServiceImpl implements DocumentService{
 
     @Override
     public DocumentSearch search(DocumentSearch docSearch) {
-        Pageable pageable;
-        Page<Document> results;
+        SearchResults<Document> results;
+
+        results = this.queryDocumentSearch(docSearch);
+
+        docSearch.setResults(results.getResults());
+        docSearch.setTotal(results.getTotalCount());
+        docSearch.setContentTypes(this.getDocumentContentTypes(docSearch));
+        return docSearch;
+    }
+
+    private SearchResults<Document> queryDocumentSearch(DocumentSearch docSearch) {
+        SearchResults<Document> results = new SearchResults<>();
         String username = docSearch.getUsername();
         User user = this.userService.getCurrentUser();
 
@@ -80,45 +102,81 @@ public class DocumentServiceImpl implements DocumentService{
             username = user.getUsername();
         }
 
-        if(StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
-            if(docSearch.getAscending()) {
-                pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize(), Sort.by(docSearch.getSort()).ascending());
-            } else {
-                pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize(), Sort.by(docSearch.getSort()).descending());
-            }
-        } else {
-            pageable = PageRequest.of(docSearch.getPage(),docSearch.getSize());
-        }
+        if(StringUtils.isNotNullOrEmpty(username)
+                || StringUtils.isNotNullOrEmpty(docSearch.getFileName())
+                || StringUtils.isNotNullOrEmpty(docSearch.getContentType())
+                || (docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0)) {
 
-        if(StringUtils.isNotNullOrEmpty(username) || StringUtils.isNotNullOrEmpty(docSearch.getFileName()) || StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
-            ExampleMatcher customExampleMatcher = ExampleMatcher.matching();
-            Document exampleDocument = Document.asNull();
+            CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+            CriteriaQuery<Document> criteriaQuery = criteriaBuilder.createQuery(Document.class);
+
+            Root<Document> documentRoot = criteriaQuery.from(Document.class);
+            Join<Document, User> userRoot = documentRoot.join("user", JoinType.INNER);
+            List<Predicate> predicates = new ArrayList<>();
 
             if(StringUtils.isNotNullOrEmpty(username)) {
-                customExampleMatcher = customExampleMatcher.withMatcher("user.username", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-                exampleDocument.setUser(User.from(username));
+                predicates.add(criteriaBuilder.like(documentRoot.get("user").get("username"),"%"+docSearch.getUsername()+"%"));
             }
 
             if(StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
-                customExampleMatcher = customExampleMatcher.withMatcher("fileName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-                exampleDocument.setFileName(docSearch.getFileName());
+                predicates.add(criteriaBuilder.like(documentRoot.get("fileName"),"%"+docSearch.getFileName()+"%"));
             }
 
             if(StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
-                customExampleMatcher = customExampleMatcher.withMatcher("contentType", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-                exampleDocument.setContentType(docSearch.getContentType());
+                predicates.add(criteriaBuilder.like(documentRoot.get("contentType"),"%"+docSearch.getContentType()+"%"));
+            }
+            if(docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0) {
+                predicates.add(criteriaBuilder.greaterThan(documentRoot.get("size"),docSearch.getSizeFilter()));
             }
 
-            Example<Document> example = Example.of(exampleDocument,customExampleMatcher);
+            Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            criteriaQuery.where(finalPredicate);
 
-            results = this.documentRepository.findAll(example, pageable);
+            if(StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
+                Path<Object> objectPath = null;
+                if(docSearch.getSort().equals("user.username")) {
+                    objectPath = userRoot.get("username");
+                } else {
+                    documentRoot.get(docSearch.getSort());
+                }
+                if (docSearch.getAscending()) {
+                    criteriaQuery.orderBy(criteriaBuilder.asc(objectPath));
+                } else {
+                    criteriaQuery.orderBy(criteriaBuilder.desc(objectPath));
+                }
+            }
+
+
+            TypedQuery<Document> query = entityManager.createQuery(criteriaQuery);
+            query.setFirstResult(docSearch.getPage() * docSearch.getSize());
+            query.setMaxResults(docSearch.getSize());
+
+            results.setResults(query.getResultList());
+
+            CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+            countQuery.select(criteriaBuilder.count(countQuery.from(Document.class)));
+            countQuery.where(finalPredicate);
+
+            results.setTotalCount(entityManager.createQuery(countQuery).getSingleResult());
+
         } else {
-            results = this.documentRepository.findAll(pageable);
+            Pageable pageable;
+
+            if(StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
+                if(docSearch.getAscending()) {
+                    pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize(), Sort.by(docSearch.getSort()).ascending());
+                } else {
+                    pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize(), Sort.by(docSearch.getSort()).descending());
+                }
+            } else {
+                pageable = PageRequest.of(docSearch.getPage(),docSearch.getSize());
+            }
+            Page<Document> docs = this.documentRepository.findAll(pageable);
+            results.setTotalCount(docs.getTotalElements());
+            results.setResults(docs.toList());
         }
-        docSearch.setResults(results.toList());
-        docSearch.setTotal(results.getTotalElements());
-        docSearch.setContentTypes(this.getDocumentContentTypes(docSearch));
-        return docSearch;
+
+        return results;
     }
 
     private List<String> getDocumentContentTypes(DocumentSearch docSearch) {
