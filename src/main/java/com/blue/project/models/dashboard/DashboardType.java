@@ -4,13 +4,11 @@ import com.blue.project.models.AbstractEntity;
 import com.blue.project.models.users.SecurityRole;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.util.Objects;
 
 @Table(name = "dashboard_type", schema = "dashboard", catalog = "dashboard")
 @Entity
 public class DashboardType extends AbstractEntity {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -111,15 +109,13 @@ public class DashboardType extends AbstractEntity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("DashboardType{");
-        sb.append("id=").append(id);
-        sb.append(", type='").append(type).append('\'');
-        sb.append(", rowspan=").append(rowspan);
-        sb.append(", colspan=").append(colspan);
-        sb.append(", data='").append(data).append('\'');
-        sb.append(", defaultItem=").append(defaultItem);
-        sb.append(", role=").append(role);
-        sb.append('}');
-        return sb.toString();
+        return "DashboardType{" + "id=" + id +
+                ", type='" + type + '\'' +
+                ", rowspan=" + rowspan +
+                ", colspan=" + colspan +
+                ", data='" + data + '\'' +
+                ", defaultItem=" + defaultItem +
+                ", role=" + role +
+                '}';
     }
 }

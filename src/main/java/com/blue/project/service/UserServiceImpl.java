@@ -272,9 +272,7 @@ public class UserServiceImpl implements UserService {
 
     public List<UserRole> getUserRoles(Long userId) {
         Map<Long, UserRole> map = ListUtils.safe(this.securityRoleRepository.findAll()).stream().map(role -> new UserRole(userId, role)).collect(Collectors.toMap(UserRole::getSecurityRoleId, Function.identity()));
-        ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(userId)).forEach(role -> {
-            map.get(role.getSecurityRole().getId()).setActive(true);
-        });
+        ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(userId)).forEach(role -> map.get(role.getSecurityRole().getId()).setActive(true));
 
         return ListUtils.mapValuesToList(map);
     }
@@ -285,13 +283,13 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User Id Mismatch");
         }
         Optional<User> user = this.userRepository.findById(userId);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new IllegalArgumentException("User not found");
         }
         List<UserSecurityRole> deleteList = new ArrayList<>();
         List<UserSecurityRole> saveList = new ArrayList<>();
 
-        roles.stream().forEach(role -> {
+        roles.forEach(role -> {
             UserSecurityRole roleFound = this.userSecurityRoleRepository.findFirstByUser_IdAndSecurityRole_Id(userId, role.getSecurityRoleId());
             if (roleFound != null) {
                 if (!role.getActive()) {
@@ -300,6 +298,7 @@ public class UserServiceImpl implements UserService {
             } else if (role.getActive()) {
                 UserSecurityRole newRole = new UserSecurityRole();
                 newRole.setUser(user.get());
+                //noinspection OptionalGetWithoutIsPresent
                 newRole.setSecurityRole(this.securityRoleRepository.findById(role.getSecurityRoleId()).get());
                 saveList.add(newRole);
             }

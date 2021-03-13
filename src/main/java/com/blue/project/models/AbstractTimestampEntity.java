@@ -35,6 +35,7 @@ public abstract class AbstractTimestampEntity extends AbstractEntity {
         this.lastUpdated = ZonedDateTime.now(ZoneOffset.UTC);
     }
 
+    @SuppressWarnings("unused")
     public ZonedDateTime getDateCreated() {
         return this.dateCreated;
     }
@@ -43,6 +44,7 @@ public abstract class AbstractTimestampEntity extends AbstractEntity {
         this.dateCreated = dateCreated;
     }
 
+    @SuppressWarnings("unused")
     public ZonedDateTime getLastUpdated() {
         return this.lastUpdated;
     }

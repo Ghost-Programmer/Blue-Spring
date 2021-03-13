@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +56,7 @@ public class DashboardServiceImpl implements DashboardService {
         }
 
         List<Long> currentIds = ListUtils.safe(this.getUserDashboardComponents().stream().map(Dashboard::getId).collect(Collectors.toList()));
-        List<Long> keepIds = ListUtils.safe(cards.stream().filter(card -> card.getId() != null).map(Dashboard::getId).collect(Collectors.toList()));
+        List<Long> keepIds = ListUtils.safe(cards.stream().map(Dashboard::getId).filter(Objects::nonNull).collect(Collectors.toList()));
 
         currentIds.removeAll(keepIds);
 

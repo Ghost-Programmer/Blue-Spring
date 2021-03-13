@@ -3,13 +3,11 @@ package com.blue.project.models.dashboard;
 import com.blue.project.models.AbstractEntity;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.util.Objects;
 
 @Table(name = "dashboard", schema = "dashboard", catalog = "dashboard")
 @Entity
 public class Dashboard extends AbstractEntity {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -110,15 +108,13 @@ public class Dashboard extends AbstractEntity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Dashboard{");
-        sb.append("id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", rowspan=").append(rowspan);
-        sb.append(", colspan=").append(colspan);
-        sb.append(", sort=").append(sort);
-        sb.append(", data='").append(data).append('\'');
-        sb.append(", type=").append(type);
-        sb.append('}');
-        return sb.toString();
+        return "Dashboard{" + "id=" + id +
+                ", userId=" + userId +
+                ", rowspan=" + rowspan +
+                ", colspan=" + colspan +
+                ", sort=" + sort +
+                ", data='" + data + '\'' +
+                ", type=" + type +
+                '}';
     }
 }

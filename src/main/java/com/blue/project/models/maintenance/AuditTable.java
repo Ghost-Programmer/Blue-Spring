@@ -125,15 +125,13 @@ public class AuditTable extends AbstractTimestampEntity implements Serializable 
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("AuditTable{");
-        sb.append("id=").append(id);
-        sb.append(", type=").append(type);
-        sb.append(", tableName='").append(tableName).append('\'');
-        sb.append(", user='").append(user).append('\'');
-        sb.append(", row='").append(row).append('\'');
-        sb.append(", timestamp=").append(timestamp);
-        sb.append(", rows=").append(rows);
-        sb.append('}');
-        return sb.toString();
+        return "AuditTable{" + "id=" + id +
+                ", type=" + type +
+                ", tableName='" + tableName + '\'' +
+                ", user='" + user + '\'' +
+                ", row='" + row + '\'' +
+                ", timestamp=" + timestamp +
+                ", rows=" + rows +
+                '}';
     }
 }

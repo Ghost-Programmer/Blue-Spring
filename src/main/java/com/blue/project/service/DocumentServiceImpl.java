@@ -135,11 +135,11 @@ public class DocumentServiceImpl implements DocumentService {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(documentRoot.get("dateCreated"), docSearch.getDate()));
             }
 
-            Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[0]));
             criteriaQuery.where(finalPredicate);
 
             if (StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
-                Path<Object> objectPath = null;
+                Path<Object> objectPath;
                 if (docSearch.getSort().equals("user.username")) {
                     objectPath = userRoot.get("username");
                 } else {

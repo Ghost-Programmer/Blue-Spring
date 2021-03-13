@@ -102,13 +102,11 @@ public class AuditRow extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("AuditRow{");
-        sb.append("id=").append(id);
-        sb.append(", auditTable=").append(auditTable);
-        sb.append(", field='").append(field).append('\'');
-        sb.append(", original='").append(original).append('\'');
-        sb.append(", change='").append(change).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "AuditRow{" + "id=" + id +
+                ", auditTable=" + auditTable +
+                ", field='" + field + '\'' +
+                ", original='" + original + '\'' +
+                ", change='" + change + '\'' +
+                '}';
     }
 }

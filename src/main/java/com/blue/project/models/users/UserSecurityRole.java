@@ -74,11 +74,9 @@ public class UserSecurityRole extends AbstractTimestampEntity implements Seriali
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("UserSecurityRole{");
-        sb.append("id=").append(id);
-        sb.append(", user=").append(user);
-        sb.append(", securityRole=").append(securityRole);
-        sb.append('}');
-        return sb.toString();
+        return "UserSecurityRole{" + "id=" + id +
+                ", user=" + user +
+                ", securityRole=" + securityRole +
+                '}';
     }
 }

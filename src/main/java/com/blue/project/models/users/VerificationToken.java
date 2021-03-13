@@ -114,14 +114,12 @@ public class VerificationToken extends AbstractTimestampEntity implements Serial
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("VerificationToken{");
-        sb.append("id=").append(id);
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", verification='").append(verification).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", expiration=").append(expiration);
-        sb.append(", valid=").append(valid);
-        sb.append('}');
-        return sb.toString();
+        return "VerificationToken{" + "id=" + id +
+                ", email='" + email + '\'' +
+                ", verification='" + verification + '\'' +
+                ", password='" + password + '\'' +
+                ", expiration=" + expiration +
+                ", valid=" + valid +
+                '}';
     }
 }

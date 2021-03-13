@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.io.File;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -31,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendTemplateMessage(String to, String subject, SimpleMailMessage template, String... templateArgs) {
-        String text = String.format(template.getText(), templateArgs);
+        String text = String.format(Objects.requireNonNull(template.getText()), templateArgs);
         sendMessage(to, subject, text);
     }
 

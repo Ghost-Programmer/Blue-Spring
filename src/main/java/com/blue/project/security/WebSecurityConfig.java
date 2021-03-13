@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static String[] PUBLIC_APIS = {
+    public static final String[] PUBLIC_APIS = {
             "/actuator/**",
             "/public/**",
             "/swagger-ui/**",
@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JdbcUserDetailsService();
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     public AuthenticationManager authenticationManagerBean() throws Exception {

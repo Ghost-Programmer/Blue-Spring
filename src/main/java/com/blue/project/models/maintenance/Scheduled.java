@@ -81,12 +81,10 @@ public class Scheduled extends AbstractTimestampEntity implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Scheduled{");
-        sb.append("id=").append(id);
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", start=").append(start);
-        sb.append(", end=").append(end);
-        sb.append('}');
-        return sb.toString();
+        return "Scheduled{" + "id=" + id +
+                ", description='" + description + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
     }
 }

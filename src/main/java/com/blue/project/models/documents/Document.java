@@ -187,12 +187,10 @@ public class Document extends AbstractTimestampEntity implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Document{");
-        sb.append("id=").append(id);
-        sb.append(", user=").append(user);
-        sb.append(", fileName='").append(fileName).append('\'');
-        sb.append(", contentType='").append(contentType).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "Document{" + "id=" + id +
+                ", user=" + user +
+                ", fileName='" + fileName + '\'' +
+                ", contentType='" + contentType + '\'' +
+                '}';
     }
 }

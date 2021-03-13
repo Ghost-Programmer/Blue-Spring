@@ -205,18 +205,16 @@ public class User extends AbstractTimestampEntity implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", enabled=").append(enabled);
-        sb.append(", accountExpired=").append(accountExpired);
-        sb.append(", passwordChangeRequired=").append(passwordChangeRequired);
-        sb.append(", accountLocked=").append(accountLocked);
-        sb.append(", accountVerified=").append(accountVerified);
-        sb.append(", accountComplete=").append(accountComplete);
-        sb.append(", accountRefreshed=").append(accountRefreshed);
-        sb.append('}');
-        return sb.toString();
+        return "User{" + "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", accountExpired=" + accountExpired +
+                ", passwordChangeRequired=" + passwordChangeRequired +
+                ", accountLocked=" + accountLocked +
+                ", accountVerified=" + accountVerified +
+                ", accountComplete=" + accountComplete +
+                ", accountRefreshed=" + accountRefreshed +
+                '}';
     }
 }

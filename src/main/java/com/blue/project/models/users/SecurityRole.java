@@ -110,14 +110,12 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("SecurityRole{");
-        sb.append("id=").append(id);
-        sb.append(", authority='").append(authority).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", category='").append(category).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", defaultRole=").append(defaultRole);
-        sb.append('}');
-        return sb.toString();
+        return "SecurityRole{" + "id=" + id +
+                ", authority='" + authority + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", defaultRole=" + defaultRole +
+                '}';
     }
 }
