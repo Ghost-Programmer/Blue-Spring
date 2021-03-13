@@ -21,17 +21,16 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class SystemServiceImpl implements SystemService{
-
-    @Autowired
-    private Environment environment;
+public class SystemServiceImpl implements SystemService {
 
     @Autowired
     BuildProperties buildProperties;
+    @Autowired
+    private Environment environment;
 
     @Override
     public SystemInfo getSystemInfo() {
-        return new SystemInfo(buildProperties,environment);
+        return new SystemInfo(buildProperties, environment);
     }
 
     @Override

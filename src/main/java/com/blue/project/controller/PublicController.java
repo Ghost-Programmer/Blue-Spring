@@ -1,9 +1,9 @@
 package com.blue.project.controller;
 
-import com.blue.project.dto.users.Registration;
 import com.blue.project.dto.ScheduledMaintenance;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.dto.system.SystemInfo;
+import com.blue.project.dto.users.Registration;
 import com.blue.project.service.DocumentService;
 import com.blue.project.service.MaintenanceService;
 import com.blue.project.service.SystemService;

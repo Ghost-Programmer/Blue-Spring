@@ -13,7 +13,6 @@ public class SystemStatus {
     private Double cpuLoad;
 
 
-
     public ZonedDateTime getDateTime() {
         return dateTime;
     }

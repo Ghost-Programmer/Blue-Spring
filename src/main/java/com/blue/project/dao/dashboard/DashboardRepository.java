@@ -13,6 +13,6 @@ public interface DashboardRepository extends JpaRepository<Dashboard, Long>, Jpa
     List<Dashboard> findAllByUserIdOrderBySortAsc(Long userId);
 
     @Modifying
-    @Query(value = "delete from dashboard.dashboard where id in (:idList)",nativeQuery = true)
+    @Query(value = "delete from dashboard.dashboard where id in (:idList)", nativeQuery = true)
     void deleteAllInIdList(@Param("idList") List<Long> idList);
 }

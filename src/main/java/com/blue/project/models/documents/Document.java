@@ -54,6 +54,38 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         return serialVersionUID;
     }
 
+    public static Document from(String username, String fileName, String contentType, ZonedDateTime date) {
+        Document doc = new Document();
+
+        doc.setContentType(contentType);
+        doc.setFileName(fileName);
+
+        doc.setUuid(null);
+        doc.setDocument(null);
+        doc.setId(null);
+        doc.setDateCreated(date);
+        if (username == null || username.isEmpty()) {
+            doc.setUser(null);
+        } else {
+            doc.setUser(User.from(username));
+        }
+        return doc;
+    }
+
+    public static Document asNull() {
+        Document doc = new Document();
+
+        doc.setContentType(null);
+        doc.setFileName(null);
+
+        doc.setUuid(null);
+        doc.setDocument(null);
+        doc.setId(null);
+        doc.setDateCreated(null);
+        doc.setUser(null);
+        return doc;
+    }
+
     public Long getId() {
         return id;
     }
@@ -125,6 +157,7 @@ public class Document extends AbstractTimestampEntity implements Serializable {
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
     @PrePersist
     public void prePersist() {
         this.setUuid(UUID.randomUUID().toString());
@@ -135,38 +168,6 @@ public class Document extends AbstractTimestampEntity implements Serializable {
         this.lock = false;
 
         this.sizeString = UnitOfMemory.measurement(this.size);
-    }
-
-    public static Document from(String username, String fileName, String contentType, ZonedDateTime date) {
-        Document doc = new Document();
-
-        doc.setContentType(contentType);
-        doc.setFileName(fileName);
-
-        doc.setUuid(null);
-        doc.setDocument(null);
-        doc.setId(null);
-        doc.setDateCreated(date);
-        if(username == null || username.isEmpty()) {
-            doc.setUser(null);
-        } else {
-            doc.setUser(User.from(username));
-        }
-        return doc;
-    }
-
-    public static Document asNull() {
-        Document doc = new Document();
-
-        doc.setContentType(null);
-        doc.setFileName(null);
-
-        doc.setUuid(null);
-        doc.setDocument(null);
-        doc.setId(null);
-        doc.setDateCreated(null);
-        doc.setUser(null);
-        return doc;
     }
 
     @Override

@@ -10,9 +10,9 @@ import java.time.ZonedDateTime;
 @JsonPropertyOrder({"status", "code", "error", "message", "timestamp"})
 public class ErrorResponse {
 
+    private final ZonedDateTime timestamp;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Throwable throwable;
-    private final ZonedDateTime timestamp;
     private int status;
     private HttpStatus code;
     private String error;

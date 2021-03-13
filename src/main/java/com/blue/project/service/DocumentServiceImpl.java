@@ -9,7 +9,10 @@ import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
 import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,7 +33,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class DocumentServiceImpl implements DocumentService{
+public class DocumentServiceImpl implements DocumentService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -56,7 +59,7 @@ public class DocumentServiceImpl implements DocumentService{
             doc.setSize(Integer.toUnsignedLong(file.getBytes().length));
 
             this.documentRepository.save(doc);
-        } catch(IOException e) {
+        } catch (IOException e) {
             status.setOk(false);
             status.setMessage(e.getMessage());
         }
@@ -67,16 +70,16 @@ public class DocumentServiceImpl implements DocumentService{
     public ResponseEntity<byte[]> downloadDocument(Long documentId) {
         User user = this.userService.getCurrentUser();
 
-        Document doc = this.documentRepository.findFirstByIdAndUser(documentId,user);
+        Document doc = this.documentRepository.findFirstByIdAndUser(documentId, user);
 
-        return this.downloadResponseEntity(doc.getDocument(),doc.getFileName());
+        return this.downloadResponseEntity(doc.getDocument(), doc.getFileName());
     }
 
     @Override
     public ResponseEntity<byte[]> downloadDocumentByUuid(String uuid) {
         Document doc = this.documentRepository.findFirstByUuid(uuid);
 
-        return this.downloadResponseEntity(doc.getDocument(),doc.getFileName());
+        return this.downloadResponseEntity(doc.getDocument(), doc.getFileName());
     }
 
     @Override
@@ -96,11 +99,11 @@ public class DocumentServiceImpl implements DocumentService{
         String username = docSearch.getUsername();
         User user = this.userService.getCurrentUser();
 
-        if(!this.userService.hasAuthority(user,SecurityRole.ROLE_DOCUMENT_MANAGER)) {
+        if (!this.userService.hasAuthority(user, SecurityRole.ROLE_DOCUMENT_MANAGER)) {
             username = user.getUsername();
         }
 
-        if(StringUtils.isNotNullOrEmpty(username)
+        if (StringUtils.isNotNullOrEmpty(username)
                 || StringUtils.isNotNullOrEmpty(docSearch.getFileName())
                 || StringUtils.isNotNullOrEmpty(docSearch.getContentType())
                 || (docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0)
@@ -113,31 +116,31 @@ public class DocumentServiceImpl implements DocumentService{
             Join<Document, User> userRoot = documentRoot.join("user", JoinType.INNER);
             List<Predicate> predicates = new ArrayList<>();
 
-            if(StringUtils.isNotNullOrEmpty(username)) {
-                predicates.add(criteriaBuilder.like(documentRoot.get("user").get("username"),"%"+docSearch.getUsername()+"%"));
+            if (StringUtils.isNotNullOrEmpty(username)) {
+                predicates.add(criteriaBuilder.like(documentRoot.get("user").get("username"), "%" + docSearch.getUsername() + "%"));
             }
 
-            if(StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
-                predicates.add(criteriaBuilder.like(documentRoot.get("fileName"),"%"+docSearch.getFileName()+"%"));
+            if (StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
+                predicates.add(criteriaBuilder.like(documentRoot.get("fileName"), "%" + docSearch.getFileName() + "%"));
             }
 
-            if(StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
-                predicates.add(criteriaBuilder.equal(documentRoot.get("contentType"),docSearch.getContentType()));
+            if (StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
+                predicates.add(criteriaBuilder.equal(documentRoot.get("contentType"), docSearch.getContentType()));
             }
-            if(docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(documentRoot.get("size"),docSearch.getSizeFilter()));
+            if (docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(documentRoot.get("size"), docSearch.getSizeFilter()));
             }
 
-            if(docSearch.getDate() != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(documentRoot.get("dateCreated"),docSearch.getDate()));
+            if (docSearch.getDate() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(documentRoot.get("dateCreated"), docSearch.getDate()));
             }
 
             Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             criteriaQuery.where(finalPredicate);
 
-            if(StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
+            if (StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
                 Path<Object> objectPath = null;
-                if(docSearch.getSort().equals("user.username")) {
+                if (docSearch.getSort().equals("user.username")) {
                     objectPath = userRoot.get("username");
                 } else {
                     objectPath = documentRoot.get(docSearch.getSort());
@@ -165,14 +168,14 @@ public class DocumentServiceImpl implements DocumentService{
         } else {
             Pageable pageable;
 
-            if(StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
-                if(docSearch.getAscending()) {
+            if (StringUtils.isNotNullOrEmpty(docSearch.getSort())) {
+                if (docSearch.getAscending()) {
                     pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize(), Sort.by(docSearch.getSort()).ascending());
                 } else {
                     pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize(), Sort.by(docSearch.getSort()).descending());
                 }
             } else {
-                pageable = PageRequest.of(docSearch.getPage(),docSearch.getSize());
+                pageable = PageRequest.of(docSearch.getPage(), docSearch.getSize());
             }
             Page<Document> docs = this.documentRepository.findAll(pageable);
             results.setTotalCount(docs.getTotalElements());
@@ -189,27 +192,27 @@ public class DocumentServiceImpl implements DocumentService{
         Long size = 0L;
         ZonedDateTime dateCreated = ZonedDateTime.now();
 
-        if(StringUtils.isNotNullOrEmpty(docSearch.getUsername())) {
-            username = "%"+docSearch.getUsername()+"%";
+        if (StringUtils.isNotNullOrEmpty(docSearch.getUsername())) {
+            username = "%" + docSearch.getUsername() + "%";
         }
 
-        if(StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
-            filename = "%"+docSearch.getFileName()+"%";
+        if (StringUtils.isNotNullOrEmpty(docSearch.getFileName())) {
+            filename = "%" + docSearch.getFileName() + "%";
         }
 
-        if(StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
-            contentType = "%"+docSearch.getContentType()+"%";
+        if (StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
+            contentType = "%" + docSearch.getContentType() + "%";
         }
 
-        if(docSearch.getSizeFilter() != null) {
+        if (docSearch.getSizeFilter() != null) {
             size = docSearch.getSizeFilter();
         }
 
-        if(docSearch.getDate() != null) {
+        if (docSearch.getDate() != null) {
             dateCreated = docSearch.getDate();
         }
 
-        return this.documentRepository.findAllContentTypesByDocSearch(username,filename,contentType,dateCreated,size);
+        return this.documentRepository.findAllContentTypesByDocSearch(username, filename, contentType, dateCreated, size);
     }
 
     private ResponseEntity<byte[]> downloadResponseEntity(byte[] body, String fileName) {
@@ -224,7 +227,7 @@ public class DocumentServiceImpl implements DocumentService{
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return new ResponseEntity <>(body, headers, HttpStatus.OK);
+        return new ResponseEntity<>(body, headers, HttpStatus.OK);
     }
 
     private ResponseEntity<byte[]> mediaTypeResponseEntity(byte[] body) {
@@ -237,20 +240,20 @@ public class DocumentServiceImpl implements DocumentService{
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return new ResponseEntity <>(body, headers, HttpStatus.OK);
+        return new ResponseEntity<>(body, headers, HttpStatus.OK);
     }
 
     public StatusMessage deleteDocument(Long id) {
         StatusMessage status = new StatusMessage();
         status.setOk(true);
 
-        User user  = this.userService.getCurrentUser();
+        User user = this.userService.getCurrentUser();
         Optional<Document> optionalDocument = this.documentRepository.findById(id);
-        if(optionalDocument.isPresent() && optionalDocument.get().getUser().getId().equals(user.getId())) {
+        if (optionalDocument.isPresent() && optionalDocument.get().getUser().getId().equals(user.getId())) {
             this.documentRepository.delete(optionalDocument.get());
-        } else if(optionalDocument.isPresent() && this.userService.hasAuthority(user,SecurityRole.ROLE_DOCUMENT_MANAGER)) {
+        } else if (optionalDocument.isPresent() && this.userService.hasAuthority(user, SecurityRole.ROLE_DOCUMENT_MANAGER)) {
             this.documentRepository.delete(optionalDocument.get());
-        } else if(optionalDocument.isPresent()){
+        } else if (optionalDocument.isPresent()) {
             status.setOk(false);
             status.setMessage("error.not_authorized");
         } else {

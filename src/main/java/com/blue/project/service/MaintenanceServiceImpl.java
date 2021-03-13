@@ -21,7 +21,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     public ScheduledMaintenance getNextScheduledMaintenance() {
         Scheduled maintenance = this.scheduleRepository.findFirstByStartGreaterThanEqualOrderByStartAsc(ZonedDateTime.now());
 
-        if(maintenance == null) {
+        if (maintenance == null) {
             return null;
         } else return new ScheduledMaintenance(maintenance);
     }

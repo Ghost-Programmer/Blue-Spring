@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.time.ZonedDateTime;
 
-public interface ScheduleRepository  extends JpaRepository<Scheduled, Long>, JpaSpecificationExecutor<Scheduled> {
+public interface ScheduleRepository extends JpaRepository<Scheduled, Long>, JpaSpecificationExecutor<Scheduled> {
 
     Scheduled findFirstByStartGreaterThanEqualOrderByStartAsc(ZonedDateTime zonedDateTime);
 }

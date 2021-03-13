@@ -30,7 +30,7 @@ public class JdbcUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        if(user == null) {
+        if (user == null) {
             return true;
         }
         return !user.getAccountExpired();
@@ -38,7 +38,7 @@ public class JdbcUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        if(user == null) {
+        if (user == null) {
             return true;
         }
         return !user.getAccountLocked();
@@ -46,7 +46,7 @@ public class JdbcUserDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        if(user == null) {
+        if (user == null) {
             return true;
         }
         return user.getEnabled();
@@ -54,7 +54,7 @@ public class JdbcUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if(user == null) {
+        if (user == null) {
             return true;
         }
         return user.getEnabled();

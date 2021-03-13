@@ -15,7 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class ProjectApplication {
 
 
-
     public static void main(String[] args) {
         Nadia.getInstance();
         SpringApplication.run(ProjectApplication.class, args);

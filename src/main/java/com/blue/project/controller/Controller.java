@@ -13,6 +13,6 @@ public class Controller {
 
     @GetMapping("/help")
     public StatusMessage getSiteLIst() {
-        return new StatusMessage("API is Working",true);
+        return new StatusMessage("API is Working", true);
     }
 }

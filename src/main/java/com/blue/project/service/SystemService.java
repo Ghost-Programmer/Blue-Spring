@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface SystemService {
     SystemInfo getSystemInfo();
+
     List<SystemStatus> getSystemStatus();
+
     SystemStatusReport getCurrentSystemStatus();
 }

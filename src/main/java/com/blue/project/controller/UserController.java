@@ -1,7 +1,7 @@
 package com.blue.project.controller;
 
-import com.blue.project.dto.users.ChangePassword;
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.dto.users.ChangePassword;
 import com.blue.project.dto.users.ChangeUserPassword;
 import com.blue.project.dto.users.UserRole;
 import com.blue.project.dto.users.UserSearch;
@@ -59,7 +59,7 @@ public class UserController {
     @RolesAllowed("ROLE_USER_MANAGEMENT")
     @PutMapping("{id}/roles")
     public List<UserRole> putUserRoles(@PathVariable("id") long userId, @RequestBody List<UserRole> roles) {
-        return this.userService.putUserRoles(userId,roles);
+        return this.userService.putUserRoles(userId, roles);
     }
 
     @RolesAllowed("ROLE_USER")

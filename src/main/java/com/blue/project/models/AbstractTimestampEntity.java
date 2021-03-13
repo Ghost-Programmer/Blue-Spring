@@ -1,8 +1,8 @@
 package com.blue.project.models;
 
+import com.blue.project.View.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.blue.project.View.Views;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -22,6 +22,9 @@ public abstract class AbstractTimestampEntity extends AbstractEntity {
     @Column(name = "last_updated", nullable = false)
     private ZonedDateTime lastUpdated;
 
+    public AbstractTimestampEntity() {
+    }
+
     @PrePersist
     protected void onCreate() {
         this.dateCreated = this.lastUpdated = ZonedDateTime.now(ZoneOffset.UTC);
@@ -36,13 +39,12 @@ public abstract class AbstractTimestampEntity extends AbstractEntity {
         return this.dateCreated;
     }
 
-    public void setDateCreated(ZonedDateTime dateCreated) { this.dateCreated = dateCreated; }
+    public void setDateCreated(ZonedDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public ZonedDateTime getLastUpdated() {
         return this.lastUpdated;
-    }
-
-    public AbstractTimestampEntity() {
     }
 
 }

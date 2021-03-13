@@ -1,8 +1,8 @@
 package com.blue.project.dao.user;
 
+import com.blue.project.models.users.UserSecurityRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import com.blue.project.models.users.UserSecurityRole;
 
 import java.util.List;
 

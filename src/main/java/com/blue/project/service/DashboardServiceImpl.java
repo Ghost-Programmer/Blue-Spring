@@ -8,7 +8,6 @@ import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
 import name.mymiller.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class DashboardServiceImpl implements DashboardService{
+public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private UserService userService;
@@ -35,11 +34,11 @@ public class DashboardServiceImpl implements DashboardService{
 
         List<Dashboard> dashboards = ListUtils.safe(this.dashboardRepository.findAllByUserIdOrderBySortAsc(user.getId()));
 
-        if(ListUtils.isEmpty(dashboards)) {
+        if (ListUtils.isEmpty(dashboards)) {
             dashboards = this.getDefaultUserComponents(user);
-            if(ListUtils.notEmpty(dashboards)) {
-                for(int i = 0; i < dashboards.size();i++) {
-                    dashboards.get(i).setSort(i+1);
+            if (ListUtils.notEmpty(dashboards)) {
+                for (int i = 0; i < dashboards.size(); i++) {
+                    dashboards.get(i).setSort(i + 1);
                 }
                 dashboards = this.dashboardRepository.saveAll(dashboards);
             }
@@ -51,8 +50,8 @@ public class DashboardServiceImpl implements DashboardService{
     public List<Dashboard> saveUserDashboardComponents(List<Dashboard> cards) {
         User user = this.userService.getCurrentUser();
         cards = ListUtils.safe(cards).stream().filter(card -> card.getUserId() == user.getId()).collect(Collectors.toList());
-        for(int i = 0 ; i < cards.size(); i++) {
-            cards.get(i).setSort(i+1);
+        for (int i = 0; i < cards.size(); i++) {
+            cards.get(i).setSort(i + 1);
         }
 
         List<Long> currentIds = ListUtils.safe(this.getUserDashboardComponents().stream().map(Dashboard::getId).collect(Collectors.toList()));

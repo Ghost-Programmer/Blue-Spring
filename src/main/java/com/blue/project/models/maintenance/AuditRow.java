@@ -29,7 +29,7 @@ public class AuditRow extends AbstractEntity implements Serializable {
     public AuditRow() {
     }
 
-    public AuditRow( AuditTable auditTable, String field, String original, String change) {
+    public AuditRow(AuditTable auditTable, String field, String original, String change) {
         this.auditTable = auditTable;
         this.field = field;
         this.original = original;
