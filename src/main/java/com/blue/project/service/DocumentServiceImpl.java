@@ -123,7 +123,7 @@ public class DocumentServiceImpl implements DocumentService{
             }
 
             if(StringUtils.isNotNullOrEmpty(docSearch.getContentType())) {
-                predicates.add(criteriaBuilder.like(documentRoot.get("contentType"),"%"+docSearch.getContentType()+"%"));
+                predicates.add(criteriaBuilder.equal(documentRoot.get("contentType"),docSearch.getContentType()));
             }
             if(docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0) {
                 predicates.add(criteriaBuilder.greaterThan(documentRoot.get("size"),docSearch.getSizeFilter()));
@@ -137,7 +137,7 @@ public class DocumentServiceImpl implements DocumentService{
                 if(docSearch.getSort().equals("user.username")) {
                     objectPath = userRoot.get("username");
                 } else {
-                    documentRoot.get(docSearch.getSort());
+                    objectPath = documentRoot.get(docSearch.getSort());
                 }
                 if (docSearch.getAscending()) {
                     criteriaQuery.orderBy(criteriaBuilder.asc(objectPath));
