@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 
@@ -21,6 +22,12 @@ public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSp
             " join user.user u on u.id = d.user_id " +
             "    where u.username like :username " +
             "    and d.filename like :filename " +
+            "    and d.date_created < :dateCreated " +
+            "    and d.size > :size " +
             "    and d.content_type like :contentType",nativeQuery = true)
-    List<String> findAllContentTypesByUsernameAndFileNameAndContentType(@Param("username")String username, @Param("filename")String filename, @Param("contentType")String contentType);
+    List<String> findAllContentTypesByDocSearch(@Param("username")String username,
+                                                @Param("filename")String filename,
+                                                @Param("contentType")String contentType,
+                                                @Param("dateCreated")ZonedDateTime dateCreated,
+                                                @Param("size")Long size);
 }

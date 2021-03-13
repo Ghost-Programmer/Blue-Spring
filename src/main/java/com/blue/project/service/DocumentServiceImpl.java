@@ -7,8 +7,6 @@ import com.blue.project.dto.documents.DocumentSearch;
 import com.blue.project.models.documents.Document;
 import com.blue.project.models.users.SecurityRole;
 import com.blue.project.models.users.User;
-import name.mymiller.utils.ArrayUtils;
-import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -25,8 +23,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,7 +103,8 @@ public class DocumentServiceImpl implements DocumentService{
         if(StringUtils.isNotNullOrEmpty(username)
                 || StringUtils.isNotNullOrEmpty(docSearch.getFileName())
                 || StringUtils.isNotNullOrEmpty(docSearch.getContentType())
-                || (docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0)) {
+                || (docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0)
+                || docSearch.getDate() != null) {
 
             CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
             CriteriaQuery<Document> criteriaQuery = criteriaBuilder.createQuery(Document.class);
@@ -126,7 +125,11 @@ public class DocumentServiceImpl implements DocumentService{
                 predicates.add(criteriaBuilder.equal(documentRoot.get("contentType"),docSearch.getContentType()));
             }
             if(docSearch.getSizeFilter() != null && docSearch.getSizeFilter() > 0) {
-                predicates.add(criteriaBuilder.greaterThan(documentRoot.get("size"),docSearch.getSizeFilter()));
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(documentRoot.get("size"),docSearch.getSizeFilter()));
+            }
+
+            if(docSearch.getDate() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(documentRoot.get("dateCreated"),docSearch.getDate()));
             }
 
             Predicate finalPredicate = criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -183,6 +186,8 @@ public class DocumentServiceImpl implements DocumentService{
         String username = "%";
         String filename = "%";
         String contentType = "%";
+        Long size = 0L;
+        ZonedDateTime dateCreated = ZonedDateTime.now();
 
         if(StringUtils.isNotNullOrEmpty(docSearch.getUsername())) {
             username = "%"+docSearch.getUsername()+"%";
@@ -196,7 +201,15 @@ public class DocumentServiceImpl implements DocumentService{
             contentType = "%"+docSearch.getContentType()+"%";
         }
 
-        return this.documentRepository.findAllContentTypesByUsernameAndFileNameAndContentType(username,filename,contentType);
+        if(docSearch.getSizeFilter() != null) {
+            size = docSearch.getSizeFilter();
+        }
+
+        if(docSearch.getDate() != null) {
+            dateCreated = docSearch.getDate();
+        }
+
+        return this.documentRepository.findAllContentTypesByDocSearch(username,filename,contentType,dateCreated,size);
     }
 
     private ResponseEntity<byte[]> downloadResponseEntity(byte[] body, String fileName) {
