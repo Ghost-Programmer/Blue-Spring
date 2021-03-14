@@ -20,3 +20,4 @@ INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `descriptio
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_MONITOR', 'System Monitor', 'Dev', 'Monitor System status.', 0, now());
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_APPROVER', 'Document Approved', 'Staff', 'Approves Proof Documents', 0, now());
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_DOCUMENT_MANAGER', 'Document Manager', 'Staff', 'Manage Document database.', 0, now());
+INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_ADMIN_MAINTENANCE', 'Maintenance Administration', 'Admin', 'Manage Maintenance Settings.', 0, now());
