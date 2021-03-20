@@ -1,7 +1,7 @@
 package com.blue.project.service;
 
-import com.blue.project.dto.system.SystemInfo;
-import com.blue.project.dto.system.SystemStatus;
+import com.blue.project.modules.maintenance.dto.SystemInfo;
+import com.blue.project.modules.maintenance.dto.SystemStatus;
 import name.mymiller.nadia.Nadia;
 import name.mymiller.nadia.constants.Fields;
 import name.mymiller.nadia.constants.Types;

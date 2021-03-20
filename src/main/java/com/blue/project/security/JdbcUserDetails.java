@@ -1,6 +1,6 @@
 package com.blue.project.security;
 
-import com.blue.project.models.users.User;
+import com.blue.project.modules.users.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

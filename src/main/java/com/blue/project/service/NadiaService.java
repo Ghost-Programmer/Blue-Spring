@@ -1,10 +1,10 @@
 package com.blue.project.service;
 
-import com.blue.project.dao.maintenance.AuditRowRepository;
-import com.blue.project.dao.maintenance.AuditTableRepository;
-import com.blue.project.models.maintenance.AuditRow;
-import com.blue.project.models.maintenance.AuditTable;
-import com.blue.project.models.maintenance.AuditTableType;
+import com.blue.project.modules.maintenance.dao.AuditRowRepository;
+import com.blue.project.modules.maintenance.dao.AuditTableRepository;
+import com.blue.project.modules.maintenance.models.AuditRow;
+import com.blue.project.modules.maintenance.models.AuditTable;
+import com.blue.project.modules.maintenance.models.AuditTableType;
 import name.mymiller.nadia.Nadia;
 import name.mymiller.nadia.dao.DaoEvent;
 import name.mymiller.nadia.dto.EntityAudit;

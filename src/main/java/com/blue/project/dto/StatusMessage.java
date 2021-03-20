@@ -16,15 +16,17 @@ public class StatusMessage {
         return message;
     }
 
-    public void setMessage(String message) {
+    public StatusMessage setMessage(String message) {
         this.message = message;
+        return this;
     }
 
     public Boolean getOk() {
         return ok;
     }
 
-    public void setOk(Boolean ok) {
+    public StatusMessage setOk(Boolean ok) {
         this.ok = ok;
+        return this;
     }
 }

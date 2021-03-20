@@ -1,7 +1,7 @@
 package com.blue.project.security;
 
-import com.blue.project.dao.user.UserRepository;
-import com.blue.project.models.users.User;
+import com.blue.project.modules.users.dao.UserRepository;
+import com.blue.project.modules.users.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
