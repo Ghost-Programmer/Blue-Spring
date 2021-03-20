@@ -13,7 +13,7 @@ public interface MaintenanceService {
 
     MaintenanceSearch search(MaintenanceSearch search);
 
-    StatusMessage saveScheduledMaintenance(Scheduled scheduled);
+    Scheduled saveScheduledMaintenance(Scheduled scheduled);
     StatusMessage deleteScheduledMaintenance(Scheduled scheduled);
     StatusMessage deleteScheduledMaintenance(Long scheduledId);
 }

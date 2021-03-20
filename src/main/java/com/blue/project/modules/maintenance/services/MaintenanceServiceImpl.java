@@ -53,9 +53,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         return search;
     }
 
-    public StatusMessage saveScheduledMaintenance(Scheduled scheduled) {
-        this.scheduleRepository.save(scheduled);
-        return new StatusMessage().setOk(true);
+    public Scheduled saveScheduledMaintenance(Scheduled scheduled) {
+        return this.scheduleRepository.save(scheduled);
     }
 
     public StatusMessage deleteScheduledMaintenance(Scheduled scheduled) {
