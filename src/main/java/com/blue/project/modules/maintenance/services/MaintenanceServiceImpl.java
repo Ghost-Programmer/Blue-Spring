@@ -1,23 +1,34 @@
 package com.blue.project.modules.maintenance.services;
 
+import com.blue.project.modules.calendar.annontation.CalendarServiceProvider;
+import com.blue.project.modules.calendar.dto.EventContext;
+import com.blue.project.modules.calendar.dto.EventData;
 import com.blue.project.modules.maintenance.dao.ScheduleRepository;
 import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.maintenance.dto.MaintenanceSearch;
 import com.blue.project.modules.maintenance.models.Scheduled;
+import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@CalendarServiceProvider
 @Service
 @Transactional
 public class MaintenanceServiceImpl implements MaintenanceService {
 
+    public static final String ORGANIZATION = "The Jockey Club";
+    public static final String SYSTEM_MAINTENANCE = "System Maintenance";
     @Autowired
     private ScheduleRepository scheduleRepository;
 
@@ -68,5 +79,29 @@ public class MaintenanceServiceImpl implements MaintenanceService {
             return this.deleteScheduledMaintenance(scheduled.get());
         }
         return new StatusMessage().setOk(false).setMessage("Scheduled: " + scheduledId + " not found.");
+    }
+
+    @Override
+    public List<EventData> getEventData(ZonedDateTime start, ZonedDateTime end) {
+        List<Scheduled> maintenanceList = ListUtils.safe(this.scheduleRepository.findAllByStartBetween(start, end));
+        return maintenanceList.stream()
+                .map(com.blue.project.modules.maintenance.dto.EventData::new)
+                .map(eventData -> {
+                    eventData.setOrganization(ORGANIZATION);
+                    eventData.setType(SYSTEM_MAINTENANCE);
+                    return eventData;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EventContext> getEventContext() {
+        List<EventContext> contextList = new ArrayList<>();
+        EventContext context = new EventContext();
+        context.setOrganization(ORGANIZATION);
+        context.setType(SYSTEM_MAINTENANCE);
+        contextList.add(context);
+
+        return contextList;
     }
 }
