@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +41,7 @@ public class CalendarServiceImpl implements CalendarService {
                 return (CalendarServiceProviderInterface)bean;
             }
             return null;
-        }).collect(Collectors.toList());
+        }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Override
@@ -55,11 +53,10 @@ public class CalendarServiceImpl implements CalendarService {
             eventDataList.addAll(provider.getEventData(start,end));
         });
 
-        eventDataList.forEach(eventData -> {
+        return eventDataList.stream().map(eventData -> {
             eventData.setColor(this.getEventContextColor(eventData.getOrganization(),eventData.getType()));
-        });
-
-        return eventDataList;
+            return eventData;
+        }).sorted(Comparator.comparing(EventData::getStartDate)).collect(Collectors.toList());
     }
 
     private String getEventContextColor(String organization, String type) {
