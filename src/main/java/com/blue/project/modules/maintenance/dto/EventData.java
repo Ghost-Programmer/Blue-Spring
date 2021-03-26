@@ -6,7 +6,7 @@ public class EventData extends com.blue.project.modules.calendar.dto.EventData {
     public EventData(Scheduled scheduled)  {
         this.setStartDate(scheduled.getStart());
         this.setEndDate(scheduled.getEnd());
-        this.setTitle(scheduled.getDescription());
+        this.setTitle("System Maintenance: " + scheduled.getDescription());
         this.setDesc(null);
         this.setCreatedAt(scheduled.getDateCreated());
     }
