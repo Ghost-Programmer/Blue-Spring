@@ -1,4 +1,4 @@
-package com.blue.project.quartz;
+package com.blue.project.config;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;

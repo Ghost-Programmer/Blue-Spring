@@ -1,4 +1,4 @@
-package com.blue.project.quartz;
+package com.blue.project.config;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
