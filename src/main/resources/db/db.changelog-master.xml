@@ -11,6 +11,7 @@
     <include file="changes/0000100-schema-dashboard.sql" relativeToChangelogFile="true"/>
     <include file="changes/0000200-schema-maintenance.sql" relativeToChangelogFile="true"/>
     <include file="changes/0000300-schema-documents.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000400-schema-quartz.sql" relativeToChangelogFile="true"/>
 
     <include file="changes/0100100-import-user.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
