@@ -1,8 +1,10 @@
 package com.blue.project.modules.quartz.services;
 
+import com.blue.project.modules.quartz.dto.QuartzJobInfo;
 import com.blue.project.modules.quartz.jobs.HelloWorldJob;
 import name.mymiller.utils.ListUtils;
 import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -166,13 +169,62 @@ public class QuartzService {
                 .findFirst().isPresent();
     }
 
+    public String getJobState(String jobName, String group) throws SchedulerException {
 
-    public String getJobState(String jobName, String group) {
+        List<? extends Trigger> triggers = this.getTriggersOfJob(jobName, group);
+
+        if(triggers != null && triggers.size() > 0){
+            for (Trigger trigger : triggers) {
+                Trigger.TriggerState triggerState = this.schedulerFactoryBean.getScheduler().getTriggerState(trigger.getKey());
+
+                if (Trigger.TriggerState.PAUSED.equals(triggerState)) {
+                    return "PAUSED";
+                }else if (Trigger.TriggerState.BLOCKED.equals(triggerState)) {
+                    return "BLOCKED";
+                }else if (Trigger.TriggerState.COMPLETE.equals(triggerState)) {
+                    return "COMPLETE";
+                }else if (Trigger.TriggerState.ERROR.equals(triggerState)) {
+                    return "ERROR";
+                }else if (Trigger.TriggerState.NONE.equals(triggerState)) {
+                    return "NONE";
+                }else if (Trigger.TriggerState.NORMAL.equals(triggerState)) {
+                    return "SCHEDULED";
+                }
+            }
+        }
+
         return null;
+    }
+
+    public List<QuartzJobInfo> getAllJobs() throws SchedulerException {
+        List<QuartzJobInfo> info = new ArrayList<>();
+
+        Scheduler scheduler = this.schedulerFactoryBean.getScheduler();
+
+        for(String groupName : scheduler.getJobGroupNames()) {
+            for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
+                List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+                if(triggers.size() > 0) {
+                    info.add(new QuartzJobInfo(jobKey.getName(),
+                            jobKey.getGroup(),
+                            this.getJobState(jobKey.getName(),
+                                    jobKey.getGroup()),
+                            triggers.get(0)));
+                } else {
+                    info.add(new QuartzJobInfo(jobKey.getName(),
+                            jobKey.getGroup(),
+                            this.getJobState(jobKey.getName(),
+                                    jobKey.getGroup())));
+                }
+            }
+        }
+
+        return info;
     }
 
 
     private Calendar getCalendar(String calendarName) {
+        //TODO: Get Calendar
         return null;
     }
 }
