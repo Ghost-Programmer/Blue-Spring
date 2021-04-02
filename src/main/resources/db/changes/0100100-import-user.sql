@@ -15,3 +15,4 @@ INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_cr
 INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '5', now(), now());
 INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '6', now(), now());
 INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '9', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '10', now(), now());

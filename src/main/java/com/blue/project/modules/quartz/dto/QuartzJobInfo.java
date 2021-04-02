@@ -1,5 +1,6 @@
 package com.blue.project.modules.quartz.dto;
 
+import org.quartz.JobDetail;
 import org.quartz.Trigger;
 
 import java.time.ZoneId;
@@ -12,22 +13,30 @@ public class QuartzJobInfo {
     private String jobName;
     private String group;
     private String status;
+    private String triggerDescription;
+    private String jobDescription;
+    private String calendar;
 
-    public QuartzJobInfo(String jobName, String group, String status, Trigger trigger) {
-        this.jobName = jobName;
-        this.group = group;
+    public QuartzJobInfo(JobDetail jobDetail, Trigger trigger, String status) {
+        this.jobName = jobDetail.getKey().getName();
+        this.group = jobDetail.getKey().getGroup();
+        this.jobDescription = jobDetail.getDescription();
+        this.triggerDescription = trigger.getDescription();
+        this.calendar = trigger.getCalendarName();
         this.status = status;
-
         this.startTime = ZonedDateTime.ofInstant(trigger.getStartTime().toInstant(), ZoneId.systemDefault());
         this.nextFireTime = ZonedDateTime.ofInstant(trigger.getNextFireTime().toInstant(), ZoneId.systemDefault());
         this.previousFireTime = ZonedDateTime.ofInstant(trigger.getPreviousFireTime().toInstant(), ZoneId.systemDefault());
     }
 
-    public QuartzJobInfo(String jobName, String group, String status) {
-        this.jobName = jobName;
-        this.group = group;
+    public QuartzJobInfo(JobDetail jobDetail, String status) {
+        this.jobName = jobDetail.getKey().getName();
+        this.group = jobDetail.getKey().getGroup();
+        this.jobDescription = jobDetail.getDescription();
         this.status = status;
 
+        this.calendar = null;
+        this.triggerDescription = null;
         this.startTime = null;
         this.nextFireTime = null;
         this.previousFireTime = null;
@@ -80,5 +89,29 @@ public class QuartzJobInfo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTriggerDescription() {
+        return triggerDescription;
+    }
+
+    public void setTriggerDescription(String triggerDescription) {
+        this.triggerDescription = triggerDescription;
+    }
+
+    public String getJobDescription() {
+        return jobDescription;
+    }
+
+    public void setJobDescription(String jobDescription) {
+        this.jobDescription = jobDescription;
+    }
+
+    public String getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(String calendar) {
+        this.calendar = calendar;
     }
 }

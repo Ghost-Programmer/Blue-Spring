@@ -4,6 +4,7 @@ import com.blue.project.modules.quartz.dto.QuartzJobInfo;
 import com.blue.project.modules.quartz.jobs.HelloWorldJob;
 import name.mymiller.utils.ListUtils;
 import org.quartz.*;
+import org.quartz.Calendar;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -204,22 +203,23 @@ public class QuartzService {
         for(String groupName : scheduler.getJobGroupNames()) {
             for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
                 List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+                JobDetail jobDetail = scheduler.getJobDetail(jobKey);
                 if(triggers.size() > 0) {
-                    info.add(new QuartzJobInfo(jobKey.getName(),
-                            jobKey.getGroup(),
+                    info.add(new QuartzJobInfo(jobDetail,
+                            triggers.get(0),
                             this.getJobState(jobKey.getName(),
-                                    jobKey.getGroup()),
-                            triggers.get(0)));
+                                    jobKey.getGroup())));
                 } else {
-                    info.add(new QuartzJobInfo(jobKey.getName(),
-                            jobKey.getGroup(),
+                    info.add(new QuartzJobInfo(jobDetail,
                             this.getJobState(jobKey.getName(),
                                     jobKey.getGroup())));
                 }
             }
         }
 
-        return info;
+        return info.stream()
+                .sorted(Comparator.comparing(QuartzJobInfo::getGroup).thenComparing(QuartzJobInfo::getJobName))
+                .collect(Collectors.toList());
     }
 
 
