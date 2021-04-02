@@ -1,10 +1,13 @@
 package com.blue.project.modules.quartz.jobs;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HelloWorldJob implements Job {
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * <p>
      * Called by the <code>{@link Scheduler}</code> when a <code>{@link Trigger}</code>
@@ -26,6 +29,6 @@ public class HelloWorldJob implements Job {
      */
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("Hello world");
+        this.logger.info("Hello world");
     }
 }
