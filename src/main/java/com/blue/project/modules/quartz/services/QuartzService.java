@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -39,7 +41,7 @@ public class QuartzService {
                 .withSchedule(SimpleScheduleBuilder.repeatMinutelyForever()).build();
 
         try {
-            this.scheduleJob(helloWorldJobDetail,trigger);
+            this.scheduleOrReplaceJob(helloWorldJobDetail,trigger);
         } catch (SchedulerException e) {
            logger.error("Failed to schedule HelloWorld Job",e);
         }
@@ -126,6 +128,22 @@ public class QuartzService {
 
     public void scheduleJob(JobDetail jobDetail, Trigger trigger) throws SchedulerException {
         this.schedulerFactoryBean.getScheduler().scheduleJob(jobDetail,trigger);
+    }
+
+    public void scheduleOrReplaceJob(JobDetail jobDetail,Trigger trigger) throws SchedulerException {
+        if(this.checkIfJobKeyExists(jobDetail.getKey()) || this.checkIfTriggerExists(trigger.getKey())) {
+            Set<Trigger> triggerSet = new HashSet<>();
+            triggerSet.add(trigger);
+            this.schedulerFactoryBean.getScheduler().scheduleJob(jobDetail,triggerSet,true);
+        } else {
+            this.scheduleJob(jobDetail,trigger);
+        }
+    }
+
+    public void scheduleIfMissing(JobDetail jobDetail,Trigger trigger) throws SchedulerException {
+        if(!this.checkIfJobKeyExists(jobDetail.getKey()) || !this.checkIfTriggerExists(trigger.getKey())) {
+            this.scheduleJob(jobDetail,trigger);
+        }
     }
 
     public void triggerJob(String jobName, String group) throws SchedulerException {
