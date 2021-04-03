@@ -1,5 +1,6 @@
 package com.blue.project.modules.quartz.dto;
 
+import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 
@@ -16,12 +17,19 @@ public class QuartzJobInfo {
     private String triggerDescription;
     private String jobDescription;
     private String calendar;
+    private String cronExpression;
+    private Integer priority;
 
     public QuartzJobInfo(JobDetail jobDetail, Trigger trigger, String status) {
         this.jobName = jobDetail.getKey().getName();
         this.group = jobDetail.getKey().getGroup();
         this.jobDescription = jobDetail.getDescription();
         this.triggerDescription = trigger.getDescription();
+        if(trigger instanceof CronTrigger) {
+            this.cronExpression = ((CronTrigger)trigger).getCronExpression();
+        }
+
+        this.priority = trigger.getPriority();
         this.calendar = trigger.getCalendarName();
         this.status = status;
         this.startTime = ZonedDateTime.ofInstant(trigger.getStartTime().toInstant(), ZoneId.systemDefault());
@@ -113,5 +121,21 @@ public class QuartzJobInfo {
 
     public void setCalendar(String calendar) {
         this.calendar = calendar;
+    }
+
+    public String getCronExpression() {
+        return cronExpression;
+    }
+
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

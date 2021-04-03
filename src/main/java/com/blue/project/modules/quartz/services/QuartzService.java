@@ -84,7 +84,7 @@ public class QuartzService {
         return this.schedulerFactoryBean.getScheduler().getJobDetail(new JobKey(jobName,group));
     }
 
-    public List<String> getJobGroupNames() throws SchedulerException {
+    public List<String> getGroupNames() throws SchedulerException {
         return this.schedulerFactoryBean.getScheduler().getJobGroupNames();
     }
 
@@ -202,13 +202,16 @@ public class QuartzService {
 
         for(String groupName : scheduler.getJobGroupNames()) {
             for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
-                List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
                 JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+
+                List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
                 if(triggers.size() > 0) {
-                    info.add(new QuartzJobInfo(jobDetail,
-                            triggers.get(0),
-                            this.getJobState(jobKey.getName(),
-                                    jobKey.getGroup())));
+                    for(Trigger trigger: triggers) {
+                        info.add(new QuartzJobInfo(jobDetail,
+                                trigger,
+                                this.getJobState(jobKey.getName(),
+                                        jobKey.getGroup())));
+                    }
                 } else {
                     info.add(new QuartzJobInfo(jobDetail,
                             this.getJobState(jobKey.getName(),

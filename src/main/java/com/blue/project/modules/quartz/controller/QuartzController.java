@@ -26,4 +26,10 @@ public class QuartzController {
     public List<QuartzJobInfo> getUserRoles() throws SchedulerException {
         return this.quartzService.getAllJobs();
     }
+
+    @RolesAllowed("ROLE_ADMIN_QUARTZ")
+    @GetMapping("/groups")
+    public List<String> getGroupNames() throws SchedulerException {
+        return this.quartzService.getGroupNames();
+    }
 }
