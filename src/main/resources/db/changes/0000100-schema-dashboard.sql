@@ -53,6 +53,11 @@ ALTER TABLE `dashboard`.`dashboard_type`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION;
 
+ALTER TABLE `dashboard`.`dashboard_type`
+    ADD INDEX `dt_default_index` (`default` ASC) INVISIBLE;
+ALTER TABLE `dashboard`.`dashboard_type` ALTER INDEX `name_UNIQUE` INVISIBLE;
+
+
 
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('USER_INFO', '1', '1', '1', 1);
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('VM_MEMORY_MONITOR', '6', '1', '2', 0);

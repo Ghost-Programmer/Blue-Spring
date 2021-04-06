@@ -52,3 +52,7 @@ CREATE TABLE `maintenance`.`audit_row` (
                                                  ON UPDATE NO ACTION);
 
 
+ALTER TABLE `maintenance`.`scheduled`
+    ADD INDEX `scheduled_idx_start_date` (`start` ASC) INVISIBLE,
+    ADD INDEX `scheduled_idx_start_end` (`start` ASC, `end` ASC) VISIBLE;
+;

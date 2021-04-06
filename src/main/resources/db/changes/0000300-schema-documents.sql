@@ -27,3 +27,7 @@ CREATE TABLE IF NOT EXISTS documents (
                                                  ON DELETE NO ACTION
                                                  ON UPDATE NO ACTION);
 
+ALTER TABLE `documents`.`documents`
+    ADD INDEX `doc_idx_id_user_id` (`id` ASC, `user_id` ASC) INVISIBLE,
+    ADD INDEX `doc_idx_search` (`filename` ASC, `date_created` ASC, `size` ASC, `content_type` ASC) VISIBLE;
+ALTER TABLE `documents`.`documents` ALTER INDEX `fk_idx_documents_user_id_idx` INVISIBLE;
