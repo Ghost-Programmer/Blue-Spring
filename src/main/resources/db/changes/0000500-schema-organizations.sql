@@ -30,6 +30,23 @@ CREATE TABLE `organizations`.`organizations` (
                                                  INDEX `idx_org_name` (`name` ASC) INVISIBLE,
                                                  INDEX `idx_org_abbre` (`abbreviation` ASC) VISIBLE);
 
+ALTER TABLE `organizations`.`organizations`
+    ADD INDEX `fk_state_idx` (`state` ASC) VISIBLE,
+    ADD INDEX `fk_country_idx` (`country` ASC) VISIBLE;
+;
+ALTER TABLE `organizations`.`organizations`
+    ADD CONSTRAINT `fk_country`
+        FOREIGN KEY (`country`)
+            REFERENCES `meta`.`country` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    ADD CONSTRAINT `fk_state`
+        FOREIGN KEY (`state`)
+            REFERENCES `meta`.`state` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+
+
 
 INSERT INTO `organizations`.`organizations` (`name`, `abbreviation`, `address_line_1`, `address_line_2`, `city`, `zip_code`, `phone_number`) VALUES ('The Jockey Club', 'TJC', '821 Corporate Drive', '', 'Lexington', '40503', '8592242700');
 INSERT INTO `organizations`.`organizations` (`name`, `abbreviation`, `address_line_1`, `city`, `zip_code`, `phone_number`, `email_address`) VALUES ('National Reining Horse Association', 'NRHA', '3021 W Reno Ave', 'Oklahoma City', '73107', '4059467400', 'memberships@nrha.com');
