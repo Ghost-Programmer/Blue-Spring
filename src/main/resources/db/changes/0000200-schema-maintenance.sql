@@ -56,3 +56,15 @@ ALTER TABLE `maintenance`.`scheduled`
     ADD INDEX `scheduled_idx_start_date` (`start` ASC) INVISIBLE,
     ADD INDEX `scheduled_idx_start_end` (`start` ASC, `end` ASC) VISIBLE;
 ;
+
+CREATE TABLE `maintenance`.`settings` (
+                                          `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                                          `setting` VARCHAR(255) NOT NULL,
+                                          `value` VARCHAR(255) NOT NULL,
+                                          `start_date_time` DATETIME(6) NULL,
+                                          `end_date_time` DATETIME(6) NULL,
+                                          `date_created` TIMESTAMP NULL DEFAULT NULL,
+                                          `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                          PRIMARY KEY (`id`),
+                                          INDEX `idx_setting` (`setting` ASC) INVISIBLE,
+                                          INDEX `idx_lookup` (`setting` ASC, `start_date_time` ASC, `end_date_time` ASC) VISIBLE);
