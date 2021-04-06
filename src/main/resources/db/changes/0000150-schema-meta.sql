@@ -268,7 +268,7 @@ INSERT INTO `country` VALUES (223,'UNK','UN','Unknown',_binary '\0','N',2260,_bi
 INSERT INTO `country` VALUES (224,'URY','UY','Uruguay',_binary '','S',2270,_binary '\0','2011-01-17 23:13:40','2014-08-07 17:54:10');
 INSERT INTO `country` VALUES (225,'USA','US','United States',_binary '','N',1,_binary '','2011-01-17 23:13:40','2014-07-23 11:36:43');
 INSERT INTO `country` VALUES (226,'UZB','UZ','Uzbekistan',_binary '','N',2280,_binary '\0','2011-01-17 23:13:40','2014-07-23 11:36:43');
-INSERT INTO `country` VALUES (227,'VAT','VA','Vatican City State',_binary '','N',2300,_binary '\0','2011-01-17 23:13:40','2019-02-01 20:05:18');
+INSERT INTO `country` VALUES (227,'VAT','VA','Vatican City StateRepository',_binary '','N',2300,_binary '\0','2011-01-17 23:13:40','2019-02-01 20:05:18');
 INSERT INTO `country` VALUES (228,'VCT','VC','Saint Vincent And The Grenadines',_binary '','N',1810,_binary '\0','2011-01-17 23:13:40','2014-07-23 11:36:43');
 INSERT INTO `country` VALUES (229,'VEN','VE','Venezuela',_binary '','N',2310,_binary '\0','2011-01-17 23:13:40','2014-07-23 11:36:43');
 INSERT INTO `country` VALUES (230,'VGB','VG','Virgin Islands, British',_binary '','N',2330,_binary '\0','2011-01-17 23:13:40','2014-07-23 11:36:43');
@@ -1059,7 +1059,7 @@ INSERT INTO `state` VALUES (772,159,'ZH','Zuid Holland',_binary '',NULL,'2018-0
 INSERT INTO `state` VALUES (773,56,'ZL','Zlin Region (Zlínský kraj)',_binary '',NULL,'2011-01-17 23:19:43','2011-01-17 23:59:16');
 INSERT INTO `state` VALUES (774,137,'ZT','Zacatecas',_binary '',NULL,'2014-02-24 15:31:48','2014-02-24 15:31:48');
 INSERT INTO `state` VALUES (775,238,'EC','Eastern Cape',_binary '',NULL,'2020-03-23 13:37:46',NULL);
-INSERT INTO `state` VALUES (776,238,'FS','Free State',_binary '',NULL,'2020-03-23 13:37:46',NULL);
+INSERT INTO `state` VALUES (776,238,'FS','Free StateRepository',_binary '',NULL,'2020-03-23 13:37:46',NULL);
 INSERT INTO `state` VALUES (777,238,'GT','Gauteng',_binary '',NULL,'2020-03-23 13:37:46',NULL);
 INSERT INTO `state` VALUES (778,238,'NL','KwaZulu-Natal',_binary '',NULL,'2020-03-23 13:37:47',NULL);
 INSERT INTO `state` VALUES (779,238,'LP','Limpopo',_binary '',NULL,'2020-03-23 13:37:47',NULL);
