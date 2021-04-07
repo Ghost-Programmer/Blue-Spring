@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset jmiller:0000500
+--changeset jmiller:0000200
 
 DROP SCHEMA IF EXISTS `organizations` ;
 

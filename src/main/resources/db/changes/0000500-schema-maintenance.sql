@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset jmiller:0000200
+--changeset jmiller:0000500
 
 DROP SCHEMA IF EXISTS `maintenance` ;
 
@@ -60,6 +60,7 @@ ALTER TABLE `maintenance`.`scheduled`
 CREATE TABLE `maintenance`.`settings` (
                                           `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                                           `setting` VARCHAR(255) NOT NULL,
+                                          `organization` BIGINT UNSIGNED NULL,
                                           `value` VARCHAR(255) NOT NULL,
                                           `start_date_time` DATETIME(6) NULL,
                                           `end_date_time` DATETIME(6) NULL,
@@ -68,3 +69,11 @@ CREATE TABLE `maintenance`.`settings` (
                                           PRIMARY KEY (`id`),
                                           INDEX `idx_setting` (`setting` ASC) INVISIBLE,
                                           INDEX `idx_lookup` (`setting` ASC, `start_date_time` ASC, `end_date_time` ASC) VISIBLE);
+
+
+ALTER TABLE `maintenance`.`settings`
+    ADD CONSTRAINT `fk_settings_organization`
+        FOREIGN KEY (`organization`)
+            REFERENCES `organizations`.`organizations` (`id`)
+            ON DELETE NO ACTION
+               ON UPDATE NO ACTION;

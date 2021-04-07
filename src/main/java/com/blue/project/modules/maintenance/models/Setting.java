@@ -1,6 +1,7 @@
 package com.blue.project.modules.maintenance.models;
 
 import com.blue.project.models.AbstractTimestampEntity;
+import com.blue.project.modules.organizations.models.Organizations;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,10 @@ public class Setting extends AbstractTimestampEntity implements Serializable {
 
     @Column(name = "setting")
     private String setting;
+
+    @ManyToOne
+    @JoinColumn(name = "organization", nullable = true)
+    private Organizations organization;
 
     @Column(name = "value")
     private String value;
@@ -66,16 +71,24 @@ public class Setting extends AbstractTimestampEntity implements Serializable {
         this.endDateTime = endDateTime;
     }
 
+    public Organizations getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organizations organization) {
+        this.organization = organization;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Setting settings = (Setting) o;
-        return Objects.equals(id, settings.id) && Objects.equals(setting, settings.setting) && Objects.equals(value, settings.value) && Objects.equals(startDateTime, settings.startDateTime) && Objects.equals(endDateTime, settings.endDateTime);
+        Setting setting1 = (Setting) o;
+        return Objects.equals(id, setting1.id) && Objects.equals(setting, setting1.setting) && Objects.equals(organization, setting1.organization) && Objects.equals(value, setting1.value) && Objects.equals(startDateTime, setting1.startDateTime) && Objects.equals(endDateTime, setting1.endDateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, setting, value, startDateTime, endDateTime);
+        return Objects.hash(id, setting, organization, value, startDateTime, endDateTime);
     }
 }
