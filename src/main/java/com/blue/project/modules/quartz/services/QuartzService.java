@@ -194,7 +194,11 @@ public class QuartzService {
                 }else if (Trigger.TriggerState.NONE.equals(triggerState)) {
                     return "NONE";
                 }else if (Trigger.TriggerState.NORMAL.equals(triggerState)) {
-                    return "SCHEDULED";
+                    if(this.isJobRunning(jobName, group)) {
+                        return "RUNNING";
+                    } else {
+                        return "SCHEDULED";
+                    }
                 }
             }
         }

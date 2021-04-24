@@ -30,5 +30,10 @@ public class HelloWorldJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         this.logger.info("Hello world");
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+        }
+        this.logger.info("Good Bye world");
     }
 }
