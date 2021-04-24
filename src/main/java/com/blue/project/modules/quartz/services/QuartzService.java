@@ -206,6 +206,20 @@ public class QuartzService {
         return null;
     }
 
+    public List<String> getAllJobNames() throws SchedulerException {
+        List<String> info = new ArrayList<>();
+
+        Scheduler scheduler = this.schedulerFactoryBean.getScheduler();
+
+        for(String groupName : scheduler.getJobGroupNames()) {
+            for(JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
+                    info.add(jobKey.getName());
+            }
+        }
+
+        return info;
+    }
+
     public List<QuartzJobInfo> getAllJobs() throws SchedulerException {
         List<QuartzJobInfo> info = new ArrayList<>();
 
