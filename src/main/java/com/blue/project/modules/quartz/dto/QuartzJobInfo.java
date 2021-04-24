@@ -33,8 +33,18 @@ public class QuartzJobInfo {
         this.calendar = trigger.getCalendarName();
         this.status = status;
         this.startTime = ZonedDateTime.ofInstant(trigger.getStartTime().toInstant(), ZoneId.systemDefault());
-        this.nextFireTime = ZonedDateTime.ofInstant(trigger.getNextFireTime().toInstant(), ZoneId.systemDefault());
-        this.previousFireTime = ZonedDateTime.ofInstant(trigger.getPreviousFireTime().toInstant(), ZoneId.systemDefault());
+        
+        if(trigger != null && trigger.getNextFireTime() != null) {
+            this.nextFireTime = ZonedDateTime.ofInstant(trigger.getNextFireTime().toInstant(), ZoneId.systemDefault());
+        } else {
+            this.nextFireTime = null;
+        }
+
+        if(trigger != null && trigger.getPreviousFireTime() != null) {
+            this.previousFireTime = ZonedDateTime.ofInstant(trigger.getPreviousFireTime().toInstant(), ZoneId.systemDefault());
+        } else {
+            this.previousFireTime = null;
+        }
     }
 
     public QuartzJobInfo(JobDetail jobDetail, String status) {
