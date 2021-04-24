@@ -25,7 +25,7 @@ public class MetaController {
 
     @RequestMapping(value = "/countries", method = RequestMethod.GET)
     @PermitAll
-    public List<Country> downloadDocument(@PathVariable("id") Long documentId) {
+    public List<Country> getCountries() {
         return this.countryRepository.findAll(Sort.by(Sort.Direction.ASC,"sort"));
     }
 }
