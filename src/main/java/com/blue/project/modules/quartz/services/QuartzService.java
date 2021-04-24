@@ -1,5 +1,7 @@
 package com.blue.project.modules.quartz.services;
 
+import com.blue.project.modules.organizations.dao.OrganizationsRepository;
+import com.blue.project.modules.organizations.models.Organizations;
 import com.blue.project.modules.quartz.dto.QuartzJobInfo;
 import com.blue.project.modules.quartz.jobs.HelloWorldJob;
 import name.mymiller.utils.ListUtils;
@@ -23,6 +25,9 @@ public class QuartzService {
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
+
+    @Autowired
+    private OrganizationsRepository organizationsRepository;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -85,7 +90,9 @@ public class QuartzService {
     }
 
     public List<String> getGroupNames() throws SchedulerException {
-        return this.schedulerFactoryBean.getScheduler().getJobGroupNames();
+        List<String> groupNames = ListUtils.safe(this.organizationsRepository.findAll().stream().map(Organizations::getAbbreviation).collect(Collectors.toList()));
+        groupNames.add("System");
+        return groupNames.stream().sorted().collect(Collectors.toList());
     }
 
     public Trigger getTrigger(String triggerName, String group) throws SchedulerException {

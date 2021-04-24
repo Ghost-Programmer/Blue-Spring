@@ -1,5 +1,8 @@
 package com.blue.project.modules.organizations.models;
 
+import com.blue.project.modules.meta.models.Country;
+import com.blue.project.modules.meta.models.State;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,19 +14,51 @@ public class Organizations {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column( name = "name")
     private String name;
-    private String abbreviation;
-    private String addressLine1;
-    private String addressLine2;
-    private String addressLine3;
-    private String city;
-    private String zipCode;
-    private String phoneNumber;
-    private String emailAddress;
-    private byte[] logo;
-    private String primaryColor;
-    private String accentColor;
 
+    @Column( name = "abbreviation")
+    private String abbreviation;
+
+    @Column( name = "address_line_1")
+    private String addressLine1;
+
+    @Column( name = "address_line_2")
+    private String addressLine2;
+
+    @Column( name = "address_line_3")
+    private String addressLine3;
+
+    @Column( name = "city")
+    private String city;
+
+    @Column( name = "zip_code")
+    private String zipCode;
+
+    @Column( name = "phone_number")
+    private String phoneNumber;
+
+    @Column( name = "email_address")
+    private String emailAddress;
+
+    @ManyToOne
+    @JoinColumn( name = "country", referencedColumnName = "id")
+    private Country country;
+
+    @ManyToOne
+    @JoinColumn( name = "state", referencedColumnName = "id")
+    private State state;
+
+
+    @Lob
+    @Column( name = "logo")
+    private byte[] logo;
+
+    @Column( name = "primary_color")
+    private String primaryColor;
+
+    @Column( name = "accent_color")
+    private String accentColor;
 
     public Long getId() {
         return id;
@@ -33,8 +68,6 @@ public class Organizations {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
     public String getName() {
         return name;
     }
@@ -43,8 +76,6 @@ public class Organizations {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "abbreviation", nullable = true, length = 20)
     public String getAbbreviation() {
         return abbreviation;
     }
@@ -53,8 +84,6 @@ public class Organizations {
         this.abbreviation = abbreviation;
     }
 
-    @Basic
-    @Column(name = "address_line_1", nullable = true, length = 100)
     public String getAddressLine1() {
         return addressLine1;
     }
@@ -63,8 +92,6 @@ public class Organizations {
         this.addressLine1 = addressLine1;
     }
 
-    @Basic
-    @Column(name = "address_line_2", nullable = true, length = 100)
     public String getAddressLine2() {
         return addressLine2;
     }
@@ -73,8 +100,6 @@ public class Organizations {
         this.addressLine2 = addressLine2;
     }
 
-    @Basic
-    @Column(name = "address_line_3", nullable = true, length = 100)
     public String getAddressLine3() {
         return addressLine3;
     }
@@ -83,8 +108,6 @@ public class Organizations {
         this.addressLine3 = addressLine3;
     }
 
-    @Basic
-    @Column(name = "city", nullable = true, length = 80)
     public String getCity() {
         return city;
     }
@@ -93,8 +116,6 @@ public class Organizations {
         this.city = city;
     }
 
-    @Basic
-    @Column(name = "zip_code", nullable = true, length = 10)
     public String getZipCode() {
         return zipCode;
     }
@@ -103,8 +124,6 @@ public class Organizations {
         this.zipCode = zipCode;
     }
 
-    @Basic
-    @Column(name = "phone_number", nullable = true, length = 15)
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -113,8 +132,6 @@ public class Organizations {
         this.phoneNumber = phoneNumber;
     }
 
-    @Basic
-    @Column(name = "email_address", nullable = true, length = 80)
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -123,8 +140,22 @@ public class Organizations {
         this.emailAddress = emailAddress;
     }
 
-    @Basic
-    @Column(name = "logo", nullable = true)
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public byte[] getLogo() {
         return logo;
     }
@@ -133,8 +164,6 @@ public class Organizations {
         this.logo = logo;
     }
 
-    @Basic
-    @Column(name = "primary_color", nullable = true, length = 6)
     public String getPrimaryColor() {
         return primaryColor;
     }
@@ -143,8 +172,6 @@ public class Organizations {
         this.primaryColor = primaryColor;
     }
 
-    @Basic
-    @Column(name = "accent_color", nullable = true, length = 6)
     public String getAccentColor() {
         return accentColor;
     }
@@ -158,12 +185,12 @@ public class Organizations {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organizations that = (Organizations) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(abbreviation, that.abbreviation) && Objects.equals(addressLine1, that.addressLine1) && Objects.equals(addressLine2, that.addressLine2) && Objects.equals(addressLine3, that.addressLine3) && Objects.equals(city, that.city) && Objects.equals(zipCode, that.zipCode) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(emailAddress, that.emailAddress) && Arrays.equals(logo, that.logo) && Objects.equals(primaryColor, that.primaryColor) && Objects.equals(accentColor, that.accentColor);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(abbreviation, that.abbreviation) && Objects.equals(addressLine1, that.addressLine1) && Objects.equals(addressLine2, that.addressLine2) && Objects.equals(addressLine3, that.addressLine3) && Objects.equals(city, that.city) && Objects.equals(zipCode, that.zipCode) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(emailAddress, that.emailAddress) && Objects.equals(country, that.country) && Objects.equals(state, that.state) && Arrays.equals(logo, that.logo) && Objects.equals(primaryColor, that.primaryColor) && Objects.equals(accentColor, that.accentColor);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, abbreviation, addressLine1, addressLine2, addressLine3, city, zipCode, phoneNumber, emailAddress, primaryColor, accentColor);
+        int result = Objects.hash(id, name, abbreviation, addressLine1, addressLine2, addressLine3, city, zipCode, phoneNumber, emailAddress, country, state, primaryColor, accentColor);
         result = 31 * result + Arrays.hashCode(logo);
         return result;
     }
