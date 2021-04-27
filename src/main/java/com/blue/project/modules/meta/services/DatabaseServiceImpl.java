@@ -11,8 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,37 +29,46 @@ public class DatabaseServiceImpl implements DatabaseService {
 
         List<Object[]> schemaResults = schemaQuery.getResultList();
 
-        List<SchemaDto> databaseInfo =  schemaResults.stream()
-                .map(item -> item[0])
-                .map(Object::toString)
-                .filter(schema -> ((String) schema).equalsIgnoreCase("core"))
-                .filter(schema -> ((String) schema).equalsIgnoreCase("information_schema"))
-                .filter(schema -> ((String) schema).equalsIgnoreCase("mysql"))
-                .filter(schema -> ((String) schema).equalsIgnoreCase("performance_schema"))
-                .map(schema -> new SchemaDto(schema)).collect(Collectors.toList());
+        List<SchemaDto> databaseInfo = new ArrayList<>();
+
+        for(Object schema: schemaResults ) {
+            String name = schema.toString();
+
+            if(!name.equalsIgnoreCase("core")
+                && !name.equalsIgnoreCase("information_schema")
+                && !name.equalsIgnoreCase("mysql")
+                && !name.equalsIgnoreCase("performance_schema"))
+            {
+                databaseInfo.add(new SchemaDto(name));
+            }
+        }
 
         databaseInfo.forEach(schema -> {
             Query tableQuery = this.entityManager.createNativeQuery(
-                    "show tables from " + schema.getSchema());
+                    "show tables from " + schema.getName());
 
             List<Object[]> tableResults = tableQuery.getResultList();
 
-            schema.setChildren(tableResults.stream()
-                    .map(item -> item[0])
-                    .map(Object::toString)
-                    .map(table -> new TableDto(table))
-                    .collect(Collectors.toList()));
+            schema.setChildren(new ArrayList<>());
 
-            schema.getChildren().forEach(table -> {
+            for(Object table : tableResults) {
+                String tableName = table.toString();
+                TableDto tableDto = new TableDto(tableName);
+                schema.getChildren().add(tableDto);
+
                 Query fieldQuery = this.entityManager.createNativeQuery(
-                        "show columns from " + schema+"."+table
+                        "show columns from " + schema.getName() + "." + tableName
                 );
 
                 List<Object[]> fieldResults = fieldQuery.getResultList();
 
-                table.setChildren(fieldResults.stream().map(field -> new FieldDto(field[0].toString(),field[1].toString(),Boolean.parseBoolean(field[2].toString())))
-                        .collect(Collectors.toList()));
-            });
+
+                tableDto.setChildren(new ArrayList<>());
+                for(Object[] fields : fieldResults) {
+                    FieldDto fieldDto = new FieldDto(fields[0].toString(),fields[1].toString(),Boolean.parseBoolean(fields[2].toString()));
+                    tableDto.getChildren().add(fieldDto);
+                }
+            }
         });
 
 

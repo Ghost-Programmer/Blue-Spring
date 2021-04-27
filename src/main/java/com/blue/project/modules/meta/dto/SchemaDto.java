@@ -3,22 +3,22 @@ package com.blue.project.modules.meta.dto;
 import java.util.List;
 
 public class SchemaDto {
-    private String schema;
+    private String name;
     private List<TableDto> children;
 
     public SchemaDto() {
     }
 
-    public SchemaDto(String schema) {
-        this.schema = schema;
+    public SchemaDto(String name) {
+        this.name = name;
     }
 
-    public String getSchema() {
-        return schema;
+    public String getName() {
+        return name;
     }
 
-    public void setSchema(String schema) {
-        this.schema = schema;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<TableDto> getChildren() {

@@ -3,22 +3,22 @@ package com.blue.project.modules.meta.dto;
 import java.util.List;
 
 public class TableDto {
-    private String table;
+    private String name;
     private List<FieldDto> children;
 
     public TableDto() {
     }
 
-    public TableDto(String table) {
-        this.table = table;
+    public TableDto(String name) {
+        this.name = name;
     }
 
-    public String getTable() {
-        return table;
+    public String getName() {
+        return name;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<FieldDto> getChildren() {
