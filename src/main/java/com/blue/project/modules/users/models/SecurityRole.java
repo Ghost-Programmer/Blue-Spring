@@ -21,6 +21,8 @@ public class SecurityRole extends AbstractTimestampEntity implements Serializabl
     public static final String ROLE_DOCUMENT_MANAGER = "ROLE_DOCUMENT_MANAGER";
     public static final String ROLE_ADMIN_MAINTENANCE = "ROLE_ADMIN_MAINTENANCE";
     public static final String ROLE_ADMIN_QUARTZ = "ROLE_ADMIN_QUARTZ";
+    public static final String ROLE_ADMIN_DBA = "ROLE_ADMIN_DBA";
+    public static final String ROLE_DB_ACCESS = "ROLE_DB_ACCESS";
 
 
     @Serial
