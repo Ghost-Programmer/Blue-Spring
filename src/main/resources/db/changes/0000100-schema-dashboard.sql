@@ -65,3 +65,4 @@ INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`,
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_VM_MEMORY_MONITOR', '6', '1', '1', 1);
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_CPU_MONITOR', '6', '1', '1', 1);
 INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('LIVE_MEMORY_MONITOR', '6', '1', '1', 1);
+INSERT INTO `dashboard`.`dashboard_type` (`type`, `security_role_id`, `rowspan`, `colspan`, `default`) VALUES ('VM_SETTINGS', '6', '1', '1', 0);
