@@ -77,3 +77,11 @@ ALTER TABLE `maintenance`.`settings`
             REFERENCES `organizations`.`organizations` (`id`)
             ON DELETE NO ACTION
                ON UPDATE NO ACTION;
+
+CREATE TABLE `maintenance`.`event` (
+                                       `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                       `event` BLOB NOT NULL,
+                                       `date_created` TIMESTAMP NOT NULL,
+                                       `last_updated` TIMESTAMP NOT NULL,
+                                       INDEX `idx_event_date_created` (`date_created` DESC) VISIBLE,
+                                       PRIMARY KEY (`id`));
