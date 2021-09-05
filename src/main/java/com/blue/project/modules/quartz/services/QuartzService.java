@@ -1,5 +1,6 @@
 package com.blue.project.modules.quartz.services;
 
+import com.blue.project.modules.quartz.jobs.EventCleanupJob;
 import com.blue.project.modules.organizations.dao.OrganizationsRepository;
 import com.blue.project.modules.organizations.models.Organizations;
 import com.blue.project.modules.quartz.dto.QuartzJobInfo;
@@ -41,14 +42,28 @@ public class QuartzService {
                 .build();
 
 
-        SimpleTrigger trigger = TriggerBuilder.newTrigger()
+        SimpleTrigger helloWorldTrigger = TriggerBuilder.newTrigger()
                 .forJob(helloWorldJobDetail)
                 .withIdentity("HelloWorldTrigger", "System")
                 .withDescription("Test Trigger")
                 .withSchedule(SimpleScheduleBuilder.repeatMinutelyForever()).build();
 
+        JobDetail eventCleanupJobDetail = JobBuilder.newJob(EventCleanupJob.class)
+                .storeDurably()
+                .withIdentity("EventCleanup", "System")
+                .withDescription("Cleanup Event Maintenance Database")
+                .build();
+
+
+        SimpleTrigger eventCleanupTrigger = TriggerBuilder.newTrigger()
+                .forJob(eventCleanupJobDetail)
+                .withIdentity("EventCleanupTrigger", "System")
+                .withDescription("Cleanup Event Maintenance Database")
+                .withSchedule(SimpleScheduleBuilder.repeatHourlyForever(12)).build();
+
         try {
-            this.scheduleOrReplaceJob(helloWorldJobDetail,trigger);
+            this.scheduleOrReplaceJob(helloWorldJobDetail,helloWorldTrigger);
+            this.scheduleOrReplaceJob(eventCleanupJobDetail,eventCleanupTrigger);
         } catch (SchedulerException e) {
            logger.error("Failed to schedule HelloWorld Job",e);
         }

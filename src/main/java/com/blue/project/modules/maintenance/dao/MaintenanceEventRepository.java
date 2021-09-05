@@ -12,4 +12,5 @@ import java.util.List;
 public interface MaintenanceEventRepository extends JpaRepository<MaintenanceEvent, Long>, JpaSpecificationExecutor<MaintenanceEvent>, PagingAndSortingRepository<MaintenanceEvent, Long>, QueryByExampleExecutor<MaintenanceEvent> {
 
     List<MaintenanceEvent> findAllByDateCreatedAfter(ZonedDateTime dateCreated);
+    void deleteAllByDateCreatedBefore(ZonedDateTime dateCreated);
 }
