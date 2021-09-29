@@ -7,6 +7,7 @@ import com.blue.project.modules.users.dto.UserRole;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -65,5 +66,11 @@ public class QuartzController {
     @DeleteMapping("/group/{group}/job/{jobName}")
     public StatusMessage deleteJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
         return new StatusMessage().setOk(this.quartzService.deleteJob(jobName,group));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN_QUARTZ') or hasRole('ROLE_ADMIN_DBA')")
+    @PostMapping("/group/{group}/job/{jobName}/create")
+    public StatusMessage createJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
+        return new StatusMessage().setOk(false).setMessage("Need to implement");
     }
 }
