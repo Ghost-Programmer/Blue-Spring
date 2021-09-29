@@ -1,6 +1,7 @@
 package com.blue.project.modules.quartz.controller;
 
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.quartz.dto.QuartzCreateJob;
 import com.blue.project.modules.quartz.dto.QuartzJobInfo;
 import com.blue.project.modules.quartz.services.QuartzService;
 import com.blue.project.modules.users.dto.UserRole;
@@ -70,7 +71,7 @@ public class QuartzController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN_QUARTZ') or hasRole('ROLE_ADMIN_DBA')")
     @PostMapping("/group/{group}/job/{jobName}/create")
-    public StatusMessage createJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
+    public StatusMessage createJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group, @RequestBody QuartzCreateJob createJob) throws SchedulerException {
         return new StatusMessage().setOk(false).setMessage("Need to implement");
     }
 }

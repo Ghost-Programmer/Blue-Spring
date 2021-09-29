@@ -1,6 +1,7 @@
 package com.blue.project.modules.quartz.jobs;
 
 import com.blue.project.modules.maintenance.dao.MaintenanceEventRepository;
+import com.blue.project.modules.maintenance.services.MaintenanceService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -13,14 +14,14 @@ import java.time.ZonedDateTime;
 public class EventCleanupJob implements Job {
 
     @Autowired
-    private MaintenanceEventRepository maintenanceEventRepository;
+    private MaintenanceService maintenanceService;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         this.logger.info("Starting Event Cleanup Job");
-        this.maintenanceEventRepository.deleteAllByDateCreatedBefore(ZonedDateTime.now().minusWeeks(3));
+        this.maintenanceService.cleanupMaintenanceData();
         this.logger.info("Completed Event Cleanup Job");
     }
 }

@@ -3,6 +3,7 @@ package com.blue.project.modules.maintenance.services;
 import com.blue.project.modules.calendar.annontation.CalendarServiceProvider;
 import com.blue.project.modules.calendar.dto.EventContext;
 import com.blue.project.modules.calendar.dto.EventData;
+import com.blue.project.modules.maintenance.dao.MaintenanceEventRepository;
 import com.blue.project.modules.maintenance.dao.ScheduleRepository;
 import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
 import com.blue.project.dto.StatusMessage;
@@ -32,6 +33,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+    @Autowired
+    private MaintenanceEventRepository maintenanceEventRepository;
 
     @Override
     public ScheduledMaintenance getNextScheduledMaintenance() {
@@ -86,10 +89,9 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         List<Scheduled> maintenanceList = ListUtils.safe(this.scheduleRepository.findAllByStartBetween(start, end));
         return maintenanceList.stream()
                 .map(com.blue.project.modules.maintenance.dto.EventData::new)
-                .map(eventData -> {
+                .peek(eventData -> {
                     eventData.setOrganization(ORGANIZATION);
                     eventData.setType(SYSTEM_MAINTENANCE);
-                    return eventData;
                 })
                 .collect(Collectors.toList());
     }
@@ -103,5 +105,10 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         contextList.add(context);
 
         return contextList;
+    }
+
+    @Override
+    public void cleanupMaintenanceData() {
+        this.maintenanceEventRepository.deleteAllByDateCreatedBefore(ZonedDateTime.now().minusWeeks(3));
     }
 }

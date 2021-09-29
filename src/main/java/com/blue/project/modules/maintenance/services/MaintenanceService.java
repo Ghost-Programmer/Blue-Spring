@@ -18,4 +18,5 @@ public interface MaintenanceService extends CalendarServiceProviderInterface {
     Scheduled saveScheduledMaintenance(Scheduled scheduled);
     StatusMessage deleteScheduledMaintenance(Scheduled scheduled);
     StatusMessage deleteScheduledMaintenance(Long scheduledId);
+    void cleanupMaintenanceData();
 }
