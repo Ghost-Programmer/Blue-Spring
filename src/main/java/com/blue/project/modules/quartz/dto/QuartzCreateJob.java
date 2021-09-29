@@ -6,6 +6,7 @@ public class QuartzCreateJob {
     private ZonedDateTime calendar;
     private String cronExpression;
     private String code;
+    private String description;
 
     public QuartzCreateJob() {
     }
@@ -32,5 +33,13 @@ public class QuartzCreateJob {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

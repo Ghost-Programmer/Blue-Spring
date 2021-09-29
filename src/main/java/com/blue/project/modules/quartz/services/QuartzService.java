@@ -1,10 +1,13 @@
 package com.blue.project.modules.quartz.services;
 
+import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.quartz.dto.QuartzCreateJob;
 import com.blue.project.modules.quartz.jobs.EventCleanupJob;
 import com.blue.project.modules.organizations.dao.OrganizationsRepository;
 import com.blue.project.modules.organizations.models.Organizations;
 import com.blue.project.modules.quartz.dto.QuartzJobInfo;
 import com.blue.project.modules.quartz.jobs.HelloWorldJob;
+import com.blue.project.modules.quartz.jobs.SqlJob;
 import name.mymiller.utils.ListUtils;
 import org.quartz.*;
 import org.quartz.Calendar;
@@ -13,7 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -269,5 +275,41 @@ public class QuartzService {
     private Calendar getCalendar(String calendarName) {
         //TODO: Get Calendar
         return null;
+    }
+
+    public StatusMessage createJob(String jobName, String group, QuartzCreateJob createJob) throws SchedulerException {
+        this.logger.info("Creating Job: {}  Group: {}  Details: {}",  jobName, group, createJob);
+        JobBuilder jobBuilder = JobBuilder.newJob(SqlJob.class)
+                .storeDurably()
+                .withIdentity(jobName, group)
+                .withDescription(createJob.getDescription());
+
+        if(createJob.getCode() != null) {
+                jobBuilder = jobBuilder.usingJobData("SQL", createJob.getCode());
+        }
+        JobDetail job = jobBuilder.build();
+
+        this.addJob(job,true);
+
+        Trigger trigger = null;
+
+        if(createJob.getCalendar() != null) {
+            trigger = TriggerBuilder.newTrigger()
+                    .withDescription(createJob.getDescription())
+                    .startAt(Date.from(createJob.getCalendar().toInstant()))
+                    .forJob(job)
+                    .withIdentity(jobName,group).build();
+
+        } else if(createJob.getCronExpression() != null) {
+            trigger = TriggerBuilder.newTrigger()
+                    .withDescription(createJob.getDescription())
+                    .withSchedule(CronScheduleBuilder.cronSchedule(createJob.getCronExpression()))
+                    .forJob(job)
+                    .withIdentity(jobName,group).build();
+        }
+
+        this.scheduleOrReplaceJob(job,trigger);
+
+        return new StatusMessage().setMessage("Job Scheduled").setOk(true);
     }
 }

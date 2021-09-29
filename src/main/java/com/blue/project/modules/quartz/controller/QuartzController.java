@@ -72,6 +72,6 @@ public class QuartzController {
     @PreAuthorize("hasRole('ROLE_ADMIN_QUARTZ') or hasRole('ROLE_ADMIN_DBA')")
     @PostMapping("/group/{group}/job/{jobName}/create")
     public StatusMessage createJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group, @RequestBody QuartzCreateJob createJob) throws SchedulerException {
-        return new StatusMessage().setOk(false).setMessage("Need to implement");
+        return this.quartzService.createJob(jobName,group,createJob);
     }
 }
