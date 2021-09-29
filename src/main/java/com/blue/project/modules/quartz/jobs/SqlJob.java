@@ -1,10 +1,15 @@
 package com.blue.project.modules.quartz.jobs;
 
+import com.blue.project.modules.quartz.services.QuartzService;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class SqlJob implements Job {
+
+    @Autowired
+    QuartzService quartzService;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -36,5 +41,7 @@ public class SqlJob implements Job {
         String jobSql = dataMap.getString("SQL");
 
         this.logger.info("SQL to Execute: " + jobSql);
+
+        this.quartzService.executeSQL(jobSql);
     }
 }

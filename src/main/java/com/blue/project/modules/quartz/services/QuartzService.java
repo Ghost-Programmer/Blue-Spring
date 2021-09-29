@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,6 +31,9 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class QuartzService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
@@ -311,5 +316,9 @@ public class QuartzService {
         this.scheduleOrReplaceJob(job,trigger);
 
         return new StatusMessage().setMessage("Job Scheduled").setOk(true);
+    }
+
+    public void executeSQL(String sql) {
+        this.entityManager.createNativeQuery(sql).getResultList();
     }
 }
