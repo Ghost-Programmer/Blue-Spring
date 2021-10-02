@@ -3,11 +3,14 @@ package com.blue.project.modules.documents.services;
 import com.blue.project.modules.documents.dao.DocumentRepository;
 import com.blue.project.dto.SearchResults;
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.documents.dao.PagesRepository;
 import com.blue.project.modules.documents.dto.DocumentSearch;
+import com.blue.project.modules.documents.dto.PageSearch;
 import com.blue.project.modules.documents.models.Document;
 import com.blue.project.modules.users.models.SecurityRole;
 import com.blue.project.modules.users.models.User;
 import com.blue.project.modules.users.services.UserService;
+import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +34,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -44,6 +49,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
     private DocumentRepository documentRepository;
+
 
     @Override
     public StatusMessage uploadDocument(MultipartFile file) {
@@ -264,4 +270,5 @@ public class DocumentServiceImpl implements DocumentService {
 
         return status;
     }
+
 }

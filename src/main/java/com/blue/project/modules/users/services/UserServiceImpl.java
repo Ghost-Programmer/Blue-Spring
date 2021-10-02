@@ -153,13 +153,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean hasAuthority(Collection<SecurityRole> roles, Collection<SecurityRole> checkRoles) {
+        if (roles != null) {
+            return roles.stream().anyMatch(securityRole -> checkRoles.contains(securityRole));
+        }
+        return false;
+    }
+
+    @Override
     public boolean hasAuthority(User user, String role) {
         return ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(user.getId())).stream().anyMatch(securityRole -> securityRole.getSecurityRole().getAuthority().equals(role));
     }
 
     @Override
-    public boolean hasAuthority(User user, List<String> roles) {
+    public boolean hasAuthority(User user, Collection<String> roles) {
         return ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(user.getId())).stream().anyMatch(securityRole -> roles.contains(securityRole.getSecurityRole().getAuthority()));
+    }
+
+    @Override
+    public boolean currentUserHasAuthority(Collection<String> roles) {
+        return ListUtils.safe(this.userSecurityRoleRepository.findAllByUserId(this.getCurrentUser().getId())).stream().anyMatch(securityRole -> roles.contains(securityRole.getSecurityRole().getAuthority()));
     }
 
     @Override

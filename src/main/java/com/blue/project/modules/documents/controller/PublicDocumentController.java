@@ -1,7 +1,9 @@
 package com.blue.project.modules.documents.controller;
 
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.documents.models.Page;
 import com.blue.project.modules.documents.services.DocumentService;
+import com.blue.project.modules.documents.services.PageService;
 import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
 import com.blue.project.modules.maintenance.dto.SystemInfo;
 import com.blue.project.modules.maintenance.services.MaintenanceService;
@@ -21,9 +23,18 @@ public class PublicDocumentController {
     @Autowired
     private DocumentService documentService;
 
+    @Autowired
+    private PageService PageService;
+
     @GetMapping("/document/{uuid}")
     @PreAuthorize("permitAll()")
     public ResponseEntity<byte[]> downloadDocument(@PathVariable("uuid") String uuid) {
         return documentService.downloadDocumentByUuid(uuid);
+    }
+
+    @GetMapping("/page/{uuid}")
+    @PreAuthorize("permitAll()")
+    public Page findByUuid(@PathVariable("uuid") String uuid) {
+        return PageService.findByUuid(uuid);
     }
 }

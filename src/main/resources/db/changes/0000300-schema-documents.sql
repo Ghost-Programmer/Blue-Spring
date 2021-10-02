@@ -31,3 +31,34 @@ ALTER TABLE `documents`.`documents`
     ADD INDEX `doc_idx_id_user_id` (`id` ASC, `user_id` ASC) INVISIBLE,
     ADD INDEX `doc_idx_search` (`filename` ASC, `date_created` ASC, `size` ASC, `content_type` ASC) VISIBLE;
 ALTER TABLE `documents`.`documents` ALTER INDEX `fk_idx_documents_user_id_idx` INVISIBLE;
+
+CREATE TABLE `documents`.`pages` (
+                                     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                     `uuid` VARCHAR(45) NOT NULL,
+                                     `name` VARCHAR(255) NOT NULL,
+                                     `page` BLOB NOT NULL,
+                                     `date_created` TIMESTAMP NOT NULL,
+                                     `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                     PRIMARY KEY (`id`),
+                                     INDEX `idx_page_pk` (`id` ASC) INVISIBLE,
+                                     INDEX `idx_page_uuid` (`uuid` ASC) VISIBLE);
+
+CREATE TABLE `documents`.`page_access` (
+                                           `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                           `page_id` BIGINT(20) UNSIGNED NOT NULL,
+                                           `role_id` BIGINT(20) UNSIGNED NOT NULL,
+                                           `date_created` TIMESTAMP NOT NULL,
+                                           `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                           PRIMARY KEY (`id`),
+                                           INDEX `idx_page_access_page_id` (`page_id` ASC) INVISIBLE,
+                                           INDEX `idx_page_access_role_id` (`role_id` ASC) INVISIBLE,
+                                           CONSTRAINT `fk_idx_page_access_page_id`
+                                               FOREIGN KEY (`page_id`)
+                                                   REFERENCES `documents`.`pages` (`id`)
+                                                   ON DELETE NO ACTION
+                                                   ON UPDATE NO ACTION,
+                                           CONSTRAINT `fk_idx_page_access_role_id`
+                                               FOREIGN KEY (`page_id`)
+                                                   REFERENCES `user`.`security_role` (`id`)
+                                                   ON DELETE NO ACTION
+                                                   ON UPDATE NO ACTION);

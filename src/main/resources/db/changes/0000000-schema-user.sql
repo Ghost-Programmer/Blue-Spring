@@ -42,3 +42,5 @@ INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `descriptio
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_ADMIN_QUARTZ', 'Quartz Job Scheduling', 'Admin', 'Manage Quartz Job Scheduling.', 0, now());
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_ADMIN_DBA', 'Advanced DB Manager', 'Admin', 'Manage Advanced Database Queries.', 0, now());
 INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_DB_ACCESS', 'DB Access', 'DB', 'Query Only DB Access.', 0, now());
+INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_PAGE_EDITOR', 'Page Editor', 'Staff', 'Edit Pages.', 0, now());
+INSERT INTO `user`.`security_role` (`authority`, `name`, `category`, `description`, `default`, `date_created`) VALUES ('ROLE_MENU_EDITOR', 'MENU Editor', 'Staff', 'Edit Menu.', 0, now());

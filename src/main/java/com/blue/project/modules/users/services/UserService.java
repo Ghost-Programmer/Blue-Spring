@@ -29,6 +29,10 @@ public interface UserService {
 
     boolean hasAuthority(Collection<SecurityRole> roles, String role);
 
+    boolean hasAuthority(Collection<SecurityRole> roles, Collection<SecurityRole> checkRoles);
+
+    boolean currentUserHasAuthority(Collection<String> roles);
+
     StatusMessage changePassword(ChangePassword changePassword);
 
     StatusMessage changeUserPassword(ChangeUserPassword changeUserPassword);
@@ -39,7 +43,7 @@ public interface UserService {
 
     boolean hasAuthority(User user, String role);
 
-    boolean hasAuthority(User user, List<String> roles);
+    boolean hasAuthority(User user, Collection<String> roles);
 
     List<UserRole> putUserRoles(long userId, List<UserRole> roles);
 }
