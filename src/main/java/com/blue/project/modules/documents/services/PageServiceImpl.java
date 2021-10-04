@@ -128,13 +128,6 @@ public class PageServiceImpl implements PageService{
         } else {
             Pageable pageable;
 
-            Page page = new Page();
-            page.setPage("");
-            page.setName("");
-            page.setUuid("");
-            page.setId(null);
-            page.setRoles(Collections.emptyList());
-
             if (StringUtils.isNotNullOrEmpty(pageSearch.getSort())) {
                 if (pageSearch.getAscending()) {
                     pageable = PageRequest.of(pageSearch.getPage(), pageSearch.getSize(), Sort.by(pageSearch.getSort()).ascending());
