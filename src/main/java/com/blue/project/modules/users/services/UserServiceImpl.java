@@ -329,4 +329,9 @@ public class UserServiceImpl implements UserService {
         this.entityManager.flush();
         return this.getUserRoles(userId);
     }
+
+    @Override
+    public List<SecurityRole> getSecurityRoles() {
+        return this.securityRoleRepository.findAll(Sort.by(Sort.Direction.ASC,"category").and(Sort.by(Sort.Direction.ASC,"name")));
+    }
 }

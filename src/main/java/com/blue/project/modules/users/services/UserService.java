@@ -46,4 +46,6 @@ public interface UserService {
     boolean hasAuthority(User user, Collection<String> roles);
 
     List<UserRole> putUserRoles(long userId, List<UserRole> roles);
+
+    List<SecurityRole> getSecurityRoles();
 }
