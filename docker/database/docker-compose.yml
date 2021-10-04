@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  mariadb:
+    image: mysql:8.0.19
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: core
+      MYSQL_USER: blue
+      MYSQL_PASSWORD: blue
+    ports:
+      - 3306:3306

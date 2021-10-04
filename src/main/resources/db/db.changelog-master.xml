@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <include file="changes/0000000-schema-user.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000100-schema-dashboard.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000150-schema-meta.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000200-schema-organizations.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000300-schema-documents.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000400-schema-quartz.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0000500-schema-maintenance.sql" relativeToChangelogFile="true"/>
+
+    <include file="changes/0100100-import-user.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
