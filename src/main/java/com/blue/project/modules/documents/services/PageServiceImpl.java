@@ -22,6 +22,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,9 +42,9 @@ public class PageServiceImpl implements PageService{
 
     public Page findByUuid(String uuid) {
         Page page = this.pagesRepository.findPageByUuid(uuid);
-        if(page != null && this.userService.currentUserHasAuthority(ListUtils.safe(page.getRoles()).stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
+        if(page != null && ListUtils.isEmpty(page.getRoles())) {
             return page;
-        } else if(page != null && ListUtils.isEmpty(page.getRoles())) {
+        } else if(page != null && this.userService.currentUserHasAuthority(ListUtils.safe(page.getRoles()).stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
             return page;
         }
 
@@ -126,6 +127,13 @@ public class PageServiceImpl implements PageService{
 
         } else {
             Pageable pageable;
+
+            Page page = new Page();
+            page.setPage("");
+            page.setName("");
+            page.setUuid("");
+            page.setId(null);
+            page.setRoles(Collections.emptyList());
 
             if (StringUtils.isNotNullOrEmpty(pageSearch.getSort())) {
                 if (pageSearch.getAscending()) {
