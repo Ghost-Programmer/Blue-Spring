@@ -26,8 +26,7 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    @JoinTable( schema = "documents", catalog = "documents", name = "page_access", joinColumns = @JoinColumn(name = "page_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Transient
     private List<SecurityRole> roles;
 
     @Lob

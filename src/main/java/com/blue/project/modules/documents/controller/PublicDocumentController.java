@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 @RestController
 @RequestMapping(value = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PublicDocumentController {
@@ -30,11 +32,5 @@ public class PublicDocumentController {
     @PreAuthorize("permitAll()")
     public ResponseEntity<byte[]> downloadDocument(@PathVariable("uuid") String uuid) {
         return documentService.downloadDocumentByUuid(uuid);
-    }
-
-    @GetMapping("/page/{uuid}")
-    @PreAuthorize("permitAll()")
-    public Page findByUuid(@PathVariable("uuid") String uuid) {
-        return PageService.findByUuid(uuid);
     }
 }

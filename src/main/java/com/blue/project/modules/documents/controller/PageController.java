@@ -49,4 +49,10 @@ public class PageController {
     public PageSearch docSearch(@RequestBody PageSearch pageSearch) {
         return pageService.search(pageSearch);
     }
+
+    @GetMapping("/{uuid}")
+    @RolesAllowed("ROLE_USER")
+    public Page findByUuid(@PathVariable("uuid") String uuid) {
+        return pageService.findByUuid(uuid);
+    }
 }

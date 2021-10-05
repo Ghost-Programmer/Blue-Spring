@@ -2,10 +2,13 @@ package com.blue.project.modules.documents.services;
 
 import com.blue.project.dto.SearchResults;
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.documents.dao.PageAccessRepository;
 import com.blue.project.modules.documents.dao.PagesRepository;
 import com.blue.project.modules.documents.dto.PageSearch;
 import com.blue.project.modules.documents.models.Document;
 import com.blue.project.modules.documents.models.Page;
+import com.blue.project.modules.documents.models.PageAccess;
+import com.blue.project.modules.users.dao.SecurityRoleRepository;
 import com.blue.project.modules.users.models.SecurityRole;
 import com.blue.project.modules.users.services.UserService;
 import name.mymiller.utils.ListUtils;
@@ -21,10 +24,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,24 +38,67 @@ public class PageServiceImpl implements PageService{
     private PagesRepository pagesRepository;
 
     @Autowired
+    private PageAccessRepository pageAccessRepository;
+
+    @Autowired
+    private SecurityRoleRepository securityRoleRepository;
+
+    @Autowired
     private UserService userService;
 
     public Page findByUuid(String uuid) {
         Page page = this.pagesRepository.findPageByUuid(uuid);
+        if(page != null) {
+            page.setRoles(this.getSecurityRolesForPageAccess(page.getId()));
+        }
+
         if(page != null && ListUtils.isEmpty(page.getRoles())) {
             return page;
         } else if(page != null && this.userService.currentUserHasAuthority(ListUtils.safe(page.getRoles()).stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
+            return page;
+        } else if(page != null && this.userService.currentUserHasAuthority(List.of(SecurityRole.ROLE_PAGE_EDITOR))) {
             return page;
         }
 
         return null;
     }
 
+    private List<PageAccess> getPageAccess(Long pageId) {
+       return this.pageAccessRepository.findAllByPageId(pageId);
+    }
+
+    private List<SecurityRole> getSecurityRoles(List<PageAccess> pageAccesses) {
+        List<Long> ids = ListUtils.safe(pageAccesses).stream().map(PageAccess::getRoleId).collect(Collectors.toList());
+
+        if(ListUtils.isEmpty(ids)) {
+            return Collections.EMPTY_LIST;
+        }
+        return this.securityRoleRepository.findAllById(ids);
+    }
+
+    private List<SecurityRole> getSecurityRolesForPageAccess(Long pageId) {
+        return this.getSecurityRoles(this.getPageAccess(pageId));
+    }
+
     public Page updatePage(Page page) {
-        return this.pagesRepository.save(page);
+        List<PageAccess> allByPageId = this.pageAccessRepository.findAllByPageId(page.getId());
+        if(ListUtils.notEmpty(allByPageId)) {
+            this.pageAccessRepository.deleteAll(allByPageId);
+        }
+
+        ListUtils.safe(page.getRoles()).forEach( role -> {
+            this.pageAccessRepository.save(new PageAccess(page.getId(),role.getId()));
+        });
+
+       return this.pagesRepository.save(page);
     }
 
     public StatusMessage deletePage(Long id) {
+        List<PageAccess> allByPageId = this.pageAccessRepository.findAllByPageId(id);
+        if(ListUtils.notEmpty(allByPageId)) {
+            this.pageAccessRepository.deleteAll(allByPageId);
+        }
+
         this.pagesRepository.deleteById(id);
         return new StatusMessage().setOk(true);
     }
@@ -64,7 +107,18 @@ public class PageServiceImpl implements PageService{
         page.setUuid(UUID.randomUUID().toString());
         page.setId(null);
 
-        return this.pagesRepository.save(page);
+        List<SecurityRole> roles = page.getRoles();
+        page.setRoles(null);
+
+        page = this.pagesRepository.save(page);
+
+        final Long pageId = page.getId();
+
+        roles.forEach( role -> {
+            this.pageAccessRepository.save(new PageAccess(pageId,role.getId()));
+        });
+
+        return this.pagesRepository.findPageByUuid(page.getUuid());
     }
 
     @Override
