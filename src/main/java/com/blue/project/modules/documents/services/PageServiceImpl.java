@@ -81,12 +81,26 @@ public class PageServiceImpl implements PageService{
     }
 
     public Page updatePage(Page page) {
-        List<PageAccess> allByPageId = this.pageAccessRepository.findAllByPageId(page.getId());
-        if(ListUtils.notEmpty(allByPageId)) {
-            this.pageAccessRepository.deleteAll(allByPageId);
+
+        List<Long> list = ListUtils.safe(page.getRoles()).stream().map(SecurityRole::getId).collect(Collectors.toList());
+
+        List<PageAccess> deleteList = this.pageAccessRepository.findAllByPageId(page.getId());
+
+        List<Long> saveList = ListUtils.safe(deleteList).stream().filter(item -> {
+            return list.contains(item.getRoleId());
+        }).map(PageAccess::getRoleId).collect(Collectors.toList());
+
+        deleteList = ListUtils.safe(deleteList).stream().filter(item -> {
+            return !list.contains(item.getRoleId());
+        }).collect(Collectors.toList());
+
+        if(ListUtils.notEmpty(deleteList)) {
+            this.pageAccessRepository.deleteAll(deleteList);
         }
 
-        ListUtils.safe(page.getRoles()).forEach( role -> {
+        ListUtils.safe(page.getRoles()).stream().filter(item -> {
+            return !saveList.contains(item.getId());
+        }).forEach( role -> {
             this.pageAccessRepository.save(new PageAccess(page.getId(),role.getId()));
         });
 
