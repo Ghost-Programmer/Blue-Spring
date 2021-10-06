@@ -36,6 +36,7 @@ CREATE TABLE `documents`.`pages` (
                                      `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
                                      `uuid` VARCHAR(45) NOT NULL,
                                      `name` VARCHAR(255) NOT NULL,
+                                     `icon` VARCHAR(255) NOT NULL,
                                      `page` BLOB NOT NULL,
                                      `date_created` TIMESTAMP NOT NULL,
                                      `last_updated` TIMESTAMP NULL DEFAULT NULL,

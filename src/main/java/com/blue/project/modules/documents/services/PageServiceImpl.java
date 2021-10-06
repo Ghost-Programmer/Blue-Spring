@@ -128,9 +128,11 @@ public class PageServiceImpl implements PageService{
 
         final Long pageId = page.getId();
 
-        roles.forEach( role -> {
-            this.pageAccessRepository.save(new PageAccess(pageId,role.getId()));
-        });
+        if(ListUtils.notEmpty(roles)) {
+            roles.forEach(role -> {
+                this.pageAccessRepository.save(new PageAccess(pageId, role.getId()));
+            });
+        }
 
         return this.pagesRepository.findPageByUuid(page.getUuid());
     }

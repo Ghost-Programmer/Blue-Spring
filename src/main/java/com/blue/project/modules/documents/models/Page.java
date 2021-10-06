@@ -26,6 +26,9 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "icon")
+    private String icon;
+
     @Transient
     private List<SecurityRole> roles;
 
@@ -72,6 +75,14 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
 
     public void setRoles(List<SecurityRole> roles) {
         this.roles = roles;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @Override
