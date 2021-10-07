@@ -63,3 +63,36 @@ CREATE TABLE `documents`.`page_access` (
                                                    REFERENCES `user`.`security_role` (`id`)
                                                    ON DELETE NO ACTION
                                                    ON UPDATE NO ACTION);
+
+CREATE TABLE `documents`.`menu` (
+                                    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                    `name` VARCHAR(255) NOT NULL,
+                                    `icon` VARCHAR(255) NOT NULL,
+                                    `date_created` TIMESTAMP NOT NULL,
+                                    `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                    PRIMARY KEY (`id`));
+
+CREATE TABLE `documents`.`menu_item` (
+                                    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                    `menu_id` BIGINT(20) UNSIGNED NOT NULL,
+                                    `sort` MEDIUMINT(10) NOT NULL,
+                                    `name` VARCHAR(255) NOT NULL,
+                                    `icon` VARCHAR(255) NOT NULL,
+                                    `route` VARCHAR(255) NULL,
+                                    `url` VARCHAR(255) NULL,
+                                    `sub_menu_id` BIGINT(20) UNSIGNED NULL,
+                                    `date_created` TIMESTAMP NOT NULL,
+                                    `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                    INDEX `idx_menu_item_menu_id` (`menu_id` ASC) INVISIBLE,
+                                    PRIMARY KEY (`id`),
+                                        CONSTRAINT `fk_idx_menu_item_menu_id`
+                                            FOREIGN KEY (`menu_id`)
+                                            REFERENCES `documents`.`menu` (`id`)
+                                            ON DELETE NO ACTION
+                                            ON UPDATE NO ACTION,
+                                        CONSTRAINT `fk_idx_menu_item_sum_menu_id`
+                                            FOREIGN KEY (`sub_menu_id`)
+                                            REFERENCES `documents`.`menu` (`id`)
+                                            ON DELETE NO ACTION
+                                            ON UPDATE NO ACTION
+                                            );
