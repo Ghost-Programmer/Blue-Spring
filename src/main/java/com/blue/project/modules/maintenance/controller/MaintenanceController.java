@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 @RestController
 @RequestMapping(value = "/maintenance", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MaintenanceController {
@@ -31,5 +33,11 @@ public class MaintenanceController {
     @PreAuthorize("hasRole(T(com.blue.project.modules.users.models.SecurityRole).ROLE_ADMIN_MAINTENANCE) ")
     public StatusMessage delete (@PathVariable("id") Long id) {
         return this.maintenanceService.deleteScheduledMaintenance(id);
+    }
+
+    @GetMapping("/logging/{level}")
+    @RolesAllowed("ROLE_DEVELOPER")
+    public StatusMessage setLoggingLevel(@PathVariable("level") String level) {
+        return this.maintenanceService.setLoggingLevel(level);
     }
 }

@@ -1,5 +1,6 @@
 package com.blue.project.modules.maintenance.services;
 
+import ch.qos.logback.classic.Level;
 import com.blue.project.modules.calendar.annontation.CalendarServiceProvider;
 import com.blue.project.modules.calendar.dto.EventContext;
 import com.blue.project.modules.calendar.dto.EventData;
@@ -11,8 +12,9 @@ import com.blue.project.modules.maintenance.dto.MaintenanceSearch;
 import com.blue.project.modules.maintenance.models.Scheduled;
 import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
+import ch.qos.logback.classic.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -110,5 +112,20 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     @Override
     public void cleanupMaintenanceData() {
         this.maintenanceEventRepository.deleteAllByDateCreatedBefore(ZonedDateTime.now().minusWeeks(3));
+    }
+
+    public StatusMessage setLoggingLevel(String level) {
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+
+        switch(level) {
+            case "warn": root.setLevel(Level.WARN); break;
+            case "info": root.setLevel(Level.INFO); break;
+
+            default:
+            case "error": root.setLevel(Level.ERROR); break;
+            case "debug": root.setLevel(Level.DEBUG); break;
+            case "trace": root.setLevel(Level.TRACE); break;
+        }
+        return new StatusMessage().setOk(true);
     }
 }
