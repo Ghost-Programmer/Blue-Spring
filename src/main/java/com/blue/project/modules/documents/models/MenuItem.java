@@ -31,6 +31,9 @@ public class MenuItem extends AbstractTimestampEntity implements Serializable {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "lock")
+    private Boolean lock;
+
     @ManyToOne
     @JoinColumn(name ="menu_id")
     private Menu menu;
@@ -101,6 +104,14 @@ public class MenuItem extends AbstractTimestampEntity implements Serializable {
 
     public void setSubMenu(Menu subMenu) {
         this.subMenu = subMenu;
+    }
+
+    public Boolean getLock() {
+        return lock;
+    }
+
+    public void setLock(Boolean lock) {
+        this.lock = lock;
     }
 
     public MenuItem() {
