@@ -98,3 +98,23 @@ CREATE TABLE `documents`.`menu_item` (
                                             ON DELETE NO ACTION
                                             ON UPDATE NO ACTION
                                             );
+
+CREATE TABLE `documents`.`menu_item_access` (
+                                           `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                           `menu_item_id` BIGINT(20) UNSIGNED NOT NULL,
+                                           `role_id` BIGINT(20) UNSIGNED NOT NULL,
+                                           `date_created` TIMESTAMP NOT NULL,
+                                           `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                           PRIMARY KEY (`id`),
+                                           INDEX `idx_menu_item_access_menu_item_id` (`menu_item_id` ASC) INVISIBLE,
+                                           INDEX `idx_menu_item_access_role_id` (`role_id` ASC) INVISIBLE,
+                                           CONSTRAINT `fk_idx_menu_item_access_page_id`
+                                               FOREIGN KEY (`menu_item_id`)
+                                                   REFERENCES `documents`.`menu_item` (`id`)
+                                                   ON DELETE NO ACTION
+                                                   ON UPDATE NO ACTION,
+                                           CONSTRAINT `fk_idx_menu_item_access_role_id`
+                                               FOREIGN KEY (`menu_item_id`)
+                                                   REFERENCES `user`.`security_role` (`id`)
+                                                   ON DELETE NO ACTION
+                                                   ON UPDATE NO ACTION);

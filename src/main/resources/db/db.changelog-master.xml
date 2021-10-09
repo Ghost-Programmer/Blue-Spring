@@ -16,4 +16,5 @@
     <include file="changes/0000500-schema-maintenance.sql" relativeToChangelogFile="true"/>
 
     <include file="changes/0100100-import-user.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0101000-import-sidebar.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
