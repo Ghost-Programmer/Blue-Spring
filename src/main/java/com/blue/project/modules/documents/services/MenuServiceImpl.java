@@ -1,6 +1,7 @@
 package com.blue.project.modules.documents.services;
 
 
+import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.dao.MenuItemRepository;
 import com.blue.project.modules.documents.dao.MenuRepository;
 import com.blue.project.modules.documents.models.Menu;
@@ -31,8 +32,9 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteMenu(Long id) {
+    public StatusMessage deleteMenu(Long id) {
         this.menuRepository.deleteById(id);
+        return new StatusMessage().setOk(true);
     }
 
     @Override

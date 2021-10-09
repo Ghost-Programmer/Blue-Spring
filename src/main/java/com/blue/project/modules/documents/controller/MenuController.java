@@ -1,5 +1,6 @@
 package com.blue.project.modules.documents.controller;
 
+import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.models.Menu;
 import com.blue.project.modules.documents.models.MenuItem;
 import com.blue.project.modules.documents.models.Page;
@@ -30,8 +31,8 @@ public class MenuController {
 
     @DeleteMapping("{id}")
     @RolesAllowed("ROLE_MENU_EDITOR")
-    public void updateMenu(@PathVariable("id") Long menuId) {
-        menuService.deleteMenu(menuId);
+    public StatusMessage updateMenu(@PathVariable("id") Long menuId) {
+        return menuService.deleteMenu(menuId);
     }
 
     @PostMapping("/item")
@@ -48,7 +49,7 @@ public class MenuController {
 
     @DeleteMapping("/item/{id}")
     @RolesAllowed("ROLE_MENU_EDITOR")
-    public void updateMenuItem(@PathVariable("id") Long mmenuItemId) {
+    public void deleteMenuItem(@PathVariable("id") Long mmenuItemId) {
         menuService.deleteMenuItem(mmenuItemId);
     }
 }

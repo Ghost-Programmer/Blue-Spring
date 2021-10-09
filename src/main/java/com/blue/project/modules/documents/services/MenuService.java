@@ -1,5 +1,6 @@
 package com.blue.project.modules.documents.services;
 
+import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.models.Menu;
 import com.blue.project.modules.documents.models.MenuItem;
 
@@ -8,7 +9,7 @@ public interface MenuService {
 
     Menu updateMenu(Menu menu);
 
-    void deleteMenu(Long id);
+    StatusMessage deleteMenu(Long id);
 
     void deleteMenuItem(Long id);
 
