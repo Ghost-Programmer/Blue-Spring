@@ -118,3 +118,7 @@ CREATE TABLE `documents`.`menu_item_access` (
                                                    REFERENCES `user`.`security_role` (`id`)
                                                    ON DELETE NO ACTION
                                                    ON UPDATE NO ACTION);
+
+ALTER TABLE `documents`.`menu_item`
+    ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
+;

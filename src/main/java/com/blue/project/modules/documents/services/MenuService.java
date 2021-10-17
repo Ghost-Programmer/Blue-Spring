@@ -1,6 +1,7 @@
 package com.blue.project.modules.documents.services;
 
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.documents.dto.MenuDto;
 import com.blue.project.modules.documents.models.Menu;
 import com.blue.project.modules.documents.models.MenuItem;
 
@@ -24,4 +25,8 @@ public interface MenuService {
     MenuItem setSubMenu(MenuItem item, Long menuId);
 
     MenuItem removeSubMenu(MenuItem item);
+
+    MenuDto getMenu(String menuName);
+
+    MenuDto getMenuPublic(String menuName);
 }

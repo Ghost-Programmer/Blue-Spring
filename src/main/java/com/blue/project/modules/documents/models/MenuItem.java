@@ -1,12 +1,13 @@
 package com.blue.project.modules.documents.models;
 
 import com.blue.project.models.AbstractTimestampEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 
-@Table(name = "pages", schema = "documents", catalog = "documents")
+@Table(name = "menu_item", schema = "documents", catalog = "documents")
 @Entity
 public class MenuItem extends AbstractTimestampEntity implements Serializable {
     @Serial
@@ -34,6 +35,7 @@ public class MenuItem extends AbstractTimestampEntity implements Serializable {
     @Column(name = "lock")
     private Boolean lock;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name ="menu_id")
     private Menu menu;

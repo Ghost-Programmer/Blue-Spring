@@ -7,4 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 
 public interface MenuRepository  extends JpaRepository<Menu, Long>, JpaSpecificationExecutor<Menu>, PagingAndSortingRepository<Menu, Long>, QueryByExampleExecutor<Menu> {
+    Menu findFirstByName(String name);
 }

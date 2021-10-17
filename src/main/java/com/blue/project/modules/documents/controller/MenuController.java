@@ -1,14 +1,17 @@
 package com.blue.project.modules.documents.controller;
 
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.documents.dto.MenuDto;
 import com.blue.project.modules.documents.models.Menu;
 import com.blue.project.modules.documents.models.MenuItem;
 import com.blue.project.modules.documents.models.Page;
 import com.blue.project.modules.documents.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
 @RestController
@@ -51,5 +54,11 @@ public class MenuController {
     @RolesAllowed("ROLE_MENU_EDITOR")
     public void deleteMenuItem(@PathVariable("id") Long mmenuItemId) {
         menuService.deleteMenuItem(mmenuItemId);
+    }
+
+    @GetMapping("/display/{name}")
+    @PreAuthorize("permitAll()")
+    public MenuDto getDisplayMenu(@PathVariable ("name") String menuName) {
+        return menuService.getMenu(menuName);
     }
 }
