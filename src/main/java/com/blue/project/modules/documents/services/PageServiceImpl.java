@@ -4,8 +4,8 @@ import com.blue.project.dto.SearchResults;
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.dao.PageAccessRepository;
 import com.blue.project.modules.documents.dao.PagesRepository;
+import com.blue.project.modules.documents.dto.PageDto;
 import com.blue.project.modules.documents.dto.PageSearch;
-import com.blue.project.modules.documents.models.Document;
 import com.blue.project.modules.documents.models.Page;
 import com.blue.project.modules.documents.models.PageAccess;
 import com.blue.project.modules.users.dao.SecurityRoleRepository;
@@ -147,6 +147,10 @@ public class PageServiceImpl implements PageService{
         pageSearch.setTotal(results.getTotalCount());
 
         return pageSearch;
+    }
+
+    public List<PageDto> getAllPages() {
+        return ListUtils.safe(this.pagesRepository.findAll()).stream().map(PageDto::new).collect(Collectors.toList());
     }
 
     private SearchResults<Page> queryPageSearch(PageSearch pageSearch) {

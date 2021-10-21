@@ -2,6 +2,7 @@ package com.blue.project.modules.documents.controller;
 
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.dto.DocumentSearch;
+import com.blue.project.modules.documents.dto.PageDto;
 import com.blue.project.modules.documents.dto.PageSearch;
 import com.blue.project.modules.documents.models.Page;
 import com.blue.project.modules.documents.services.DocumentService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/page", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PageController {
@@ -55,4 +58,8 @@ public class PageController {
     public Page findByUuid(@PathVariable("uuid") String uuid) {
         return pageService.findByUuid(uuid);
     }
+
+    @GetMapping("")
+    @RolesAllowed("ROLE_MENU_EDITOR")
+    public List<PageDto> getAllPages() { return this.pageService.getAllPages();}
 }
