@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +37,12 @@ public class MenuController {
     @RolesAllowed("ROLE_MENU_EDITOR")
     public StatusMessage updateMenu(@PathVariable("id") Long menuId) {
         return menuService.deleteMenu(menuId);
+    }
+
+    @GetMapping("")
+    @RolesAllowed("ROLE_MENU_EDITOR")
+    public List<String> getAllMenuNames() {
+        return this.menuService.getMenuNames();
     }
 
     @PostMapping("/item")

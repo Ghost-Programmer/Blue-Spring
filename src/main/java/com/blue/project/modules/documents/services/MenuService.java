@@ -5,6 +5,8 @@ import com.blue.project.modules.documents.dto.MenuDto;
 import com.blue.project.modules.documents.models.Menu;
 import com.blue.project.modules.documents.models.MenuItem;
 
+import java.util.List;
+
 public interface MenuService {
     Menu createMenu(Menu menu);
 
@@ -29,4 +31,6 @@ public interface MenuService {
     MenuDto getMenu(String menuName);
 
     MenuDto getMenuPublic(String menuName);
+
+    List<String> getMenuNames();
 }

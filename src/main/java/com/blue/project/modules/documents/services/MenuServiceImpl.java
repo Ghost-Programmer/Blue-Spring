@@ -97,6 +97,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<String> getMenuNames() {
+        return ListUtils.safe(this.menuRepository.findAll()).stream().map(Menu::getName).sorted().collect(Collectors.toList());
+    }
+
+    @Override
     public MenuDto getMenu(String menuName) {
         Menu menu = this.menuRepository.findFirstByName(menuName);
         MenuDto menuDto = null;
