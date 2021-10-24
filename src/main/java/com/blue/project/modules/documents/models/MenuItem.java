@@ -32,7 +32,7 @@ public class MenuItem extends AbstractTimestampEntity implements Serializable {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "lock")
+    @Column(name = "delete_lock")
     private Boolean lock;
 
     @JsonIgnore

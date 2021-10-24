@@ -23,11 +23,8 @@ public class Menu extends AbstractTimestampEntity implements Serializable {
     @Column(name = "icon")
     private String icon;
 
-    @Column(name = "lock")
+    @Column(name = "delete_lock")
     private Boolean lock;
-
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
-    private List<MenuItem> items;
 
     public Long getId() {
         return id;
@@ -59,13 +56,5 @@ public class Menu extends AbstractTimestampEntity implements Serializable {
 
     public void setLock(Boolean lock) {
         this.lock = lock;
-    }
-
-    public List<MenuItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<MenuItem> items) {
-        this.items = items;
     }
 }

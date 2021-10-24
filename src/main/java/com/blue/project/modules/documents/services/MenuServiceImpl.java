@@ -35,9 +35,15 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private MenuItemAccessRepository menuItemAccessRepository;
+
     @Override
     public Menu createMenu(Menu menu) {
-        return this.menuRepository.save(menu);
+        Menu newMenu = new Menu();
+        newMenu.setIcon(menu.getIcon());
+        newMenu.setId(null);
+        newMenu.setLock(false);
+        newMenu.setName(menu.getName());
+        return this.menuRepository.save(newMenu);
     }
 
     @Override
@@ -109,7 +115,7 @@ public class MenuServiceImpl implements MenuService {
         if(menu != null) {
             menuDto = new MenuDto(menu);
             List<MenuItem> menuItems = new ArrayList<>();
-            menu.getItems().forEach( item -> {
+            ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId())).forEach( item -> {
                 List<SecurityRole> roles = ListUtils.safe(this.menuItemAccessRepository.findAllByMenuItemId((item.getId()))).stream().map(MenuItemAccess::getRole).collect(Collectors.toList());
                 if(ListUtils.notEmpty(roles)) {
                     if(this.userService.currentUserHasAuthority(roles.stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
@@ -132,7 +138,7 @@ public class MenuServiceImpl implements MenuService {
         if(menu != null) {
             menuDto = new MenuDto(menu);
             List<MenuItem> menuItems = new ArrayList<>();
-            menu.getItems().forEach( item -> {
+            ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId())).forEach( item -> {
                 List<SecurityRole> roles = ListUtils.safe(this.menuItemAccessRepository.findAllByMenuItemId((item.getId()))).stream().map(MenuItemAccess::getRole).collect(Collectors.toList());
                 if(ListUtils.isEmpty(roles)) {
                     menuItems.add(item);
