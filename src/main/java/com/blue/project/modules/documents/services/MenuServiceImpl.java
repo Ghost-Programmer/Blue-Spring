@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,8 +48,40 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu updateMenu(Menu menu) {
-        return this.menuRepository.save(menu);
+    public Menu updateMenu(MenuDto menu) {
+        Optional<Menu> optional = this.menuRepository.findById(menu.getId());
+
+        if(optional.isPresent()) {
+            Menu update = optional.get();
+            update.setName(menu.getName());
+            update.setIcon(menu.getIcon());
+            final Menu returnMenu = this.menuRepository.save(update);
+
+            List<MenuItem> items = ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId()));
+            List<MenuItem> updateItems = ListUtils.safe(menu.getItems());
+            updateItems.forEach(item -> {
+                item.setMenu(returnMenu);
+            });
+
+            List<MenuItem> intersection = ListUtils.intersection(items, updateItems);
+
+            List<MenuItem> itemsToRemove = ListUtils.unique(items, intersection);
+            if(ListUtils.notEmpty(itemsToRemove)) {
+                this.menuItemRepository.deleteAll(itemsToRemove);
+            }
+
+            List<MenuItem> itemsToAdd = ListUtils.unique(updateItems,intersection);
+            if(ListUtils.notEmpty(itemsToAdd)) {
+                this.menuItemRepository.saveAll(itemsToAdd);
+            }
+
+            List<MenuItem> itemsToUpdate = ListUtils.union(updateItems,intersection);
+            if(ListUtils.notEmpty(itemsToUpdate)) {
+                this.menuItemRepository.saveAll(itemsToUpdate);
+            }
+
+            return returnMenu;
+        } else return null;
     }
 
     @Override

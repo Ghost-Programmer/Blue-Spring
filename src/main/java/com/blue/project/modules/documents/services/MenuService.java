@@ -10,7 +10,7 @@ import java.util.List;
 public interface MenuService {
     Menu createMenu(Menu menu);
 
-    Menu updateMenu(Menu menu);
+    Menu updateMenu(MenuDto menu);
 
     StatusMessage deleteMenu(Long id);
 

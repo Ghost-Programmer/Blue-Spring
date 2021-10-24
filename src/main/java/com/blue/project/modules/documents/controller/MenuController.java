@@ -29,7 +29,7 @@ public class MenuController {
 
     @PutMapping("")
     @RolesAllowed("ROLE_MENU_EDITOR")
-    public Menu updateMenu(@RequestBody Menu menu) {
+    public Menu updateMenu(@RequestBody MenuDto menu) {
         return menuService.updateMenu(menu);
     }
 
