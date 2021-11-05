@@ -29,6 +29,9 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
     @Column(name = "icon")
     private String icon;
 
+    @ManyToOne
+    private Menu menu;
+
     @Transient
     private List<SecurityRole> roles;
 
@@ -83,6 +86,14 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     @Override
