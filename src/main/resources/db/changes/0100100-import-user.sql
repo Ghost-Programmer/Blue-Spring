@@ -10,9 +10,9 @@ insert into user.user_security_role (user_id,security_role_id,date_created,last_
 update user.user set account_expired = 0;
 update user.user set account_locked = 0;
 
-INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '2', now(), now());
-INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '4', now(), now());
-INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '5', now(), now());
-INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '6', now(), now());
-INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '9', now(), now());
-INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('1', '10', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('3', '2', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('3', '4', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('3', '5', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('3', '6', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('3', '9', now(), now());
+INSERT INTO `user`.`user_security_role` (`user_id`, `security_role_id`, `date_created`, `last_updated`) VALUES ('3', '10', now(), now());
