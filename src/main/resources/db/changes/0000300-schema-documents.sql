@@ -6,6 +6,15 @@ DROP SCHEMA IF EXISTS `documents` ;
 CREATE SCHEMA IF NOT EXISTS `documents` DEFAULT CHARACTER SET latin1 ;
 USE `documents` ;
 
+CREATE TABLE `documents`.`menu` (
+                                    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                    `name` VARCHAR(255) NOT NULL,
+                                    `icon` VARCHAR(255) NOT NULL,
+                                    `delete_lock` BIT(1) NULL DEFAULT 0,
+                                    `date_created` TIMESTAMP NOT NULL,
+                                    `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                    PRIMARY KEY (`id`));
+
 CREATE TABLE IF NOT EXISTS documents (
                                          `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                                          `uuid` VARCHAR(45) NOT NULL,
@@ -32,6 +41,23 @@ ALTER TABLE `documents`.`documents`
     ADD INDEX `doc_idx_search` (`filename` ASC, `date_created` ASC, `size` ASC, `content_type` ASC) VISIBLE;
 ALTER TABLE `documents`.`documents` ALTER INDEX `fk_idx_documents_user_id_idx` INVISIBLE;
 
+CREATE TABLE `documents`.`pages` (
+                                     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                     `uuid` VARCHAR(45) NOT NULL,
+                                     `name` VARCHAR(255) NOT NULL,
+                                     `icon` VARCHAR(255) NOT NULL,
+                                     `menu_id` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
+                                     `page` BLOB NOT NULL,
+                                     `date_created` TIMESTAMP NOT NULL,
+                                     `last_updated` TIMESTAMP NULL DEFAULT NULL,
+                                     PRIMARY KEY (`id`),
+                                     INDEX `idx_page_pk` (`id` ASC) INVISIBLE,
+                                     INDEX `idx_page_uuid` (`uuid` ASC) VISIBLE,
+                                     CONSTRAINT `fk_idx_pages_menu_id`
+                                         FOREIGN KEY (`menu_id`)
+                                             REFERENCES `documents`.`menu` (`id`)
+                                             ON DELETE NO ACTION
+                                             ON UPDATE NO ACTION);
 
 CREATE TABLE `documents`.`page_access` (
                                            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -52,15 +78,6 @@ CREATE TABLE `documents`.`page_access` (
                                                    REFERENCES `user`.`security_role` (`id`)
                                                    ON DELETE NO ACTION
                                                    ON UPDATE NO ACTION);
-
-CREATE TABLE `documents`.`menu` (
-                                    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-                                    `name` VARCHAR(255) NOT NULL,
-                                    `icon` VARCHAR(255) NOT NULL,
-                                    `delete_lock` BIT(1) NULL DEFAULT 0,
-                                    `date_created` TIMESTAMP NOT NULL,
-                                    `last_updated` TIMESTAMP NULL DEFAULT NULL,
-                                    PRIMARY KEY (`id`));
 
 CREATE TABLE `documents`.`menu_item` (
                                     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -111,21 +128,3 @@ CREATE TABLE `documents`.`menu_item_access` (
 ALTER TABLE `documents`.`menu_item`
     ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
 ;
-
-CREATE TABLE `documents`.`pages` (
-                                     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-                                     `uuid` VARCHAR(45) NOT NULL,
-                                     `name` VARCHAR(255) NOT NULL,
-                                     `icon` VARCHAR(255) NOT NULL,
-                                     `menu_id` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
-                                     `page` BLOB NOT NULL,
-                                     `date_created` TIMESTAMP NOT NULL,
-                                     `last_updated` TIMESTAMP NULL DEFAULT NULL,
-                                     PRIMARY KEY (`id`),
-                                     INDEX `idx_page_pk` (`id` ASC) INVISIBLE,
-                                     INDEX `idx_page_uuid` (`uuid` ASC) VISIBLE,
-                                     CONSTRAINT `fk_idx_pages_menu_id`
-                                         FOREIGN KEY (`menu_id`)
-                                             REFERENCES `documents`.`menu` (`id`)
-                                             ON DELETE NO ACTION
-                                             ON UPDATE NO ACTION);
