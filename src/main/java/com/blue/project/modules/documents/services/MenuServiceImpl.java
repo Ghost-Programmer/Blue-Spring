@@ -141,8 +141,16 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public MenuDto getMenu(Long menuId) {
+        return this.getMenu(this.menuRepository.getById(menuId));
+    }
+
+    @Override
     public MenuDto getMenu(String menuName) {
-        Menu menu = this.menuRepository.findFirstByName(menuName);
+        return this.getMenu(this.menuRepository.findFirstByName(menuName));
+    }
+
+    private MenuDto getMenu(Menu menu) {
         MenuDto menuDto = null;
 
         if(menu != null) {

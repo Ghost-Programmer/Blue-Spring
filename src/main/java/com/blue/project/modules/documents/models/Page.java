@@ -1,6 +1,7 @@
 package com.blue.project.modules.documents.models;
 
 import com.blue.project.models.AbstractTimestampEntity;
+import com.blue.project.modules.documents.dto.MenuDto;
 import com.blue.project.modules.users.models.SecurityRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +30,14 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
     @Column(name = "icon")
     private String icon;
 
-    @ManyToOne
-    private Menu menu;
+    @Column(name = "menu_id")
+    private Long menuId;
 
     @Transient
     private List<SecurityRole> roles;
+
+    @Transient
+    private MenuDto menu;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
@@ -88,11 +92,19 @@ public class Page extends AbstractTimestampEntity implements Serializable  {
         this.icon = icon;
     }
 
-    public Menu getMenu() {
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
+
+    public MenuDto getMenu() {
         return menu;
     }
 
-    public void setMenu(Menu menu) {
+    public void setMenu(MenuDto menu) {
         this.menu = menu;
     }
 

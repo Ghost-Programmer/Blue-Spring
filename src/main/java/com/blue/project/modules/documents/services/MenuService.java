@@ -33,4 +33,6 @@ public interface MenuService {
     MenuDto getMenuPublic(String menuName);
 
     List<String> getMenuNames();
+
+    MenuDto getMenu(Long menuId);
 }

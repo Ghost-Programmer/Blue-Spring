@@ -44,12 +44,19 @@ public class PageServiceImpl implements PageService{
     private SecurityRoleRepository securityRoleRepository;
 
     @Autowired
+    private MenuService menuService;
+
+    @Autowired
     private UserService userService;
 
     public Page findByUuid(String uuid) {
         Page page = this.pagesRepository.findPageByUuid(uuid);
         if(page != null) {
             page.setRoles(this.getSecurityRolesForPageAccess(page.getId()));
+        }
+
+        if(page.getMenuId() != null) {
+            page.setMenu(this.menuService.getMenu(page.getMenuId()));
         }
 
         if(page != null && ListUtils.isEmpty(page.getRoles())) {
