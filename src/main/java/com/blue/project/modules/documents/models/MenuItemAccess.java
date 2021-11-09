@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Table(name = "menu_item_access", schema = "documents", catalog = "documents")
 @Entity
-public class MenuItemAccess  extends AbstractTimestampEntity implements Serializable {
+public class MenuItemAccess extends AbstractTimestampEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

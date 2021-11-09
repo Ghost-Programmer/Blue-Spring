@@ -29,7 +29,7 @@ public class MetaController {
     @Cacheable("countries")
     @PermitAll
     public List<Country> getCountries() {
-        return this.countryRepository.findAll(Sort.by(Sort.Direction.ASC,"sort"));
+        return this.countryRepository.findAll(Sort.by(Sort.Direction.ASC, "sort"));
     }
 
     @RequestMapping(value = "/database", method = RequestMethod.GET)

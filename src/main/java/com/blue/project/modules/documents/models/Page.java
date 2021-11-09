@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Table(name = "pages", schema = "documents", catalog = "documents")
 @Entity
-public class Page extends AbstractTimestampEntity implements Serializable  {
+public class Page extends AbstractTimestampEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

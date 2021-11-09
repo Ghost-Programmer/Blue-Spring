@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface PageAccessRepository extends JpaRepository<PageAccess, Long>, JpaSpecificationExecutor<PageAccess>, PagingAndSortingRepository<PageAccess, Long>, QueryByExampleExecutor<PageAccess> {
     void deleteAllByPageId(Long pageId);
+
     List<PageAccess> findAllByPageId(Long pageId);
 }

@@ -31,7 +31,7 @@ public class MaintenanceController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole(T(com.blue.project.modules.users.models.SecurityRole).ROLE_ADMIN_MAINTENANCE) ")
-    public StatusMessage delete (@PathVariable("id") Long id) {
+    public StatusMessage delete(@PathVariable("id") Long id) {
         return this.maintenanceService.deleteScheduledMaintenance(id);
     }
 

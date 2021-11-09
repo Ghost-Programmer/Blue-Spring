@@ -25,22 +25,22 @@ public class QuartzJobInfo {
         this.group = jobDetail.getKey().getGroup();
         this.jobDescription = jobDetail.getDescription();
         this.triggerDescription = trigger.getDescription();
-        if(trigger instanceof CronTrigger) {
-            this.cronExpression = ((CronTrigger)trigger).getCronExpression();
+        if (trigger instanceof CronTrigger) {
+            this.cronExpression = ((CronTrigger) trigger).getCronExpression();
         }
 
         this.priority = trigger.getPriority();
         this.calendar = trigger.getCalendarName();
         this.status = status;
         this.startTime = ZonedDateTime.ofInstant(trigger.getStartTime().toInstant(), ZoneId.systemDefault());
-        
-        if(trigger != null && trigger.getNextFireTime() != null) {
+
+        if (trigger != null && trigger.getNextFireTime() != null) {
             this.nextFireTime = ZonedDateTime.ofInstant(trigger.getNextFireTime().toInstant(), ZoneId.systemDefault());
         } else {
             this.nextFireTime = null;
         }
 
-        if(trigger != null && trigger.getPreviousFireTime() != null) {
+        if (trigger != null && trigger.getPreviousFireTime() != null) {
             this.previousFireTime = ZonedDateTime.ofInstant(trigger.getPreviousFireTime().toInstant(), ZoneId.systemDefault());
         } else {
             this.previousFireTime = null;

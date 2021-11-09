@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface CalendarService {
     List<EventData> getEventData(ZonedDateTime start, ZonedDateTime end);
+
     List<EventContext> getEventContext();
 }

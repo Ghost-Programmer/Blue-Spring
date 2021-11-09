@@ -51,7 +51,7 @@ public class MenuServiceImpl implements MenuService {
     public Menu updateMenu(MenuDto menu) {
         Optional<Menu> optional = this.menuRepository.findById(menu.getId());
 
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             Menu update = optional.get();
             update.setName(menu.getName());
             update.setIcon(menu.getIcon());
@@ -64,17 +64,17 @@ public class MenuServiceImpl implements MenuService {
             List<MenuItem> intersection = ListUtils.intersection(items, updateItems);
 
             List<MenuItem> itemsToRemove = ListUtils.unique(items, intersection);
-            if(ListUtils.notEmpty(itemsToRemove)) {
+            if (ListUtils.notEmpty(itemsToRemove)) {
                 this.menuItemRepository.deleteAll(itemsToRemove);
             }
 
-            List<MenuItem> itemsToAdd = ListUtils.unique(updateItems,intersection);
-            if(ListUtils.notEmpty(itemsToAdd)) {
+            List<MenuItem> itemsToAdd = ListUtils.unique(updateItems, intersection);
+            if (ListUtils.notEmpty(itemsToAdd)) {
                 this.menuItemRepository.saveAll(itemsToAdd);
             }
 
-            List<MenuItem> itemsToUpdate = ListUtils.union(updateItems,intersection);
-            if(ListUtils.notEmpty(itemsToUpdate)) {
+            List<MenuItem> itemsToUpdate = ListUtils.union(updateItems, intersection);
+            if (ListUtils.notEmpty(itemsToUpdate)) {
                 this.menuItemRepository.saveAll(itemsToUpdate);
             }
 
@@ -151,16 +151,16 @@ public class MenuServiceImpl implements MenuService {
     private MenuDto getMenu(Menu menu) {
         MenuDto menuDto = null;
 
-        if(menu != null) {
+        if (menu != null) {
             menuDto = new MenuDto(menu);
             List<MenuItem> menuItems = new ArrayList<>();
-            ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId())).forEach( item -> {
+            ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId())).forEach(item -> {
                 List<SecurityRole> roles = ListUtils.safe(this.menuItemAccessRepository.findAllByMenuItemId((item.getId()))).stream().map(MenuItemAccess::getRole).collect(Collectors.toList());
-                if(ListUtils.notEmpty(roles)) {
-                    if(this.userService.currentUserHasAuthority(roles.stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
-                       menuItems.add(item);
+                if (ListUtils.notEmpty(roles)) {
+                    if (this.userService.currentUserHasAuthority(roles.stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
+                        menuItems.add(item);
                     }
-                } else  {
+                } else {
                     menuItems.add(item);
                 }
             });
@@ -174,12 +174,12 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto getMenuPublic(String menuName) {
         Menu menu = this.menuRepository.findFirstByName(menuName);
         MenuDto menuDto = null;
-        if(menu != null) {
+        if (menu != null) {
             menuDto = new MenuDto(menu);
             List<MenuItem> menuItems = new ArrayList<>();
-            ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId())).forEach( item -> {
+            ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId())).forEach(item -> {
                 List<SecurityRole> roles = ListUtils.safe(this.menuItemAccessRepository.findAllByMenuItemId((item.getId()))).stream().map(MenuItemAccess::getRole).collect(Collectors.toList());
-                if(ListUtils.isEmpty(roles)) {
+                if (ListUtils.isEmpty(roles)) {
                     menuItems.add(item);
                 }
             });

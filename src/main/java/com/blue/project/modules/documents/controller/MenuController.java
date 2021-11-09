@@ -63,7 +63,7 @@ public class MenuController {
 
     @GetMapping("/display/{name}")
     @PreAuthorize("permitAll()")
-    public MenuDto getDisplayMenu(@PathVariable ("name") String menuName) {
+    public MenuDto getDisplayMenu(@PathVariable("name") String menuName) {
         return menuService.getMenu(menuName);
     }
 }

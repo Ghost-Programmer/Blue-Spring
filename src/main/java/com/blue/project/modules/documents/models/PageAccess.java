@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Table(name = "page_access", schema = "documents", catalog = "documents")
 @Entity
-public class PageAccess  extends AbstractTimestampEntity implements Serializable {
+public class PageAccess extends AbstractTimestampEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -22,6 +22,14 @@ public class PageAccess  extends AbstractTimestampEntity implements Serializable
 
     @Column(name = "role_id")
     private Long roleId;
+
+    public PageAccess(Long pageId, Long roleId) {
+        this.pageId = pageId;
+        this.roleId = roleId;
+    }
+
+    public PageAccess() {
+    }
 
     public Long getId() {
         return id;
@@ -45,13 +53,5 @@ public class PageAccess  extends AbstractTimestampEntity implements Serializable
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
-    }
-
-    public PageAccess(Long pageId, Long roleId) {
-        this.pageId = pageId;
-        this.roleId = roleId;
-    }
-
-    public PageAccess() {
     }
 }

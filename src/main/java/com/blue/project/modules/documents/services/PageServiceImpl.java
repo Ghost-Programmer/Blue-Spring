@@ -24,16 +24,19 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class PageServiceImpl implements PageService{
+public class PageServiceImpl implements PageService {
 
     @PersistenceContext
     private EntityManager entityManager;
-    
+
     @Autowired
     private PagesRepository pagesRepository;
 
@@ -51,19 +54,19 @@ public class PageServiceImpl implements PageService{
 
     public Page findByUuid(String uuid) {
         Page page = this.pagesRepository.findPageByUuid(uuid);
-        if(page != null) {
+        if (page != null) {
             page.setRoles(this.getSecurityRolesForPageAccess(page.getId()));
         }
 
-        if(page.getMenuId() != null) {
+        if (page.getMenuId() != null) {
             page.setMenu(this.menuService.getMenu(page.getMenuId()));
         }
 
-        if(page != null && ListUtils.isEmpty(page.getRoles())) {
+        if (page != null && ListUtils.isEmpty(page.getRoles())) {
             return page;
-        } else if(page != null && this.userService.currentUserHasAuthority(ListUtils.safe(page.getRoles()).stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
+        } else if (page != null && this.userService.currentUserHasAuthority(ListUtils.safe(page.getRoles()).stream().map(SecurityRole::getAuthority).collect(Collectors.toList()))) {
             return page;
-        } else if(page != null && this.userService.currentUserHasAuthority(List.of(SecurityRole.ROLE_PAGE_EDITOR))) {
+        } else if (page != null && this.userService.currentUserHasAuthority(List.of(SecurityRole.ROLE_PAGE_EDITOR))) {
             return page;
         }
 
@@ -71,13 +74,13 @@ public class PageServiceImpl implements PageService{
     }
 
     private List<PageAccess> getPageAccess(Long pageId) {
-       return this.pageAccessRepository.findAllByPageId(pageId);
+        return this.pageAccessRepository.findAllByPageId(pageId);
     }
 
     private List<SecurityRole> getSecurityRoles(List<PageAccess> pageAccesses) {
         List<Long> ids = ListUtils.safe(pageAccesses).stream().map(PageAccess::getRoleId).collect(Collectors.toList());
 
-        if(ListUtils.isEmpty(ids)) {
+        if (ListUtils.isEmpty(ids)) {
             return Collections.EMPTY_LIST;
         }
         return this.securityRoleRepository.findAllById(ids);
@@ -97,18 +100,18 @@ public class PageServiceImpl implements PageService{
 
         deleteList = ListUtils.safe(deleteList).stream().filter(item -> !list.contains(item.getRoleId())).collect(Collectors.toList());
 
-        if(ListUtils.notEmpty(deleteList)) {
+        if (ListUtils.notEmpty(deleteList)) {
             this.pageAccessRepository.deleteAll(deleteList);
         }
 
-        ListUtils.safe(page.getRoles()).stream().filter(item -> !saveList.contains(item.getId())).forEach(role -> this.pageAccessRepository.save(new PageAccess(page.getId(),role.getId())));
+        ListUtils.safe(page.getRoles()).stream().filter(item -> !saveList.contains(item.getId())).forEach(role -> this.pageAccessRepository.save(new PageAccess(page.getId(), role.getId())));
 
-       return this.pagesRepository.save(page);
+        return this.pagesRepository.save(page);
     }
 
     public StatusMessage deletePage(Long id) {
         List<PageAccess> allByPageId = this.pageAccessRepository.findAllByPageId(id);
-        if(ListUtils.notEmpty(allByPageId)) {
+        if (ListUtils.notEmpty(allByPageId)) {
             this.pageAccessRepository.deleteAll(allByPageId);
         }
 
@@ -127,7 +130,7 @@ public class PageServiceImpl implements PageService{
 
         final Long pageId = page.getId();
 
-        if(ListUtils.notEmpty(roles)) {
+        if (ListUtils.notEmpty(roles)) {
             roles.forEach(role -> this.pageAccessRepository.save(new PageAccess(pageId, role.getId())));
         }
 

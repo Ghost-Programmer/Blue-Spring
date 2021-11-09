@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class EventCleanupJob implements Job {
 
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private MaintenanceService maintenanceService;
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

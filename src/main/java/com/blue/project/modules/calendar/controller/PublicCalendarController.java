@@ -1,9 +1,8 @@
 package com.blue.project.modules.calendar.controller;
 
+import com.blue.project.modules.calendar.dto.EventData;
 import com.blue.project.modules.calendar.dto.EventRange;
 import com.blue.project.modules.calendar.services.CalendarService;
-
-import com.blue.project.modules.calendar.dto.EventData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +23,6 @@ public class PublicCalendarController {
     @PreAuthorize("permitAll()")
     @PostMapping("/events")
     public List<EventData> getCalendarEventData(@RequestBody EventRange range) {
-        return this.calendarService.getEventData(range.getStart(),range.getEnd());
+        return this.calendarService.getEventData(range.getStart(), range.getEnd());
     }
 }

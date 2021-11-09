@@ -1,8 +1,8 @@
 package com.blue.project.modules.documents.services;
 
-import com.blue.project.modules.documents.dao.DocumentRepository;
 import com.blue.project.dto.SearchResults;
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.documents.dao.DocumentRepository;
 import com.blue.project.modules.documents.dto.DocumentSearch;
 import com.blue.project.modules.documents.models.Document;
 import com.blue.project.modules.users.models.SecurityRole;

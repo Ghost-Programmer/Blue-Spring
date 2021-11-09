@@ -21,6 +21,6 @@ public class SettingsController {
     @RequestMapping(value = "/{setting}/{organization}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_PDF_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     @PermitAll
     public SettingValue getSettingValue(@PathVariable("setting") String setting, @PathVariable("organization") String organization) {
-        return this.settingsService.getSettingValue(setting,organization);
+        return this.settingsService.getSettingValue(setting, organization);
     }
 }

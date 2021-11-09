@@ -30,9 +30,9 @@ public class CalendarServiceImpl implements CalendarService {
 
         Set<BeanDefinition> providers = provider.findCandidateComponents("com.blue.project");
 
-        return providers.stream().map(BeanDefinition::getBeanClassName).map(name -> name.substring(name.lastIndexOf('.')+1)).map(beanName -> Character.toLowerCase(beanName.charAt(0)) + beanName.substring(1)).map(beanName -> applicationContext.getBean(beanName)).map(bean -> {
-            if(bean instanceof CalendarServiceProviderInterface) {
-                return (CalendarServiceProviderInterface)bean;
+        return providers.stream().map(BeanDefinition::getBeanClassName).map(name -> name.substring(name.lastIndexOf('.') + 1)).map(beanName -> Character.toLowerCase(beanName.charAt(0)) + beanName.substring(1)).map(beanName -> applicationContext.getBean(beanName)).map(bean -> {
+            if (bean instanceof CalendarServiceProviderInterface) {
+                return (CalendarServiceProviderInterface) bean;
             }
             return null;
         }).filter(Objects::nonNull).collect(Collectors.toList());
@@ -43,9 +43,9 @@ public class CalendarServiceImpl implements CalendarService {
         List<CalendarServiceProviderInterface> calendarServiceProviders = ListUtils.safe(this.findCalendarServiceProviders());
         List<EventData> eventDataList = new ArrayList<>();
 
-        calendarServiceProviders.forEach(provider -> eventDataList.addAll(provider.getEventData(start,end)));
+        calendarServiceProviders.forEach(provider -> eventDataList.addAll(provider.getEventData(start, end)));
 
-        return eventDataList.stream().peek(eventData -> eventData.setColor(this.getEventContextColor(eventData.getOrganization(),eventData.getType()))).sorted(Comparator.comparing(EventData::getStartDate)).collect(Collectors.toList());
+        return eventDataList.stream().peek(eventData -> eventData.setColor(this.getEventContextColor(eventData.getOrganization(), eventData.getType()))).sorted(Comparator.comparing(EventData::getStartDate)).collect(Collectors.toList());
     }
 
     private String getEventContextColor(String organization, String type) {

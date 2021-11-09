@@ -1,16 +1,16 @@
 package com.blue.project.modules.users.services;
 
 import com.blue.project.config.PortalConfig;
+import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.users.dao.SecurityRoleRepository;
 import com.blue.project.modules.users.dao.UserRepository;
 import com.blue.project.modules.users.dao.UserSecurityRoleRepository;
 import com.blue.project.modules.users.dao.VerificationTokenRepository;
-import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.users.dto.*;
 import com.blue.project.modules.users.models.SecurityRole;
 import com.blue.project.modules.users.models.User;
 import com.blue.project.modules.users.models.UserSecurityRole;
 import com.blue.project.modules.users.models.VerificationToken;
-import com.blue.project.modules.users.dto.*;
 import com.blue.project.service.EmailService;
 import com.blue.project.service.NadiaService;
 import name.mymiller.nadia.Nadia;
@@ -332,6 +332,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SecurityRole> getSecurityRoles() {
-        return this.securityRoleRepository.findAll(Sort.by(Sort.Direction.ASC,"category").and(Sort.by(Sort.Direction.ASC,"name")));
+        return this.securityRoleRepository.findAll(Sort.by(Sort.Direction.ASC, "category").and(Sort.by(Sort.Direction.ASC, "name")));
     }
 }

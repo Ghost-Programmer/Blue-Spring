@@ -41,7 +41,7 @@ public class QuartzController {
     @RolesAllowed("ROLE_ADMIN_QUARTZ")
     @PostMapping("/group/{group}/job/{jobName}/pause")
     public StatusMessage pauseJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
-        this.quartzService.pauseJob(jobName,group);
+        this.quartzService.pauseJob(jobName, group);
 
         return new StatusMessage().setOk(true);
     }
@@ -49,7 +49,7 @@ public class QuartzController {
     @RolesAllowed("ROLE_ADMIN_QUARTZ")
     @PostMapping("/group/{group}/job/{jobName}/resume")
     public StatusMessage resumeJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
-        this.quartzService.resumeJob(jobName,group);
+        this.quartzService.resumeJob(jobName, group);
 
         return new StatusMessage().setOk(true);
     }
@@ -57,7 +57,7 @@ public class QuartzController {
     @RolesAllowed("ROLE_ADMIN_QUARTZ")
     @PostMapping("/group/{group}/job/{jobName}")
     public StatusMessage executeJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
-        this.quartzService.triggerJob(jobName,group);
+        this.quartzService.triggerJob(jobName, group);
 
         return new StatusMessage().setOk(true);
     }
@@ -65,12 +65,12 @@ public class QuartzController {
     @RolesAllowed("ROLE_ADMIN_QUARTZ")
     @DeleteMapping("/group/{group}/job/{jobName}")
     public StatusMessage deleteJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group) throws SchedulerException {
-        return new StatusMessage().setOk(this.quartzService.deleteJob(jobName,group));
+        return new StatusMessage().setOk(this.quartzService.deleteJob(jobName, group));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN_QUARTZ') or hasRole('ROLE_ADMIN_DBA')")
     @PostMapping("/group/{group}/job/{jobName}/create")
     public StatusMessage createJob(@PathVariable("jobName") String jobName, @PathVariable("group") String group, @RequestBody QuartzCreateJob createJob) throws SchedulerException {
-        return this.quartzService.createJob(jobName,group,createJob);
+        return this.quartzService.createJob(jobName, group, createJob);
     }
 }

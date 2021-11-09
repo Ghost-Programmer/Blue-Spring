@@ -38,12 +38,15 @@ public class MenuItem extends AbstractTimestampEntity implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name ="menu_id")
+    @JoinColumn(name = "menu_id")
     private Menu menu;
 
     @ManyToOne
-    @JoinColumn(name="sub_menu_id")
+    @JoinColumn(name = "sub_menu_id")
     private Menu subMenu;
+
+    public MenuItem() {
+    }
 
     public Long getId() {
         return id;
@@ -115,9 +118,6 @@ public class MenuItem extends AbstractTimestampEntity implements Serializable {
 
     public void setLock(Boolean lock) {
         this.lock = lock;
-    }
-
-    public MenuItem() {
     }
 
     @Override

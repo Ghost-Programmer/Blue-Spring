@@ -57,5 +57,7 @@ public class PageController {
 
     @GetMapping("")
     @RolesAllowed("ROLE_MENU_EDITOR")
-    public List<PageDto> getAllPages() { return this.pageService.getAllPages();}
+    public List<PageDto> getAllPages() {
+        return this.pageService.getAllPages();
+    }
 }

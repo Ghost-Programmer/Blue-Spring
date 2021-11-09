@@ -23,6 +23,6 @@ public class OrganizationsController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @PermitAll
     public List<Organizations> downloadDocument(@PathVariable("id") Long documentId) {
-        return this.organizationsRepository.findAll(Sort.by(Sort.Direction.ASC,"name"));
+        return this.organizationsRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 }

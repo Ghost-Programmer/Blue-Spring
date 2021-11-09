@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class SqlJob implements Job {
 
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     QuartzService quartzService;
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * <p>

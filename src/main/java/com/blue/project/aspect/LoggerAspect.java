@@ -18,20 +18,19 @@ import java.util.stream.Collectors;
 @Aspect
 @Component
 public class LoggerAspect {
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     private static final String POINTCUT = "within(com.blue.project..*)";
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Around(POINTCUT)
     @SneakyThrows
     public Object logArroundExec(ProceedingJoinPoint pjp) {
-        if(log.isTraceEnabled()) {
+        if (log.isTraceEnabled()) {
             log.trace("before {}", constructLogMsg(pjp));
         }
 
         Object proceed = pjp.proceed();
 
-        if(log.isTraceEnabled()) {
+        if (log.isTraceEnabled()) {
             if (Objects.nonNull(proceed)) {
                 log.trace("after {} with result: {}", constructLogMsg(pjp), proceed);
             } else {
@@ -43,7 +42,7 @@ public class LoggerAspect {
 
     @AfterThrowing(pointcut = POINTCUT, throwing = "e")
     public void logAfterException(JoinPoint jp, Exception e) {
-        log.error("Exception during: {} with ex: {}", constructLogMsg(jp),  e.toString(),e);
+        log.error("Exception during: {} with ex: {}", constructLogMsg(jp), e.toString(), e);
     }
 
     private String constructLogMsg(JoinPoint jp) {

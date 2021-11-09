@@ -1,9 +1,9 @@
 package com.blue.project.modules.users.services;
 
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.users.dto.*;
 import com.blue.project.modules.users.models.SecurityRole;
 import com.blue.project.modules.users.models.User;
-import com.blue.project.modules.users.dto.*;
 
 import java.util.Collection;
 import java.util.List;

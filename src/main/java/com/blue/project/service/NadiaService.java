@@ -24,12 +24,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class NadiaService implements EntityAuditInterface, DaoEvent {
 
+    private final MaintenanceEventRepository maintenanceEventRepository;
     @Autowired
     private AuditTableRepository auditTableRepository;
-
-
-    private final MaintenanceEventRepository maintenanceEventRepository;
-
     @Autowired
     private AuditRowRepository auditRowRepository;
 

@@ -1,21 +1,24 @@
 package com.blue.project.modules.maintenance.services;
 
 import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.calendar.annontation.CalendarServiceProvider;
 import com.blue.project.modules.calendar.dto.EventContext;
 import com.blue.project.modules.calendar.dto.EventData;
 import com.blue.project.modules.maintenance.dao.MaintenanceEventRepository;
 import com.blue.project.modules.maintenance.dao.ScheduleRepository;
-import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
-import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.maintenance.dto.MaintenanceSearch;
+import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
 import com.blue.project.modules.maintenance.models.Scheduled;
 import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
-import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -80,7 +83,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     public StatusMessage deleteScheduledMaintenance(Long scheduledId) {
         Optional<Scheduled> scheduled = this.scheduleRepository.findById(scheduledId);
-        if(scheduled.isPresent()) {
+        if (scheduled.isPresent()) {
             return this.deleteScheduledMaintenance(scheduled.get());
         }
         return new StatusMessage().setOk(false).setMessage("Scheduled: " + scheduledId + " not found.");
