@@ -4,14 +4,12 @@ import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.dto.MenuDto;
 import com.blue.project.modules.documents.models.Menu;
 import com.blue.project.modules.documents.models.MenuItem;
-import com.blue.project.modules.documents.models.Page;
 import com.blue.project.modules.documents.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 

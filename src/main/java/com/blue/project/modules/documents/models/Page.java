@@ -3,7 +3,6 @@ package com.blue.project.modules.documents.models;
 import com.blue.project.models.AbstractTimestampEntity;
 import com.blue.project.modules.documents.dto.MenuDto;
 import com.blue.project.modules.users.models.SecurityRole;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serial;

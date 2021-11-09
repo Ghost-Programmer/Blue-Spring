@@ -32,7 +32,7 @@ public class HelloWorldJob implements Job {
         this.logger.info("Hello world");
         try {
             Thread.sleep(30000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         this.logger.info("Good Bye world");
     }

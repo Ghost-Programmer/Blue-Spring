@@ -28,7 +28,7 @@ public class NadiaService implements EntityAuditInterface, DaoEvent {
     private AuditTableRepository auditTableRepository;
 
 
-    private MaintenanceEventRepository maintenanceEventRepository;
+    private final MaintenanceEventRepository maintenanceEventRepository;
 
     @Autowired
     private AuditRowRepository auditRowRepository;

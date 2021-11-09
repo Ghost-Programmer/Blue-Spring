@@ -1,8 +1,6 @@
 package com.blue.project.modules.meta.models;
 
-import com.blue.project.models.AbstractEntity;
 import com.blue.project.models.AbstractTimestampEntity;
-import com.blue.project.modules.maintenance.models.AuditTable;
 
 import javax.persistence.*;
 import java.io.Serializable;

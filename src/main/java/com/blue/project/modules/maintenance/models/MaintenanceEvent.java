@@ -1,7 +1,6 @@
 package com.blue.project.modules.maintenance.models;
 
 import com.blue.project.models.AbstractTimestampEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -19,7 +19,7 @@ public class Setting extends AbstractTimestampEntity implements Serializable {
     private String setting;
 
     @ManyToOne
-    @JoinColumn(name = "organization", nullable = true)
+    @JoinColumn(name = "organization")
     private Organizations organization;
 
     @Column(name = "value")

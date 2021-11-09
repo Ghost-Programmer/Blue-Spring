@@ -16,10 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -197,8 +194,7 @@ public class QuartzService {
         return ListUtils.safe(this.schedulerFactoryBean.getScheduler().getCurrentlyExecutingJobs())
                 .stream()
                 .filter(context -> context.getJobDetail().getKey().getGroup().equals(group))
-                .filter(context -> context.getJobDetail().getKey().getName().equals(jobName))
-                .findFirst().isPresent();
+                .anyMatch(context -> context.getJobDetail().getKey().getName().equals(jobName));
     }
 
     public String getJobState(String jobName, String group) throws SchedulerException {

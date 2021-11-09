@@ -117,14 +117,12 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     public StatusMessage setLoggingLevel(String level) {
         Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 
-        switch(level) {
-            case "warn": root.setLevel(Level.WARN); break;
-            case "info": root.setLevel(Level.INFO); break;
-
-            default:
-            case "error": root.setLevel(Level.ERROR); break;
-            case "debug": root.setLevel(Level.DEBUG); break;
-            case "trace": root.setLevel(Level.TRACE); break;
+        switch (level) {
+            case "warn" -> root.setLevel(Level.WARN);
+            case "info" -> root.setLevel(Level.INFO);
+            case "error" -> root.setLevel(Level.ERROR);
+            case "debug" -> root.setLevel(Level.DEBUG);
+            case "trace" -> root.setLevel(Level.TRACE);
         }
         return new StatusMessage().setOk(true);
     }

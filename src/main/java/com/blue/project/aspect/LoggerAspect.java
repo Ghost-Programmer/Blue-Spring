@@ -6,12 +6,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,7 +33,7 @@ public class LoggerAspect {
 
         if(log.isTraceEnabled()) {
             if (Objects.nonNull(proceed)) {
-                log.trace("after {} with result: {}", constructLogMsg(pjp), proceed.toString());
+                log.trace("after {} with result: {}", constructLogMsg(pjp), proceed);
             } else {
                 log.info("after {}", constructLogMsg(pjp));
             }
@@ -49,7 +47,7 @@ public class LoggerAspect {
     }
 
     private String constructLogMsg(JoinPoint jp) {
-        String args = Arrays.asList(jp.getArgs()).stream().map(String::valueOf).collect(Collectors.joining(",", "[", "]"));
+        String args = Arrays.stream(jp.getArgs()).map(String::valueOf).collect(Collectors.joining(",", "[", "]"));
 
         StringBuilder sb = new StringBuilder("@");
         sb.append(jp.getSignature().toShortString());

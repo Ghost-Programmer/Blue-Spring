@@ -93,23 +93,15 @@ public class PageServiceImpl implements PageService{
 
         List<PageAccess> deleteList = this.pageAccessRepository.findAllByPageId(page.getId());
 
-        List<Long> saveList = ListUtils.safe(deleteList).stream().filter(item -> {
-            return list.contains(item.getRoleId());
-        }).map(PageAccess::getRoleId).collect(Collectors.toList());
+        List<Long> saveList = ListUtils.safe(deleteList).stream().map(PageAccess::getRoleId).filter(roleId -> list.contains(roleId)).collect(Collectors.toList());
 
-        deleteList = ListUtils.safe(deleteList).stream().filter(item -> {
-            return !list.contains(item.getRoleId());
-        }).collect(Collectors.toList());
+        deleteList = ListUtils.safe(deleteList).stream().filter(item -> !list.contains(item.getRoleId())).collect(Collectors.toList());
 
         if(ListUtils.notEmpty(deleteList)) {
             this.pageAccessRepository.deleteAll(deleteList);
         }
 
-        ListUtils.safe(page.getRoles()).stream().filter(item -> {
-            return !saveList.contains(item.getId());
-        }).forEach( role -> {
-            this.pageAccessRepository.save(new PageAccess(page.getId(),role.getId()));
-        });
+        ListUtils.safe(page.getRoles()).stream().filter(item -> !saveList.contains(item.getId())).forEach(role -> this.pageAccessRepository.save(new PageAccess(page.getId(),role.getId())));
 
        return this.pagesRepository.save(page);
     }
@@ -136,9 +128,7 @@ public class PageServiceImpl implements PageService{
         final Long pageId = page.getId();
 
         if(ListUtils.notEmpty(roles)) {
-            roles.forEach(role -> {
-                this.pageAccessRepository.save(new PageAccess(pageId, role.getId()));
-            });
+            roles.forEach(role -> this.pageAccessRepository.save(new PageAccess(pageId, role.getId())));
         }
 
         return this.pagesRepository.findPageByUuid(page.getUuid());

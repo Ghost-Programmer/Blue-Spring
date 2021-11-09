@@ -5,7 +5,6 @@ import com.blue.project.models.AbstractTimestampEntity;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 @Table(name = "menu", schema = "documents", catalog = "documents")
 @Entity

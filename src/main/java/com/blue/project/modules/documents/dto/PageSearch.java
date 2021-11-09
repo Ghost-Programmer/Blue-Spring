@@ -1,9 +1,7 @@
 package com.blue.project.modules.documents.dto;
 
-import com.blue.project.modules.documents.models.Document;
 import com.blue.project.modules.documents.models.Page;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 public class PageSearch {

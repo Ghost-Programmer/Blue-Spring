@@ -4,7 +4,6 @@ import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.quartz.dto.QuartzCreateJob;
 import com.blue.project.modules.quartz.dto.QuartzJobInfo;
 import com.blue.project.modules.quartz.services.QuartzService;
-import com.blue.project.modules.users.dto.UserRole;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

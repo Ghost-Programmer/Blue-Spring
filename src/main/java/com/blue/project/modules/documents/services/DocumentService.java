@@ -2,7 +2,6 @@ package com.blue.project.modules.documents.services;
 
 import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.documents.dto.DocumentSearch;
-import com.blue.project.modules.documents.dto.PageSearch;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 

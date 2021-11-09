@@ -1,10 +1,6 @@
 package com.blue.project.modules.documents.dto;
 
 import com.blue.project.modules.documents.models.Page;
-import com.blue.project.modules.users.models.SecurityRole;
-
-import javax.persistence.*;
-import java.util.List;
 
 public class PageDto {
     private Long id;

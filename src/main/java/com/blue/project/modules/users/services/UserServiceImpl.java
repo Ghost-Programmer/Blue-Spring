@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean hasAuthority(Collection<SecurityRole> roles, Collection<SecurityRole> checkRoles) {
         if (roles != null) {
-            return roles.stream().anyMatch(securityRole -> checkRoles.contains(securityRole));
+            return roles.stream().anyMatch(checkRoles::contains);
         }
         return false;
     }

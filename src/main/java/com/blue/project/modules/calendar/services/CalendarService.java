@@ -7,6 +7,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 public interface CalendarService {
-    public List<EventData> getEventData(ZonedDateTime start, ZonedDateTime end);
-    public List<EventContext> getEventContext();
+    List<EventData> getEventData(ZonedDateTime start, ZonedDateTime end);
+    List<EventContext> getEventContext();
 }

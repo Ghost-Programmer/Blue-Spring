@@ -59,9 +59,7 @@ public class MenuServiceImpl implements MenuService {
 
             List<MenuItem> items = ListUtils.safe(this.menuItemRepository.findAllByMenu_IdOrderBySortAsc(menu.getId()));
             List<MenuItem> updateItems = ListUtils.safe(menu.getItems());
-            updateItems.forEach(item -> {
-                item.setMenu(returnMenu);
-            });
+            updateItems.forEach(item -> item.setMenu(returnMenu));
 
             List<MenuItem> intersection = ListUtils.intersection(items, updateItems);
 
