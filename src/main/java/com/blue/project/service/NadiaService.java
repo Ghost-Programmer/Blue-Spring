@@ -71,6 +71,7 @@ public class NadiaService implements EntityAuditInterface, DaoEvent {
     }
 
     private void addNadiaEventPipelines() {
+        Nadia.getInstance();
         //TODO: Insert code to add Nadia Event Pipelines here
     }
 }

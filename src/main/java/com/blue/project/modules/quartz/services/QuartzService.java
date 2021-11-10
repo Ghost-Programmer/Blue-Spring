@@ -270,9 +270,8 @@ public class QuartzService {
     }
 
 
-    private Calendar getCalendar(String calendarName) {
-        //TODO: Get Calendar
-        return null;
+    private Calendar getCalendar(String calendarName) throws SchedulerException {
+        return this.schedulerFactoryBean.getScheduler().getCalendar(calendarName);
     }
 
     public StatusMessage createJob(String jobName, String group, QuartzCreateJob createJob) throws SchedulerException {
