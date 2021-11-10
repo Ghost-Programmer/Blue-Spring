@@ -24,7 +24,7 @@ public class HelloWorldJob implements Job {
      * execution.
      * </p>
      *
-     * @param context
+     * @param context JobExecutionContext to execute code in.
      * @throws org.quartz.JobExecutionException if there is an exception while executing the job.
      */
     @Override

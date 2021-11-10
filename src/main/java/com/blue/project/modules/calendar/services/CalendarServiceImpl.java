@@ -30,7 +30,7 @@ public class CalendarServiceImpl implements CalendarService {
 
         Set<BeanDefinition> providers = provider.findCandidateComponents("com.blue.project");
 
-        return providers.stream().map(BeanDefinition::getBeanClassName).map(name -> name.substring(name.lastIndexOf('.') + 1)).map(beanName -> Character.toLowerCase(beanName.charAt(0)) + beanName.substring(1)).map(beanName -> applicationContext.getBean(beanName)).map(bean -> {
+        return providers.stream().map(BeanDefinition::getBeanClassName).filter(Objects::nonNull).map(name -> name.substring(name.lastIndexOf('.') + 1)).map(beanName -> Character.toLowerCase(beanName.charAt(0)) + beanName.substring(1)).map(beanName -> applicationContext.getBean(beanName)).map(bean -> {
             if (bean instanceof CalendarServiceProviderInterface) {
                 return (CalendarServiceProviderInterface) bean;
             }
