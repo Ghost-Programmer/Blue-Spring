@@ -96,7 +96,7 @@ public class PageServiceImpl implements PageService {
 
         List<PageAccess> deleteList = this.pageAccessRepository.findAllByPageId(page.getId());
 
-        List<Long> saveList = ListUtils.safe(deleteList).stream().map(PageAccess::getRoleId).filter(roleId -> list.contains(roleId)).collect(Collectors.toList());
+        List<Long> saveList = ListUtils.safe(deleteList).stream().map(PageAccess::getRoleId).filter(list::contains).collect(Collectors.toList());
 
         deleteList = ListUtils.safe(deleteList).stream().filter(item -> !list.contains(item.getRoleId())).collect(Collectors.toList());
 
