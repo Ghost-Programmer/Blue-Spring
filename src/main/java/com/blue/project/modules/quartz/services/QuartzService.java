@@ -281,7 +281,12 @@ public class QuartzService {
                 .withIdentity(jobName, group)
                 .withDescription(createJob.getDescription());
 
-        if (createJob.getCode() != null) {
+        JobDetail jobDetail = this.getJobDetail(jobName, group);
+
+        if (createJob.getCode() == null && jobDetail != null) {
+            String sql = (String) jobDetail.getJobDataMap().get("SQL");
+            jobBuilder.usingJobData("SQL", sql);
+        } else if (createJob.getCode() != null) {
             jobBuilder = jobBuilder.usingJobData("SQL", createJob.getCode());
         }
         JobDetail job = jobBuilder.build();
@@ -311,6 +316,7 @@ public class QuartzService {
     }
 
     public void executeSQL(String sql) {
+        this.logger.debug("SQL: {}", sql);
         this.entityManager.createNativeQuery(sql).getResultList();
     }
 }
