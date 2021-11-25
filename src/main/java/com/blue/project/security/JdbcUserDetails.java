@@ -6,12 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public class JdbcUserDetails implements UserDetails {
-    private final User user;
-
-    public JdbcUserDetails(User user) {
-        this.user = user;
-    }
+public record JdbcUserDetails(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

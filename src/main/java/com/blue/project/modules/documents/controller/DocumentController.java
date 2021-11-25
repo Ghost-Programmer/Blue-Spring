@@ -41,4 +41,7 @@ public class DocumentController {
     public StatusMessage deleteDocument(@PathVariable("id") Long id) {
         return documentService.deleteDocument(id);
     }
+
+
 }
+

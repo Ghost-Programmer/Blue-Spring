@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
-   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-   http://www.liquibase.org/xml/ns/dbchangelog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
     <include file="changes/0000000-schema-user.sql" relativeToChangelogFile="true"/>
     <include file="changes/0000100-schema-dashboard.sql" relativeToChangelogFile="true"/>
@@ -16,4 +13,5 @@
     <include file="changes/0000500-schema-maintenance.sql" relativeToChangelogFile="true"/>
 
     <include file="changes/0100100-import-user.sql" relativeToChangelogFile="true"/>
+    <include file="changes/0101000-import-sidebar.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

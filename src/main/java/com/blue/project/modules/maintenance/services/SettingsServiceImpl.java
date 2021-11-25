@@ -20,14 +20,14 @@ public class SettingsServiceImpl implements SettingsService {
     private SettingsRepository settingsRepository;
 
     private String getSetting(String name, String organization, ZonedDateTime date) {
-        List<Setting> allByNameAndDate = ListUtils.safe(this.settingsRepository.findAllByNameAndDate(name,organization, date));
+        List<Setting> allByNameAndDate = ListUtils.safe(this.settingsRepository.findAllByNameAndDate(name, organization, date));
 
-        if(allByNameAndDate.size() > 0) {
+        if (allByNameAndDate.size() > 0) {
             return allByNameAndDate.stream().max(Comparator.comparing(Setting::getStartDateTime)).get().getValue();
         }
 
-        List<Setting> allByName = ListUtils.safe(this.settingsRepository.findAllByName(name,organization));
-        if(allByName.size() > 0) {
+        List<Setting> allByName = ListUtils.safe(this.settingsRepository.findAllByName(name, organization));
+        if (allByName.size() > 0) {
             return allByName.stream().max(Comparator.comparing(Setting::getDateCreated)).get().getValue();
         }
 
@@ -38,7 +38,7 @@ public class SettingsServiceImpl implements SettingsService {
     public SettingValue getSettingValue(String setting, String organization) {
         SettingValue settingValue = new SettingValue();
         settingValue.setSetting(setting);
-        settingValue.setValue(this.getSetting(setting,organization, ZonedDateTime.now()));
+        settingValue.setValue(this.getSetting(setting, organization, ZonedDateTime.now()));
         return settingValue;
     }
 }

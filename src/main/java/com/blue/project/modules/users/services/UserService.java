@@ -1,9 +1,9 @@
 package com.blue.project.modules.users.services;
 
 import com.blue.project.dto.StatusMessage;
+import com.blue.project.modules.users.dto.*;
 import com.blue.project.modules.users.models.SecurityRole;
 import com.blue.project.modules.users.models.User;
-import com.blue.project.modules.users.dto.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +29,10 @@ public interface UserService {
 
     boolean hasAuthority(Collection<SecurityRole> roles, String role);
 
+    boolean hasAuthority(Collection<SecurityRole> roles, Collection<SecurityRole> checkRoles);
+
+    boolean currentUserHasAuthority(Collection<String> roles);
+
     StatusMessage changePassword(ChangePassword changePassword);
 
     StatusMessage changeUserPassword(ChangeUserPassword changeUserPassword);
@@ -39,7 +43,9 @@ public interface UserService {
 
     boolean hasAuthority(User user, String role);
 
-    boolean hasAuthority(User user, List<String> roles);
+    boolean hasAuthority(User user, Collection<String> roles);
 
     List<UserRole> putUserRoles(long userId, List<UserRole> roles);
+
+    List<SecurityRole> getSecurityRoles();
 }

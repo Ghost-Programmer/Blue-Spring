@@ -14,50 +14,50 @@ public class Organizations {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column( name = "abbreviation")
+    @Column(name = "abbreviation")
     private String abbreviation;
 
-    @Column( name = "address_line_1")
+    @Column(name = "address_line_1")
     private String addressLine1;
 
-    @Column( name = "address_line_2")
+    @Column(name = "address_line_2")
     private String addressLine2;
 
-    @Column( name = "address_line_3")
+    @Column(name = "address_line_3")
     private String addressLine3;
 
-    @Column( name = "city")
+    @Column(name = "city")
     private String city;
 
-    @Column( name = "zip_code")
+    @Column(name = "zip_code")
     private String zipCode;
 
-    @Column( name = "phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column( name = "email_address")
+    @Column(name = "email_address")
     private String emailAddress;
 
     @ManyToOne
-    @JoinColumn( name = "country", referencedColumnName = "id")
+    @JoinColumn(name = "country", referencedColumnName = "id")
     private Country country;
 
     @ManyToOne
-    @JoinColumn( name = "state", referencedColumnName = "id")
+    @JoinColumn(name = "state", referencedColumnName = "id")
     private State state;
 
 
     @Lob
-    @Column( name = "logo")
+    @Column(name = "logo")
     private byte[] logo;
 
-    @Column( name = "primary_color")
+    @Column(name = "primary_color")
     private String primaryColor;
 
-    @Column( name = "accent_color")
+    @Column(name = "accent_color")
     private String accentColor;
 
     public Long getId() {

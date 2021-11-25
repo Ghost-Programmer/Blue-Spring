@@ -3,6 +3,7 @@ package com.blue.project.modules.dashboard.controller;
 import com.blue.project.modules.dashboard.models.Dashboard;
 import com.blue.project.modules.dashboard.services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class DashboardController {
 
     @RolesAllowed("ROLE_USER")
     @GetMapping("/components/list")
+    @Cacheable("dashboard_types")
     public List<Dashboard> getUserDashboardTypeAvailable() {
         return this.dashboardService.getUserAvailableDashboardComponents();
     }

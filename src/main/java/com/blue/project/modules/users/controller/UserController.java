@@ -73,4 +73,10 @@ public class UserController {
     public List<SecurityRole> getCurrentUserRoles() {
         return this.userService.getRolesByUser(this.userService.getCurrentUser());
     }
+
+    @RolesAllowed("ROLE_USER")
+    @GetMapping("roles")
+    public List<SecurityRole> getSecurityRoles() {
+        return this.userService.getSecurityRoles();
+    }
 }

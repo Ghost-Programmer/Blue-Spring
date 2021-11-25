@@ -10,6 +10,7 @@ import java.util.List;
 public interface ScheduleRepository extends JpaRepository<Scheduled, Long>, JpaSpecificationExecutor<Scheduled> {
 
     Scheduled findFirstByStartGreaterThanEqualOrderByStartAsc(ZonedDateTime zonedDateTime);
+
     List<Scheduled> findAllByStartBetween(ZonedDateTime start, ZonedDateTime end);
 
 }

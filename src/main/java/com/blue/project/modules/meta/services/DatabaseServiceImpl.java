@@ -31,14 +31,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 
         List<SchemaDto> databaseInfo = new ArrayList<>();
 
-        for(Object schema: schemaResults ) {
+        for (Object schema : schemaResults) {
             String name = schema.toString();
 
-            if(!name.equalsIgnoreCase("core")
-                && !name.equalsIgnoreCase("information_schema")
-                && !name.equalsIgnoreCase("mysql")
-                && !name.equalsIgnoreCase("performance_schema"))
-            {
+            if (!name.equalsIgnoreCase("core")
+                    && !name.equalsIgnoreCase("information_schema")
+                    && !name.equalsIgnoreCase("mysql")
+                    && !name.equalsIgnoreCase("performance_schema")) {
                 databaseInfo.add(new SchemaDto(name));
             }
         }
@@ -51,7 +50,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
             schema.setChildren(new ArrayList<>());
 
-            for(Object table : tableResults) {
+            for (Object table : tableResults) {
                 String tableName = table.toString();
                 TableDto tableDto = new TableDto(tableName);
                 schema.getChildren().add(tableDto);
@@ -64,8 +63,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 
 
                 tableDto.setChildren(new ArrayList<>());
-                for(Object[] fields : fieldResults) {
-                    FieldDto fieldDto = new FieldDto(fields[0].toString(),fields[1].toString(),Boolean.parseBoolean(fields[2].toString()));
+                for (Object[] fields : fieldResults) {
+                    FieldDto fieldDto = new FieldDto(fields[0].toString(), fields[1].toString(), Boolean.parseBoolean(fields[2].toString()));
                     tableDto.getChildren().add(fieldDto);
                 }
             }

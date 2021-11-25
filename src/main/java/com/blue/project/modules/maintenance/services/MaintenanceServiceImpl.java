@@ -1,18 +1,24 @@
 package com.blue.project.modules.maintenance.services;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.calendar.annontation.CalendarServiceProvider;
 import com.blue.project.modules.calendar.dto.EventContext;
 import com.blue.project.modules.calendar.dto.EventData;
+import com.blue.project.modules.maintenance.dao.MaintenanceEventRepository;
 import com.blue.project.modules.maintenance.dao.ScheduleRepository;
-import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
-import com.blue.project.dto.StatusMessage;
 import com.blue.project.modules.maintenance.dto.MaintenanceSearch;
+import com.blue.project.modules.maintenance.dto.ScheduledMaintenance;
 import com.blue.project.modules.maintenance.models.Scheduled;
 import name.mymiller.utils.ListUtils;
 import name.mymiller.utils.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,6 +38,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+    @Autowired
+    private MaintenanceEventRepository maintenanceEventRepository;
 
     @Override
     public ScheduledMaintenance getNextScheduledMaintenance() {
@@ -75,7 +83,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     public StatusMessage deleteScheduledMaintenance(Long scheduledId) {
         Optional<Scheduled> scheduled = this.scheduleRepository.findById(scheduledId);
-        if(scheduled.isPresent()) {
+        if (scheduled.isPresent()) {
             return this.deleteScheduledMaintenance(scheduled.get());
         }
         return new StatusMessage().setOk(false).setMessage("Scheduled: " + scheduledId + " not found.");
@@ -86,10 +94,9 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         List<Scheduled> maintenanceList = ListUtils.safe(this.scheduleRepository.findAllByStartBetween(start, end));
         return maintenanceList.stream()
                 .map(com.blue.project.modules.maintenance.dto.EventData::new)
-                .map(eventData -> {
+                .peek(eventData -> {
                     eventData.setOrganization(ORGANIZATION);
                     eventData.setType(SYSTEM_MAINTENANCE);
-                    return eventData;
                 })
                 .collect(Collectors.toList());
     }
@@ -103,5 +110,23 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         contextList.add(context);
 
         return contextList;
+    }
+
+    @Override
+    public void cleanupMaintenanceData() {
+        this.maintenanceEventRepository.deleteAllByDateCreatedBefore(ZonedDateTime.now().minusWeeks(3));
+    }
+
+    public StatusMessage setLoggingLevel(String level) {
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+
+        switch (level) {
+            case "warn" -> root.setLevel(Level.WARN);
+            case "info" -> root.setLevel(Level.INFO);
+            case "error" -> root.setLevel(Level.ERROR);
+            case "debug" -> root.setLevel(Level.DEBUG);
+            case "trace" -> root.setLevel(Level.TRACE);
+        }
+        return new StatusMessage().setOk(true);
     }
 }

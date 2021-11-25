@@ -107,7 +107,8 @@ create table IF NOT EXISTS oauth_access_token (
                                                   user_name VARCHAR(255),
                                                   client_id VARCHAR(255),
                                                   authentication BLOB,
-                                                  refresh_token VARCHAR(255)
+                                                  refresh_token VARCHAR(255),
+												  PRIMARY KEY (`authentication_id`)
 );
 
 create table IF NOT EXISTS oauth_client_details (

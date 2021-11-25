@@ -16,4 +16,5 @@ public interface DocumentService {
     ResponseEntity<byte[]> downloadDocumentByUuid(String uuid);
 
     StatusMessage deleteDocument(Long id);
+
 }
